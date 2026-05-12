@@ -1,6 +1,6 @@
 <header class="site-header">
   <div class="page-width site-header__inner">
-    <a class="site-brand" href="{{ routes.root_url }}">{{ section.settings.logo_text | default: shop.name }}</a>
+    <a class="site-brand" href="{{ routes.root_url }}">NINE<span>MINDS</span></a>
 
     {% if section.settings.menu != blank %}
       <nav class="site-nav" aria-label="Primary navigation">
@@ -10,7 +10,12 @@
       </nav>
     {% endif %}
 
-    <a href="{{ routes.cart_url }}">Cart ({{ cart.item_count }})</a>
+    <div class="site-nav">
+      {% if settings.instagram_handle != blank %}
+        <a class="social-link" href="{{ settings.instagram_url | default: 'https://www.instagram.com/_nineminds_/' }}" target="_blank" rel="noopener">{{ settings.instagram_handle }}</a>
+      {% endif %}
+      <a class="cart-link" href="{{ routes.cart_url }}">Cart / {{ cart.item_count }}</a>
+    </div>
   </div>
 </header>
 
@@ -18,7 +23,6 @@
 {
   "name": "Header",
   "settings": [
-    { "type": "text", "id": "logo_text", "label": "Logo text", "default": "Nine Minds" },
     { "type": "link_list", "id": "menu", "label": "Menu" }
   ]
 }
