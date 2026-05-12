@@ -1,0 +1,21 @@
+<footer class="site-footer">
+  <div class="page-width site-footer__inner">
+    <p>&copy; {{ 'now' | date: '%Y' }} {{ shop.name }}</p>
+    {% if section.settings.menu != blank %}
+      <nav class="site-nav" aria-label="Footer navigation">
+        {% for link in section.settings.menu.links %}
+          <a href="{{ link.url }}">{{ link.title }}</a>
+        {% endfor %}
+      </nav>
+    {% endif %}
+  </div>
+</footer>
+
+{% schema %}
+{
+  "name": "Footer",
+  "settings": [
+    { "type": "link_list", "id": "menu", "label": "Menu" }
+  ]
+}
+{% endschema %}
