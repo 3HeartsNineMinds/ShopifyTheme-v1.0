@@ -1,27 +1,63 @@
-<section class="section">
+<section class="section cart-section">
   <div class="page-width">
-    <h1 class="section-title">Cart</h1>
+    <div class="cart-header">
+      <div>
+        <p class="section-kicker">Your selection</p>
+        <h1 class="section-title">Cart</h1>
+      </div>
+      <a class="button button--secondary" href="{{ routes.all_products_collection_url }}">Continue shopping</a>
+    </div>
+
     {% if cart.item_count > 0 %}
-      <form action="{{ routes.cart_url }}" method="post">
+      <form action="{{ routes.cart_url }}" method="post" class="cart-form">
         <table class="cart-table">
-          <thead><tr><th>Product</th><th>Quantity</th><th>Total</th></tr></thead>
+          <thead>
+            <tr>
+              <th>Product</th>
+              <th>Size</th>
+              <th>Quantity</th>
+              <th>Total</th>
+              <th></th>
+            </tr>
+          </thead>
           <tbody>
             {% for item in cart.items %}
               <tr>
-                <td>{{ item.product.title }}{% unless item.variant.title == 'Default Title' %}<br><small>{{ item.variant.title }}</small>{% endunless %}</td>
-                <td><input class="input" type="number" name="updates[]" value="{{ item.quantity }}" min="0"></td>
+                <td>
+                  <div class="cart-product">
+                    {% if item.image %}
+                      {{ item.image | image_url: width: 180 | image_tag: class: 'cart-product__image', loading: 'lazy' }}
+                    {% endif %}
+                    <div>
+                      <strong>{{ item.product.title }}</strong>
+                      <br><small>{{ item.final_price | money }} each</small>
+                    </div>
+                  </div>
+                </td>
+                <td>{% unless item.variant.title == 'Default Title' %}{{ item.variant.title }}{% else %}&mdash;{% endunless %}</td>
+                <td><input class="input cart-quantity" type="number" name="updates[]" value="{{ item.quantity }}" min="0" aria-label="Quantity for {{ item.product.title | escape }}"></td>
                 <td>{{ item.final_line_price | money }}</td>
+                <td><a class="remove-link" href="{{ item.url_to_remove }}" aria-label="Remove {{ item.product.title | escape }} from cart">Remove</a></td>
               </tr>
             {% endfor %}
           </tbody>
         </table>
-        <p><strong>Subtotal:</strong> {{ cart.total_price | money }}</p>
-        <button class="button button--secondary" type="submit" name="update">Update cart</button>
-        <button class="button" type="submit" name="checkout">Checkout</button>
+
+        <div class="cart-summary">
+          <p class="cart-summary__label">Subtotal</p>
+          <p class="cart-summary__price">{{ cart.total_price | money }}</p>
+          <p class="cart-summary__note">Shipping and discount codes are calculated at checkout.</p>
+          <div class="product-actions">
+            <button class="button button--secondary" type="submit" name="update">Update cart</button>
+            <button class="button" type="submit" name="checkout">Checkout</button>
+          </div>
+        </div>
       </form>
     {% else %}
-      <p>Your cart is empty.</p>
-      <a class="button" href="{{ routes.all_products_collection_url }}">Continue shopping</a>
+      <div class="empty-cart-panel">
+        <p>Your cart is empty.</p>
+        <a class="button" href="{{ routes.all_products_collection_url }}">Continue shopping</a>
+      </div>
     {% endif %}
   </div>
 </section>
