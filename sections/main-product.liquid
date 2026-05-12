@@ -1,0 +1,25 @@
+<section class="section">
+  <div class="page-width grid">
+    <div>
+      {% if product.featured_image %}
+        {{ product.featured_image | image_url: width: 1200 | image_tag: class: 'media', loading: 'eager' }}
+      {% endif %}
+    </div>
+    <div>
+      <h1 class="section-title">{{ product.title }}</h1>
+      <p class="price">{{ product.price | money }}</p>
+      <div class="rte">{{ product.description }}</div>
+
+      {% form 'product', product, data-cart-add: true %}
+        <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
+        <button class="button" type="submit" {% unless product.available %}disabled{% endunless %}>
+          {% if product.available %}Add to cart{% else %}Sold out{% endif %}
+        </button>
+      {% endform %}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{ "name": "Main product", "settings": [] }
+{% endschema %}
