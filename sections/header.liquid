@@ -1,0 +1,25 @@
+<header class="site-header">
+  <div class="page-width site-header__inner">
+    <a class="site-brand" href="{{ routes.root_url }}">{{ section.settings.logo_text | default: shop.name }}</a>
+
+    {% if section.settings.menu != blank %}
+      <nav class="site-nav" aria-label="Primary navigation">
+        {% for link in section.settings.menu.links %}
+          <a href="{{ link.url }}">{{ link.title }}</a>
+        {% endfor %}
+      </nav>
+    {% endif %}
+
+    <a href="{{ routes.cart_url }}">Cart ({{ cart.item_count }})</a>
+  </div>
+</header>
+
+{% schema %}
+{
+  "name": "Header",
+  "settings": [
+    { "type": "text", "id": "logo_text", "label": "Logo text", "default": "Nine Minds" },
+    { "type": "link_list", "id": "menu", "label": "Menu" }
+  ]
+}
+{% endschema %}
