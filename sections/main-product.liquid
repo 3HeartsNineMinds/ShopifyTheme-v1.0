@@ -1,20 +1,56 @@
-<section class="section">
-  <div class="page-width grid">
-    <div>
+<section class="section product-section">
+  <div class="page-width product-layout">
+    <div class="product-media-panel">
       {% if product.featured_image %}
-        {{ product.featured_image | image_url: width: 1200 | image_tag: class: 'media', loading: 'eager' }}
+        {{ product.featured_image | image_url: width: 1400 | image_tag: class: 'media product-media', loading: 'eager' }}
       {% endif %}
     </div>
-    <div>
-      <h1 class="section-title">{{ product.title }}</h1>
-      <p class="price">{{ product.price | money }}</p>
-      <div class="rte">{{ product.description }}</div>
 
-      {% form 'product', product, data-cart-add: true %}
-        <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
-        <button class="button" type="submit" {% unless product.available %}disabled{% endunless %}>
-          {% if product.available %}Add to cart{% else %}Sold out{% endif %}
-        </button>
+    <div class="product-info-panel">
+      <p class="section-kicker">Nine Minds piece</p>
+      <h1 class="section-title">{{ product.title }}</h1>
+
+      <p class="price product-price" data-product-price>{{ product.selected_or_first_available_variant.price | money }}</p>
+
+      {% if product.description != blank %}
+        <div class="rte product-description">{{ product.description }}</div>
+      {% endif %}
+
+      {% form 'product', product, data-cart-add: true, class: 'product-form' %}
+        <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}" data-variant-id>
+
+        {% unless product.has_only_default_variant %}
+          <fieldset class="variant-picker" data-variant-picker>
+            <legend>Choose size</legend>
+            <div class="variant-options">
+              {% for variant in product.variants %}
+                <label class="variant-option {% unless variant.available %}variant-option--sold-out{% endunless %}">
+                  <input
+                    type="radio"
+                    name="variant_choice"
+                    value="{{ variant.id }}"
+                    data-variant-input
+                    data-price="{{ variant.price | money }}"
+                    data-available="{{ variant.available }}"
+                    {% if variant.id == product.selected_or_first_available_variant.id %}checked{% endif %}
+                    {% unless variant.available %}disabled{% endunless %}
+                  >
+                  <span class="variant-option__content">
+                    <span class="variant-option__title">{{ variant.title }}</span>
+                    <span class="variant-option__price">{{ variant.price | money }}</span>
+                  </span>
+                </label>
+              {% endfor %}
+            </div>
+          </fieldset>
+        {% endunless %}
+
+        <div class="product-actions">
+          <button class="button product-submit" type="submit" {% unless product.selected_or_first_available_variant.available %}disabled{% endunless %} data-add-to-cart>
+            {% if product.selected_or_first_available_variant.available %}Add to cart{% else %}Sold out{% endif %}
+          </button>
+          <a class="button button--secondary" href="{{ routes.cart_url }}">View cart</a>
+        </div>
       {% endform %}
     </div>
   </div>
