@@ -1,6 +1,12 @@
 <footer class="site-footer">
   <div class="page-width site-footer__inner">
-    <p>&copy; {{ 'now' | date: '%Y' }} {{ shop.name }}</p>
+    <div class="footer-brand">
+      <a class="site-brand" href="{{ routes.root_url }}">NINE<span>MINDS</span></a>
+      <p>{{ settings.brand_tagline }}</p>
+      {% if settings.instagram_handle != blank %}
+        <p><a class="social-link" href="{{ settings.instagram_url | default: 'https://www.instagram.com/_nineminds_/' }}" target="_blank" rel="noopener">Follow {{ settings.instagram_handle }}</a></p>
+      {% endif %}
+    </div>
     {% if section.settings.menu != blank %}
       <nav class="site-nav" aria-label="Footer navigation">
         {% for link in section.settings.menu.links %}
@@ -8,6 +14,7 @@
         {% endfor %}
       </nav>
     {% endif %}
+    <p>&copy; {{ 'now' | date: '%Y' }} {{ shop.name }}</p>
   </div>
 </footer>
 
