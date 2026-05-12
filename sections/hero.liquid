@@ -1,11 +1,21 @@
 <section class="hero">
   <div class="page-width">
-    <p>{{ section.settings.eyebrow }}</p>
+    <p class="eyebrow">{{ section.settings.eyebrow }}</p>
     <h1>{{ section.settings.heading }}</h1>
     <p>{{ section.settings.text }}</p>
-    {% if section.settings.button_label != blank %}
-      <a class="button" href="{{ section.settings.button_link }}">{{ section.settings.button_label }}</a>
-    {% endif %}
+    <div class="button-row">
+      {% if section.settings.button_label != blank %}
+        <a class="button" href="{{ section.settings.button_link }}">{{ section.settings.button_label }}</a>
+      {% endif %}
+      {% if settings.instagram_handle != blank %}
+        <a class="button button--secondary" href="{{ settings.instagram_url | default: 'https://www.instagram.com/_nineminds_/' }}" target="_blank" rel="noopener">Follow {{ settings.instagram_handle }}</a>
+      {% endif %}
+    </div>
+    <div class="hero__meta" aria-label="Brand values">
+      <span class="pill">Limited drops</span>
+      <span class="pill">Premium weight</span>
+      <span class="pill">Built in shadow</span>
+    </div>
   </div>
 </section>
 
@@ -13,10 +23,10 @@
 {
   "name": "Hero",
   "settings": [
-    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Nine Minds" },
-    { "type": "text", "id": "heading", "label": "Heading", "default": "Built for the ones who move different" },
-    { "type": "textarea", "id": "text", "label": "Text", "default": "A clean Shopify theme foundation for premium streetwear drops, product storytelling, and conversion-focused shopping." },
-    { "type": "text", "id": "button_label", "label": "Button label", "default": "Shop now" },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Nine Minds / _nineminds_" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Move quiet. Think deeper." },
+    { "type": "textarea", "id": "text", "label": "Text", "default": "Luxury streetwear shaped around restraint, shadow and detail. Designed for the ones who do not need to be loud to be seen." },
+    { "type": "text", "id": "button_label", "label": "Button label", "default": "Enter the drop" },
     { "type": "url", "id": "button_link", "label": "Button link" }
   ],
   "presets": [{ "name": "Hero" }]
