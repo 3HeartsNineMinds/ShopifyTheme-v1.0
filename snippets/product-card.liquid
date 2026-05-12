@@ -1,9 +1,10 @@
 <article class="card product-card">
   <a href="{{ product.url }}">
     {% if product.featured_image %}
-      {{ product.featured_image | image_url: width: 700 | image_tag: class: 'media', loading: 'lazy' }}
+      {{ product.featured_image | image_url: width: 900 | image_tag: class: 'media', loading: 'lazy' }}
     {% endif %}
     <div class="card__content">
+      <span class="product-card__tag">Nine Minds piece</span>
       <h3>{{ product.title }}</h3>
       <p class="price">{{ product.price | money }}</p>
     </div>
