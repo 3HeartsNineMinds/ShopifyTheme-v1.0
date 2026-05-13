@@ -98,16 +98,53 @@
 <style>
   [data-product-section] .variant-option--sold-out .variant-option__title,
   [data-product-section] .variant-option--sold-out .variant-option__price {
-    text-decoration-line: line-through !important;
-    text-decoration-color: #ffffff !important;
-    text-decoration-thickness: 1px !important;
-    text-decoration-skip-ink: none !important;
+    text-decoration: none !important;
     color: rgba(5, 5, 5, .72) !important;
+    position: relative !important;
+    z-index: 2 !important;
   }
 
   [data-product-section] .variant-option--sold-out .variant-option__content {
-    opacity: .62 !important;
+    position: relative !important;
+    isolation: isolate !important;
+    overflow: hidden !important;
+    opacity: .78 !important;
     cursor: not-allowed !important;
+    background: #ded9cf !important;
+  }
+
+  [data-product-section] .variant-option--sold-out .variant-option__content::before,
+  [data-product-section] .variant-option--sold-out .variant-option__content::after {
+    content: "" !important;
+    position: absolute !important;
+    z-index: 1 !important;
+    pointer-events: none !important;
+    border-radius: 999px 70% 999px 80% !important;
+    background: rgba(5, 5, 5, .22) !important;
+    filter: blur(.5px) !important;
+    transform: rotate(-12deg) !important;
+  }
+
+  [data-product-section] .variant-option--sold-out .variant-option__content::before {
+    width: 54px !important;
+    height: 31px !important;
+    right: 12px !important;
+    top: 10px !important;
+    box-shadow:
+      -18px 42px 0 -13px rgba(5, 5, 5, .2),
+      14px 61px 0 -16px rgba(5, 5, 5, .18) !important;
+  }
+
+  [data-product-section] .variant-option--sold-out .variant-option__content::after {
+    width: 68px !important;
+    height: 39px !important;
+    left: 10px !important;
+    bottom: 8px !important;
+    transform: rotate(18deg) !important;
+    background: rgba(5, 5, 5, .18) !important;
+    box-shadow:
+      43px -38px 0 -20px rgba(5, 5, 5, .2),
+      78px -6px 0 -26px rgba(5, 5, 5, .16) !important;
   }
 
   @media (min-width: 881px) {
