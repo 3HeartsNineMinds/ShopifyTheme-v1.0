@@ -1,6 +1,8 @@
 <section class="nm-landing" id="top">
   <div class="nm-grain" aria-hidden="true"></div>
 
+  {% assign first_drop_product = all_products['hoodie'] %}
+
   <div class="nm-hero">
     <div class="nm-hero__copy">
       <div class="nm-eyebrow"><span class="nm-dot"></span>{{ section.settings.eyebrow }}</div>
@@ -36,21 +38,29 @@
       </div>
     </div>
 
-    <div class="nm-visual" aria-label="Nine Minds visual concept">
-      <div class="nm-orb"></div>
-      <div class="nm-octo">
-        <svg viewBox="0 0 500 500" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-          <circle cx="250" cy="176" r="78" fill="url(#nm-octo-gradient)"/>
-          <path d="M249 247c-9 78-73 106-144 127 60 10 117-2 155-48 20 53 64 78 127 73-57-25-100-60-111-138" stroke="#eee9df" stroke-width="28" stroke-linecap="round"/>
-          <path d="M186 236c-77 18-105 58-118 115 50-31 89-38 131-22M315 236c77 18 105 58 118 115-50-31-89-38-131-22M218 255c-51 49-48 104-25 157 18-51 43-84 82-105M282 255c51 49 48 104 25 157-18-51-43-84-82-105" stroke="#eee9df" stroke-width="24" stroke-linecap="round"/>
-          <defs><radialGradient id="nm-octo-gradient" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(219 130) rotate(50) scale(151)"><stop stop-color="#fff"/><stop offset=".5" stop-color="#c8c6bd"/><stop offset="1" stop-color="#565656"/></radialGradient></defs>
+    <div class="nm-visual" aria-label="Nine Minds first drop product">
+      <div class="nm-logo-mark" aria-hidden="true">
+        <svg viewBox="0 0 500 500" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M250 70c-48 0-83 36-83 86 0 26 8 45 24 60-23 8-49 20-78 42-32 24-55 52-69 83 38-18 70-27 96-27 17 0 31 4 42 11-36 29-58 65-69 109 35-21 66-29 93-24 15 3 27 9 37 18-1-45 8-82 28-111 20 29 29 66 28 111 10-9 22-15 37-18 27-5 58 3 93 24-11-44-33-80-69-109 11-7 25-11 42-11 26 0 58 9 96 27-14-31-37-59-69-83-29-22-55-34-78-42 16-15 24-34 24-60 0-50-35-86-83-86Z" fill="currentColor"/>
+          <path d="M162 180c-58 9-95 39-111 89 40-23 75-28 105-14 15 7 27 18 36 32M338 180c58 9 95 39 111 89-40-23-75-28-105-14-15 7-27 18-36 32M205 269c-59 42-79 92-60 150 25-36 54-54 87-54M295 269c59 42 79 92 60 150-25-36-54-54-87-54" stroke="currentColor" stroke-width="28" stroke-linecap="round" stroke-linejoin="round"/>
         </svg>
       </div>
-      <div class="nm-phone nm-phone--left"><span>_nineminds_</span><strong>Profile</strong><small>Octopus / hoodie / shadow / smoke</small></div>
-      <a class="nm-phone nm-phone--drop" href="{{ section.settings.drop_link | default: routes.all_products_collection_url }}" aria-label="Open the first drop collection">
-        <span>First drop</span>
-        <strong>NINE MINDS</strong>
-        <small>Premium streetwear concept</small>
+
+      <a class="nm-drop-card" href="/products/hoodie" aria-label="View the Nine Minds hoodie product">
+        <div class="nm-drop-card__image">
+          {% if first_drop_product.featured_image %}
+            {{ first_drop_product.featured_image | image_url: width: 760 | image_tag: loading: 'eager', alt: first_drop_product.title }}
+          {% else %}
+            <div class="nm-product-placeholder">
+              <span>NINE MINDS</span>
+            </div>
+          {% endif %}
+        </div>
+        <div class="nm-drop-card__content">
+          <span>First drop</span>
+          <strong>{% if first_drop_product != blank %}{{ first_drop_product.title }}{% else %}NINE MINDS HOODIE{% endif %}</strong>
+          <small>{% if first_drop_product != blank %}{{ first_drop_product.price | money }}{% else %}Premium streetwear concept{% endif %}</small>
+        </div>
       </a>
     </div>
   </div>
@@ -63,7 +73,6 @@
     { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Coming soon / first drop" },
     { "type": "textarea", "id": "lead", "label": "Lead text", "default": "A monochrome clothing brand for the ones who live between moods. Clean silhouettes, dark visuals, octopus energy and a premium streetwear feel." },
     { "type": "text", "id": "primary_label", "label": "Waitlist button label", "default": "Join the waitlist" },
-    { "type": "url", "id": "drop_link", "label": "First drop card link" },
     { "type": "text", "id": "stat_one_value", "label": "Stat one value", "default": "3.5K" },
     { "type": "text", "id": "stat_one_label", "label": "Stat one label", "default": "30 day views" },
     { "type": "text", "id": "stat_two_value", "label": "Stat two value", "default": "9" },
