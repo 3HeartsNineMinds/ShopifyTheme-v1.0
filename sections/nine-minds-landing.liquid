@@ -1,0 +1,88 @@
+<section class="nm-landing" id="top">
+  <div class="nm-grain" aria-hidden="true"></div>
+
+  <div class="nm-hero">
+    <div class="nm-hero__copy">
+      <div class="nm-eyebrow"><span class="nm-dot"></span>{{ section.settings.eyebrow }}</div>
+      <h1>NINE<br><span>MINDS</span></h1>
+      <p class="nm-lead">{{ section.settings.lead }}</p>
+      <div class="nm-actions">
+        <a class="nm-btn" href="{{ section.settings.primary_link }}">{{ section.settings.primary_label }}</a>
+        <a class="nm-btn nm-btn--ghost" href="{{ section.settings.secondary_link }}">{{ section.settings.secondary_label }}</a>
+      </div>
+      <div class="nm-stats" aria-label="Brand launch stats">
+        <div><strong>{{ section.settings.stat_one_value }}</strong><span>{{ section.settings.stat_one_label }}</span></div>
+        <div><strong>{{ section.settings.stat_two_value }}</strong><span>{{ section.settings.stat_two_label }}</span></div>
+        <div><strong>{{ section.settings.stat_three_value }}</strong><span>{{ section.settings.stat_three_label }}</span></div>
+      </div>
+    </div>
+
+    <div class="nm-visual" aria-label="Nine Minds visual concept">
+      <div class="nm-orb"></div>
+      <div class="nm-octo">
+        <svg viewBox="0 0 500 500" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <circle cx="250" cy="176" r="78" fill="url(#nm-octo-gradient)"/>
+          <path d="M249 247c-9 78-73 106-144 127 60 10 117-2 155-48 20 53 64 78 127 73-57-25-100-60-111-138" stroke="#eee9df" stroke-width="28" stroke-linecap="round"/>
+          <path d="M186 236c-77 18-105 58-118 115 50-31 89-38 131-22M315 236c77 18 105 58 118 115-50-31-89-38-131-22M218 255c-51 49-48 104-25 157 18-51 43-84 82-105M282 255c51 49 48 104 25 157-18-51-43-84-82-105" stroke="#eee9df" stroke-width="24" stroke-linecap="round"/>
+          <defs><radialGradient id="nm-octo-gradient" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(219 130) rotate(50) scale(151)"><stop stop-color="#fff"/><stop offset=".5" stop-color="#c8c6bd"/><stop offset="1" stop-color="#565656"/></radialGradient></defs>
+        </svg>
+      </div>
+      <div class="nm-phone nm-phone--left"><span>_nineminds_</span><strong>Profile</strong><small>Octopus / hoodie / shadow / smoke</small></div>
+      <div class="nm-phone"><span>First drop</span><strong>NINE MINDS</strong><small>Premium streetwear concept</small></div>
+    </div>
+  </div>
+
+  <div class="nm-section" id="drop">
+    <div class="nm-section-head"><div class="nm-kicker">{{ section.settings.drop_kicker }}</div><h2>{{ section.settings.drop_heading }}</h2></div>
+    <div class="nm-drop">
+      <div class="nm-card nm-product-concept"><div class="nm-hoodie"><div></div></div></div>
+      <div class="nm-card nm-card--pad"><h3>{{ section.settings.piece_heading }}</h3><p>{{ section.settings.piece_text }}</p><p>{{ section.settings.piece_text_two }}</p><div class="nm-actions"><a class="nm-btn" href="{{ routes.all_products_collection_url }}">Shop the drop</a><a class="nm-btn nm-btn--ghost" href="{{ settings.instagram_url | default: 'https://www.instagram.com/_nineminds_/' }}" target="_blank" rel="noopener">Instagram</a></div></div>
+    </div>
+  </div>
+
+  <div class="nm-section" id="story">
+    <div class="nm-section-head"><div class="nm-kicker">Brand language</div><h2>Not just a hoodie. A feeling.</h2></div>
+    <div class="nm-grid3">
+      <div class="nm-feature"><b>Monochrome mood</b><p>Black, white and grey visuals create a clear identity from the first view.</p></div>
+      <div class="nm-feature"><b>Octopus emblem</b><p>A symbol of adaptability, pressure, depth and multiple minds moving as one.</p></div>
+      <div class="nm-feature"><b>Premium restraint</b><p>Subtle branding, clean product shots and a luxury streetwear direction.</p></div>
+    </div>
+  </div>
+
+  <div class="nm-social" id="social">
+    <div class="nm-section-head"><div class="nm-kicker">Built from the feed</div><h2>Instagram-first visuals with a clear world.</h2><p>The page mirrors the same moody grid: octopus, hoodie, shadow, smoke, packaging and close-up detail.</p></div>
+    <div class="nm-screen-stack"><div>Profile top<br><span>_nineminds_</span></div><div>Visual grid<br><span>Clothing brand</span></div></div>
+  </div>
+
+  <div class="nm-cta" id="join">
+    <h2>Can’t decide which mind you’re in?</h2>
+    <p>Join the first drop list and get notified before Nine Minds releases.</p>
+    <a class="nm-btn" href="{{ settings.instagram_url | default: 'https://www.instagram.com/_nineminds_/' }}" target="_blank" rel="noopener">Follow {{ settings.instagram_handle | default: '_nineminds_' }}</a>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Nine Minds landing",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Coming soon / first drop" },
+    { "type": "textarea", "id": "lead", "label": "Lead text", "default": "A monochrome clothing brand for the ones who live between moods. Clean silhouettes, dark visuals, octopus energy and a premium streetwear feel." },
+    { "type": "text", "id": "primary_label", "label": "Primary button label", "default": "Join the waitlist" },
+    { "type": "url", "id": "primary_link", "label": "Primary button link" },
+    { "type": "text", "id": "secondary_label", "label": "Secondary button label", "default": "View the concept" },
+    { "type": "url", "id": "secondary_link", "label": "Secondary button link" },
+    { "type": "text", "id": "stat_one_value", "label": "Stat one value", "default": "3.5K" },
+    { "type": "text", "id": "stat_one_label", "label": "Stat one label", "default": "30 day views" },
+    { "type": "text", "id": "stat_two_value", "label": "Stat two value", "default": "9" },
+    { "type": "text", "id": "stat_two_label", "label": "Stat two label", "default": "Launch posts" },
+    { "type": "text", "id": "stat_three_value", "label": "Stat three value", "default": "01" },
+    { "type": "text", "id": "stat_three_label", "label": "Stat three label", "default": "Signature hoodie" },
+    { "type": "text", "id": "drop_kicker", "label": "Drop kicker", "default": "The first piece" },
+    { "type": "text", "id": "drop_heading", "label": "Drop heading", "default": "Soft grey hoodie. Dark mind. Clean finish." },
+    { "type": "text", "id": "piece_heading", "label": "Piece heading", "default": "The signature layer" },
+    { "type": "textarea", "id": "piece_text", "label": "Piece text", "default": "Designed around a muted grey palette, tonal detailing and the Nine Minds script across the hood. The octopus emblem becomes the quiet mark — present, but not loud." },
+    { "type": "textarea", "id": "piece_text_two", "label": "Piece text two", "default": "This landing page is built to make the brand feel premium before the shop opens: moody, minimal and visual-first." }
+  ],
+  "presets": [{ "name": "Nine Minds landing" }]
+}
+{% endschema %}
