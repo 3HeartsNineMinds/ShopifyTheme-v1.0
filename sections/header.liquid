@@ -1,6 +1,22 @@
 <header class="site-header">
   <div class="page-width site-header__inner">
-    <div class="site-nav site-actions site-actions--left">
+    <a class="site-brand site-brand--left" href="{{ routes.root_url }}" aria-label="Nine Minds home">
+      {% if settings.logo != blank %}
+        {{ settings.logo | image_url: width: 360 | image_tag: class: 'site-logo', loading: 'eager', alt: shop.name }}
+      {% else %}
+        NINE<span>MINDS</span>
+      {% endif %}
+    </a>
+
+    {% if section.settings.menu != blank %}
+      <nav class="site-nav" aria-label="Primary navigation">
+        {% for link in section.settings.menu.links %}
+          <a href="{{ link.url }}">{{ link.title }}</a>
+        {% endfor %}
+      </nav>
+    {% endif %}
+
+    <div class="site-nav site-actions site-actions--right">
       <a class="cart-link cart-link--prominent" href="{{ routes.cart_url }}" aria-label="View cart with {{ cart.item_count }} items">
         <span>Cart</span>
         <strong>{{ cart.item_count }}</strong>
@@ -14,22 +30,6 @@
         </svg>
       </a>
     </div>
-
-    {% if section.settings.menu != blank %}
-      <nav class="site-nav" aria-label="Primary navigation">
-        {% for link in section.settings.menu.links %}
-          <a href="{{ link.url }}">{{ link.title }}</a>
-        {% endfor %}
-      </nav>
-    {% endif %}
-
-    <a class="site-brand site-brand--right" href="{{ routes.root_url }}" aria-label="Nine Minds home">
-      {% if settings.logo != blank %}
-        {{ settings.logo | image_url: width: 360 | image_tag: class: 'site-logo', loading: 'eager', alt: shop.name }}
-      {% else %}
-        NINE<span>MINDS</span>
-      {% endif %}
-    </a>
   </div>
 </header>
 
