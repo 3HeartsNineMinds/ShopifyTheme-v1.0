@@ -12,10 +12,9 @@
     "nine_minds_landing": {
       "type": "nine-minds-landing",
       "settings": {
-        "eyebrow": "Coming soon / first drop",
+        "eyebrow": "ORDER NOW / FIRST DROP",
         "lead": "A monochrome clothing brand for the ones who live between moods. Clean silhouettes, dark visuals, octopus energy and a premium streetwear feel.",
-        "primary_label": "Join the waitlist",
-        "drop_link": "shopify://collections/first-drop",
+        "primary_label": "Sign up to updates",
         "stat_one_value": "3.5K",
         "stat_one_label": "30 day views",
         "stat_two_value": "9",
