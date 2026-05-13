@@ -96,6 +96,20 @@
 </section>
 
 <style>
+  [data-product-section] .variant-option--sold-out .variant-option__title,
+  [data-product-section] .variant-option--sold-out .variant-option__price {
+    text-decoration-line: line-through !important;
+    text-decoration-color: #ffffff !important;
+    text-decoration-thickness: 1px !important;
+    text-decoration-skip-ink: none !important;
+    color: rgba(5, 5, 5, .72) !important;
+  }
+
+  [data-product-section] .variant-option--sold-out .variant-option__content {
+    opacity: .62 !important;
+    cursor: not-allowed !important;
+  }
+
   @media (min-width: 881px) {
     html,
     body {
