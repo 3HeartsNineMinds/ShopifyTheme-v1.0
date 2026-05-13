@@ -1,14 +1,24 @@
 <section class="section product-section">
   <div class="page-width product-layout">
     <div class="product-media-panel">
-      {% if product.featured_image %}
-        {{ product.featured_image | image_url: width: 1400 | image_tag: class: 'media product-media', loading: 'eager' }}
-      {% endif %}
+      <div class="product-media-gallery" aria-label="Product photos">
+        {% for image in product.images %}
+          <div class="product-media-slide">
+            {{ image | image_url: width: 1400 | image_tag: class: 'media product-media', loading: 'eager', alt: product.title }}
+          </div>
+        {% else %}
+          {% if product.featured_image %}
+            <div class="product-media-slide">
+              {{ product.featured_image | image_url: width: 1400 | image_tag: class: 'media product-media', loading: 'eager', alt: product.title }}
+            </div>
+          {% endif %}
+        {% endfor %}
+      </div>
     </div>
 
     <div class="product-info-panel">
       <p class="section-kicker">Nine Minds piece</p>
-      <h1 class="section-title">{{ product.title }}</h1>
+      <h1 class="section-title product-title">{{ product.title }}</h1>
 
       <p class="price product-price" data-product-price>{{ product.selected_or_first_available_variant.price | money }}</p>
 
