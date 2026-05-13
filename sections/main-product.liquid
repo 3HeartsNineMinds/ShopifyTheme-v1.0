@@ -2,17 +2,46 @@
   <div class="page-width product-layout">
     <div class="product-media-panel">
       <div class="product-media-gallery" aria-label="Product photos">
-        {% for image in product.images %}
-          <div class="product-media-slide">
-            {{ image | image_url: width: 1400 | image_tag: class: 'media product-media', loading: 'eager', alt: product.title }}
+        {% assign image_count = product.images.size %}
+
+        {% if image_count > 0 %}
+          {% for image in product.images %}
+            <input
+              class="product-media-toggle"
+              type="radio"
+              name="product-media-{{ section.id }}"
+              id="product-media-{{ section.id }}-{{ forloop.index }}"
+              {% if forloop.first %}checked{% endif %}
+            >
+          {% endfor %}
+
+          <div class="product-media-slides">
+            {% for image in product.images %}
+              {% if forloop.last %}
+                {% assign next_index = 1 %}
+              {% else %}
+                {% assign next_index = forloop.index | plus: 1 %}
+              {% endif %}
+
+              <div class="product-media-slide product-media-slide--{{ forloop.index }}">
+                {{ image | image_url: width: 1400 | image_tag: class: 'media product-media', loading: 'eager', alt: product.title }}
+
+                {% if image_count > 1 %}
+                  <label class="product-media-next" for="product-media-{{ section.id }}-{{ next_index }}" aria-label="Show next product photo">
+                    Next photo
+                    <span aria-hidden="true">→</span>
+                  </label>
+                {% endif %}
+              </div>
+            {% endfor %}
           </div>
-        {% else %}
-          {% if product.featured_image %}
-            <div class="product-media-slide">
+        {% elsif product.featured_image %}
+          <div class="product-media-slides">
+            <div class="product-media-slide product-media-slide--1 is-visible">
               {{ product.featured_image | image_url: width: 1400 | image_tag: class: 'media product-media', loading: 'eager', alt: product.title }}
             </div>
-          {% endif %}
-        {% endfor %}
+          </div>
+        {% endif %}
       </div>
     </div>
 
