@@ -1,4 +1,4 @@
-<section class="section product-section">
+<section class="section product-section" data-product-section>
   <div class="page-width product-layout">
     <div class="product-media-panel">
       <div class="product-media-gallery" aria-label="Product photos">
@@ -94,6 +94,133 @@
     </div>
   </div>
 </section>
+
+<style>
+  @media (min-width: 881px) {
+    html,
+    body {
+      overflow: hidden !important;
+    }
+
+    .main-content:has([data-product-section]) {
+      height: 100vh !important;
+      overflow: hidden !important;
+    }
+
+    [data-product-section].product-section {
+      height: 100vh !important;
+      max-height: 100vh !important;
+      overflow: hidden !important;
+      padding-top: 96px !important;
+      padding-bottom: 24px !important;
+    }
+
+    [data-product-section] .product-layout {
+      height: calc(100vh - 120px) !important;
+      align-items: stretch !important;
+    }
+
+    [data-product-section] .product-media-panel,
+    [data-product-section] .product-info-panel {
+      height: 100% !important;
+      overflow: hidden !important;
+    }
+
+    [data-product-section] .product-media-gallery,
+    [data-product-section] .product-media-slides {
+      position: relative !important;
+      height: 100% !important;
+      overflow: hidden !important;
+    }
+
+    [data-product-section] .product-media-toggle {
+      position: absolute !important;
+      opacity: 0 !important;
+      pointer-events: none !important;
+    }
+
+    [data-product-section] .product-media-slide {
+      position: absolute !important;
+      inset: 0 !important;
+      display: grid !important;
+      place-items: center !important;
+      opacity: 0 !important;
+      visibility: hidden !important;
+      transition: opacity .3s ease, visibility .3s ease !important;
+    }
+
+    [data-product-section] .product-media-toggle:nth-of-type(1):checked ~ .product-media-slides .product-media-slide--1,
+    [data-product-section] .product-media-toggle:nth-of-type(2):checked ~ .product-media-slides .product-media-slide--2,
+    [data-product-section] .product-media-toggle:nth-of-type(3):checked ~ .product-media-slides .product-media-slide--3,
+    [data-product-section] .product-media-toggle:nth-of-type(4):checked ~ .product-media-slides .product-media-slide--4,
+    [data-product-section] .product-media-toggle:nth-of-type(5):checked ~ .product-media-slides .product-media-slide--5,
+    [data-product-section] .product-media-toggle:nth-of-type(6):checked ~ .product-media-slides .product-media-slide--6,
+    [data-product-section] .product-media-toggle:nth-of-type(7):checked ~ .product-media-slides .product-media-slide--7,
+    [data-product-section] .product-media-toggle:nth-of-type(8):checked ~ .product-media-slides .product-media-slide--8,
+    [data-product-section] .product-media-slide.is-visible {
+      opacity: 1 !important;
+      visibility: visible !important;
+    }
+
+    [data-product-section] .product-media {
+      width: 100% !important;
+      height: 100% !important;
+      max-height: 100% !important;
+      object-fit: contain !important;
+      aspect-ratio: auto !important;
+      background: #080808 !important;
+    }
+
+    [data-product-section] .product-media-next {
+      position: absolute !important;
+      right: 18px !important;
+      bottom: 18px !important;
+      display: inline-flex !important;
+      align-items: center !important;
+      gap: .5rem !important;
+      padding: .65rem .85rem !important;
+      border: 1px solid rgba(5,5,5,.18) !important;
+      border-radius: 999px !important;
+      background: rgba(246,246,243,.82) !important;
+      color: #050505 !important;
+      text-transform: uppercase !important;
+      letter-spacing: .12em !important;
+      font-size: .68rem !important;
+      font-weight: 900 !important;
+      cursor: pointer !important;
+      backdrop-filter: blur(10px) !important;
+      box-shadow: 0 14px 44px rgba(0,0,0,.18) !important;
+      transition: transform .2s ease, background .2s ease !important;
+      z-index: 5 !important;
+    }
+
+    [data-product-section] .product-media-next:hover {
+      transform: translateY(-2px) !important;
+      background: #fff !important;
+    }
+
+    [data-product-section] .product-info-panel {
+      display: flex !important;
+      flex-direction: column !important;
+      justify-content: center !important;
+    }
+
+    [data-product-section] .product-title {
+      color: #f6f6f3 !important;
+      -webkit-text-fill-color: #f6f6f3 !important;
+      text-shadow: 0 0 34px rgba(236,231,220,.24) !important;
+      opacity: 1 !important;
+      filter: none !important;
+      font-size: clamp(3rem, 5.5vw, 5.8rem) !important;
+      margin-bottom: 1rem !important;
+    }
+
+    [data-product-section] .product-description {
+      max-height: 22vh !important;
+      overflow: hidden !important;
+    }
+  }
+</style>
 
 {% schema %}
 { "name": "Main product", "settings": [] }
