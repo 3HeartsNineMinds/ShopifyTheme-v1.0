@@ -23,7 +23,13 @@
       </nav>
     {% endif %}
 
-    <a class="site-brand site-brand--right" href="{{ routes.root_url }}" aria-label="Nine Minds home">NINE<span>MINDS</span></a>
+    <a class="site-brand site-brand--right" href="{{ routes.root_url }}" aria-label="Nine Minds home">
+      {% if settings.logo != blank %}
+        {{ settings.logo | image_url: width: 360 | image_tag: class: 'site-logo', loading: 'eager', alt: shop.name }}
+      {% else %}
+        NINE<span>MINDS</span>
+      {% endif %}
+    </a>
   </div>
 </header>
 
