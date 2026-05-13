@@ -1,1 +1,66 @@
-[{"name":"theme_info","theme_name":"Nine Minds","theme_version":"1.1.0","theme_author":"Nine Minds","theme_documentation_url":"https://shopify.dev/docs/storefronts/themes","theme_support_url":"https://shopify.dev/docs/storefronts/themes"},{"name":"Brand","settings":[{"type":"image_picker","id":"logo","label":"Logo"},{"type":"image_picker","id":"favicon","label":"Favicon"},{"type":"color","id":"color_background","label":"Background","default":"#050505"},{"type":"color","id":"color_text","label":"Text","default":"#f4f0ea"},{"type":"color","id":"color_accent","label":"Accent","default":"#ffffff"},{"type":"color","id":"color_muted","label":"Muted text","default":"#a7a19a"},{"type":"text","id":"instagram_handle","label":"Instagram handle","default":"_nineminds_"},{"type":"url","id":"instagram_url","label":"Instagram URL"},{"type":"text","id":"brand_tagline","label":"Brand tagline","default":"Luxury streetwear for the ones who move different."}]}]
+[
+  {
+    "name": "theme_info",
+    "theme_name": "Nine Minds",
+    "theme_version": "1.1.0",
+    "theme_author": "Nine Minds",
+    "theme_documentation_url": "https://shopify.dev/docs/storefronts/themes",
+    "theme_support_url": "https://shopify.dev/docs/storefronts/themes"
+  },
+  {
+    "name": "Brand",
+    "settings": [
+      {
+        "type": "image_picker",
+        "id": "logo",
+        "label": "Logo"
+      },
+      {
+        "type": "image_picker",
+        "id": "favicon",
+        "label": "Favicon"
+      },
+      {
+        "type": "color",
+        "id": "color_background",
+        "label": "Background",
+        "default": "#050505"
+      },
+      {
+        "type": "color",
+        "id": "color_text",
+        "label": "Text",
+        "default": "#f4f0ea"
+      },
+      {
+        "type": "color",
+        "id": "color_accent",
+        "label": "Accent",
+        "default": "#ffffff"
+      },
+      {
+        "type": "color",
+        "id": "color_muted",
+        "label": "Muted text",
+        "default": "#a7a19a"
+      },
+      {
+        "type": "text",
+        "id": "instagram_handle",
+        "label": "Instagram handle",
+        "default": "_nineminds_"
+      },
+      {
+        "type": "url",
+        "id": "instagram_url",
+        "label": "Instagram URL"
+      },
+      {
+        "type": "text",
+        "id": "brand_tagline",
+        "label": "Brand tagline",
+        "default": "Luxury streetwear for the ones who move different."
+      }
+    ]
+  }
+]
