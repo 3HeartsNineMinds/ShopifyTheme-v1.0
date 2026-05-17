@@ -44,5 +44,21 @@
     <main id="MainContent" class="main-content" role="main" tabindex="-1">
       {{ content_for_layout }}
     </main>
+
+    <style id="nine-minds-final-theme-overrides">
+      html[data-theme='light'] [data-product-section] .product-title {
+        color: #050505 !important;
+        -webkit-text-fill-color: #050505 !important;
+        text-shadow: none !important;
+        opacity: 1 !important;
+        filter: none !important;
+      }
+
+      html[data-theme='dark'] [data-product-section] .product-title {
+        color: #f6f6f3 !important;
+        -webkit-text-fill-color: #f6f6f3 !important;
+        text-shadow: 0 0 34px rgba(236,231,220,.24) !important;
+      }
+    </style>
   </body>
 </html>
