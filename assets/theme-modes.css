@@ -34,17 +34,20 @@ html[data-theme='dark'] .site-header{background:rgba(5,5,5,.82)!important}
 .cart-link--prominent,.instagram-brand-link,.theme-toggle{border-color:var(--mode-line)!important;background:var(--mode-panel)!important;color:var(--mode-text)!important}
 .cart-link--prominent strong{background:var(--mode-inverse)!important;color:var(--mode-inverse-text)!important}
 
-.theme-toggle{display:inline-grid;grid-template-columns:1fr 1fr;align-items:center;gap:.12rem;width:46px;height:46px;border:1px solid;border-radius:999px;padding:.22rem;cursor:pointer;transition:transform .2s ease,background .2s ease,border-color .2s ease}
+.theme-toggle{display:inline-grid!important;grid-template-columns:1fr 1fr;align-items:center;gap:.12rem;width:46px;height:46px;border:1px solid;border-radius:999px;padding:.22rem;cursor:pointer;transition:transform .2s ease,background .2s ease,border-color .2s ease;appearance:none;-webkit-appearance:none;position:relative;z-index:3}
 .theme-toggle:hover{transform:translateY(-2px)}
-.theme-toggle span{display:grid;place-items:center;width:100%;height:100%;border-radius:999px;font-size:.72rem;font-weight:900;line-height:1}
-html[data-theme='light'] .theme-toggle__sun,:root .theme-toggle__sun{background:var(--mode-inverse)!important;color:var(--mode-inverse-text)!important}
+.theme-toggle span{display:grid;place-items:center;width:100%;height:100%;border-radius:999px;font-size:.72rem;font-weight:900;line-height:1;pointer-events:none}
+html[data-theme='light'] .theme-toggle__sun{background:var(--mode-inverse)!important;color:var(--mode-inverse-text)!important}
+html[data-theme='light'] .theme-toggle__moon{background:transparent!important;color:var(--mode-text)!important}
 html[data-theme='dark'] .theme-toggle__moon{background:var(--mode-inverse)!important;color:var(--mode-inverse-text)!important}
 html[data-theme='dark'] .theme-toggle__sun{background:transparent!important;color:var(--mode-text)!important}
 
 .button,.nm-btn{background:var(--mode-inverse)!important;color:var(--mode-inverse-text)!important;border-color:var(--mode-inverse)!important}
 .button--secondary{background:transparent!important;color:var(--mode-text)!important;border-color:var(--mode-line)!important}
 .card,.product-info-panel,.product-media-panel,.cart-summary,.empty-cart-panel{background:var(--mode-panel)!important;border-color:var(--mode-line)!important;box-shadow:0 28px 80px rgba(0,0,0,.12)!important}
-.section-title,.product-title,.product-price,.cart-summary__price,.variant-picker legend{color:var(--mode-text)!important;-webkit-text-fill-color:var(--mode-text)!important;text-shadow:none!important}
+.section-title,.product-price,.cart-summary__price,.variant-picker legend{color:var(--mode-text)!important;-webkit-text-fill-color:var(--mode-text)!important;text-shadow:none!important}
+.product-title{color:#050505!important;-webkit-text-fill-color:#050505!important;text-shadow:none!important;filter:none!important;opacity:1!important}
+html[data-theme='dark'] .product-title{color:#f6f6f3!important;-webkit-text-fill-color:#f6f6f3!important;text-shadow:0 0 34px rgba(236,231,220,.24)!important}
 .section-kicker,.price,.rte,.product-description,.cart-summary__label,.cart-summary__note,.product-card__tag{color:var(--mode-muted)!important}
 .input,.nm-waitlist-input{background:var(--mode-panel-strong)!important;color:var(--mode-text)!important;border-color:var(--mode-line)!important}
 .input::placeholder,.nm-waitlist-input::placeholder{color:var(--mode-muted)!important}
@@ -80,5 +83,6 @@ html[data-theme='dark'] .product-media-next{background:rgba(246,246,243,.82)!imp
   html[data-theme='dark'] .site-header{background:rgba(5,5,5,.92)!important}
   .theme-toggle{width:36px!important;height:36px!important;min-width:36px!important}
   .theme-toggle span{font-size:.58rem!important}
-  [data-product-section] .product-title{color:var(--mode-text)!important;-webkit-text-fill-color:var(--mode-text)!important;text-shadow:none!important}
+  [data-product-section] .product-title{color:#050505!important;-webkit-text-fill-color:#050505!important;text-shadow:none!important}
+  html[data-theme='dark'] [data-product-section] .product-title{color:#f6f6f3!important;-webkit-text-fill-color:#f6f6f3!important;text-shadow:0 0 24px rgba(236,231,220,.18)!important}
 }
