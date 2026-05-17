@@ -1,5 +1,5 @@
 <!doctype html>
-<html class="no-js template-{{ template.name }}" lang="{{ request.locale.iso_code }}">
+<html class="no-js template-{{ template.name }}" lang="{{ request.locale.iso_code }}" data-theme="light">
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -20,11 +20,19 @@
       <meta name="description" content="{{ page_description | escape }}">
     {% endif %}
 
+    <script>
+      (function () {
+        var savedTheme = localStorage.getItem('nine-minds-theme');
+        document.documentElement.setAttribute('data-theme', savedTheme === 'dark' ? 'dark' : 'light');
+      })();
+    </script>
+
     {{ content_for_header }}
 
     {{ 'base.css' | asset_url | stylesheet_tag }}
     {{ 'desktop-lock.css' | asset_url | stylesheet_tag }}
     {{ 'mobile-fixes.css' | asset_url | stylesheet_tag }}
+    {{ 'theme-modes.css' | asset_url | stylesheet_tag }}
     <script src="{{ 'theme.js' | asset_url }}" defer="defer"></script>
   </head>
 
