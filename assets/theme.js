@@ -1,5 +1,27 @@
 document.documentElement.classList.remove('no-js');
 
+const setThemeMode = (theme) => {
+  const nextTheme = theme === 'dark' ? 'dark' : 'light';
+  document.documentElement.setAttribute('data-theme', nextTheme);
+  localStorage.setItem('nine-minds-theme', nextTheme);
+
+  document.querySelectorAll('[data-theme-toggle]').forEach((button) => {
+    const isDark = nextTheme === 'dark';
+    button.setAttribute('aria-pressed', String(isDark));
+    button.setAttribute('aria-label', isDark ? 'Switch to light mode' : 'Switch to dark mode');
+  });
+};
+
+setThemeMode(localStorage.getItem('nine-minds-theme') || 'light');
+
+document.addEventListener('click', (event) => {
+  const toggle = event.target.closest('[data-theme-toggle]');
+  if (!toggle) return;
+
+  const currentTheme = document.documentElement.getAttribute('data-theme') || 'light';
+  setThemeMode(currentTheme === 'dark' ? 'light' : 'dark');
+});
+
 document.addEventListener('change', (event) => {
   const input = event.target;
   if (!(input instanceof HTMLInputElement)) return;
