@@ -1,23 +1,54 @@
 document.documentElement.classList.remove('no-js');
 
-const setThemeMode = (theme) => {
-  const nextTheme = theme === 'dark' ? 'dark' : 'light';
-  document.documentElement.setAttribute('data-theme', nextTheme);
-  localStorage.setItem('nine-minds-theme', nextTheme);
+const readStoredTheme = () => {
+  try {
+    return window.localStorage.getItem('nine-minds-theme');
+  } catch (error) {
+    return null;
+  }
+};
 
+const writeStoredTheme = (theme) => {
+  try {
+    window.localStorage.setItem('nine-minds-theme', theme);
+  } catch (error) {
+    // Storage can be unavailable in some browsers/modes. The visual toggle still works for the current page.
+  }
+};
+
+const updateThemeToggleButtons = (theme) => {
   document.querySelectorAll('[data-theme-toggle]').forEach((button) => {
-    const isDark = nextTheme === 'dark';
+    const isDark = theme === 'dark';
     button.setAttribute('aria-pressed', String(isDark));
     button.setAttribute('aria-label', isDark ? 'Switch to light mode' : 'Switch to dark mode');
+    button.dataset.currentTheme = theme;
   });
 };
 
-setThemeMode(localStorage.getItem('nine-minds-theme') || 'light');
+const setThemeMode = (theme) => {
+  const nextTheme = theme === 'dark' ? 'dark' : 'light';
+  document.documentElement.setAttribute('data-theme', nextTheme);
+  document.body?.setAttribute('data-theme', nextTheme);
+  writeStoredTheme(nextTheme);
+  updateThemeToggleButtons(nextTheme);
+};
+
+const initThemeMode = () => {
+  const existingTheme = document.documentElement.getAttribute('data-theme');
+  setThemeMode(readStoredTheme() || existingTheme || 'light');
+};
+
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', initThemeMode);
+} else {
+  initThemeMode();
+}
 
 document.addEventListener('click', (event) => {
   const toggle = event.target.closest('[data-theme-toggle]');
   if (!toggle) return;
 
+  event.preventDefault();
   const currentTheme = document.documentElement.getAttribute('data-theme') || 'light';
   setThemeMode(currentTheme === 'dark' ? 'light' : 'dark');
 });
