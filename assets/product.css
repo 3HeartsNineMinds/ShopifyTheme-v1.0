@@ -1,0 +1,180 @@
+/* ==========================================================
+   product.css - styles for the main-product section only.
+
+   Loaded by sections/main-product.liquid, so it is fetched on product
+   pages only - not site-wide like the four assets in theme.liquid.
+   Scoped to [data-product-section]; mostly sold-out variant states.
+   ========================================================== */
+
+[data-product-section] .variant-option--sold-out .variant-option__title,
+[data-product-section] .variant-option--sold-out .variant-option__price {
+  text-decoration: none !important;
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+  position: relative !important;
+  z-index: 4 !important;
+  text-shadow: 0 1px 10px rgba(0,0,0,.45) !important;
+}
+
+[data-product-section] .variant-option--sold-out .variant-option__content {
+  position: relative !important;
+  isolation: isolate !important;
+  overflow: hidden !important;
+  opacity: .92 !important;
+  cursor: not-allowed !important;
+  border-color: rgba(255,255,255,.28) !important;
+  background: radial-gradient(circle at 18% 72%, rgba(0,0,0,.98) 0 9px, transparent 10px), radial-gradient(circle at 23% 63%, rgba(0,0,0,.82) 0 5px, transparent 6px), radial-gradient(circle at 75% 29%, rgba(0,0,0,.95) 0 13px, transparent 14px), radial-gradient(circle at 84% 41%, rgba(0,0,0,.72) 0 5px, transparent 6px), radial-gradient(circle at 61% 77%, rgba(0,0,0,.58) 0 4px, transparent 5px), linear-gradient(135deg, #34322f 0%, #151515 100%) !important;
+  box-shadow: inset 0 0 0 1px rgba(255,255,255,.12), 0 16px 44px rgba(0,0,0,.34) !important;
+}
+
+[data-product-section] .variant-option--sold-out .variant-option__content::before {
+  content: "SOLD OUT" !important;
+  position: absolute !important;
+  top: 7px !important;
+  right: 8px !important;
+  z-index: 6 !important;
+  pointer-events: none !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  padding: .14rem .34rem !important;
+  border: 1px solid rgba(255,255,255,.62) !important;
+  border-radius: 999px !important;
+  background: rgba(0,0,0,.38) !important;
+  color: #ffffff !important;
+  font-size: .46rem !important;
+  line-height: 1 !important;
+  letter-spacing: .11em !important;
+  font-weight: 900 !important;
+  backdrop-filter: blur(4px) !important;
+}
+
+[data-product-section] .variant-option--sold-out .variant-option__content::after {
+  content: "" !important;
+  position: absolute !important;
+  z-index: 2 !important;
+  pointer-events: none !important;
+  width: 118px !important;
+  height: 74px !important;
+  left: -28px !important;
+  bottom: -18px !important;
+  border-radius: 50% 58% 44% 62% / 58% 43% 62% 47% !important;
+  transform: rotate(24deg) !important;
+  background: rgba(0,0,0,.92) !important;
+  filter: blur(.2px) !important;
+  box-shadow: 34px -38px 0 -31px #020202, 62px -21px 0 -37px #020202, 82px -53px 0 -41px #020202, 113px -14px 0 -45px #020202, 96px 23px 0 -39px #020202, 28px 62px 0 -43px #020202, 132px -60px 0 -50px #020202, 146px 3px 0 -55px #020202 !important;
+}
+
+/* ==========================================================
+   DESKTOP: 881px AND ABOVE
+   ========================================================== */
+@media (min-width: 881px) {
+  html,
+  body {
+    overflow: hidden !important;
+  }
+  .main-content:has([data-product-section]) {
+    height: 100vh !important;
+    overflow: hidden !important;
+  }
+  [data-product-section].product-section {
+    height: 100vh !important;
+    max-height: 100vh !important;
+    overflow: hidden !important;
+    padding-top: 96px !important;
+    padding-bottom: 24px !important;
+  }
+  [data-product-section] .product-layout {
+    height: calc(100vh - 120px) !important;
+    align-items: stretch !important;
+  }
+  [data-product-section] .product-media-panel,
+  [data-product-section] .product-info-panel {
+    height: 100% !important;
+    overflow: hidden !important;
+  }
+  [data-product-section] .product-media-gallery,
+  [data-product-section] .product-media-slides {
+    position: relative !important;
+    height: 100% !important;
+    overflow: hidden !important;
+  }
+  [data-product-section] .product-media-toggle {
+    position: absolute !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
+  }
+  [data-product-section] .product-media-slide {
+    position: absolute !important;
+    inset: 0 !important;
+    display: grid !important;
+    place-items: center !important;
+    opacity: 0 !important;
+    visibility: hidden !important;
+    transition: opacity .3s ease, visibility .3s ease !important;
+  }
+  [data-product-section] .product-media-toggle:nth-of-type(1):checked ~ .product-media-slides .product-media-slide--1,
+  [data-product-section] .product-media-toggle:nth-of-type(2):checked ~ .product-media-slides .product-media-slide--2,
+  [data-product-section] .product-media-toggle:nth-of-type(3):checked ~ .product-media-slides .product-media-slide--3,
+  [data-product-section] .product-media-toggle:nth-of-type(4):checked ~ .product-media-slides .product-media-slide--4,
+  [data-product-section] .product-media-toggle:nth-of-type(5):checked ~ .product-media-slides .product-media-slide--5,
+  [data-product-section] .product-media-toggle:nth-of-type(6):checked ~ .product-media-slides .product-media-slide--6,
+  [data-product-section] .product-media-toggle:nth-of-type(7):checked ~ .product-media-slides .product-media-slide--7,
+  [data-product-section] .product-media-toggle:nth-of-type(8):checked ~ .product-media-slides .product-media-slide--8,
+  [data-product-section] .product-media-slide.is-visible {
+    opacity: 1 !important;
+    visibility: visible !important;
+  }
+  [data-product-section] .product-media {
+    width: 100% !important;
+    height: 100% !important;
+    max-height: 100% !important;
+    object-fit: contain !important;
+    aspect-ratio: auto !important;
+    background: #080808 !important;
+  }
+  [data-product-section] .product-media-next {
+    position: absolute !important;
+    right: 18px !important;
+    bottom: 18px !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: .5rem !important;
+    padding: .65rem .85rem !important;
+    border: 1px solid rgba(5,5,5,.18) !important;
+    border-radius: 999px !important;
+    background: rgba(246,246,243,.82) !important;
+    color: #050505 !important;
+    text-transform: uppercase !important;
+    letter-spacing: .12em !important;
+    font-size: .68rem !important;
+    font-weight: 900 !important;
+    cursor: pointer !important;
+    backdrop-filter: blur(10px) !important;
+    box-shadow: 0 14px 44px rgba(0,0,0,.18) !important;
+    transition: transform .2s ease, background .2s ease !important;
+    z-index: 5 !important;
+  }
+  [data-product-section] .product-media-next:hover {
+    transform: translateY(-2px) !important;
+    background: #fff !important;
+  }
+  [data-product-section] .product-info-panel {
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: center !important;
+  }
+  [data-product-section] .product-title {
+    color: #f6f6f3 !important;
+    -webkit-text-fill-color: #f6f6f3 !important;
+    text-shadow: 0 0 34px rgba(236,231,220,.24) !important;
+    opacity: 1 !important;
+    filter: none !important;
+    font-size: clamp(3rem, 5.5vw, 5.8rem) !important;
+    margin-bottom: 1rem !important;
+  }
+  [data-product-section] .product-description {
+    max-height: 22vh !important;
+    overflow: hidden !important;
+  }
+}

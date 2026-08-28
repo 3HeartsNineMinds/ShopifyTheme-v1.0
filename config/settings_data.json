@@ -10,10 +10,10 @@
 {
   "current": {
     "logo": "shopify://shop_images/nine_minds_logo.png",
-    "color_background": "#050505",
-    "color_text": "#f4f0ea",
-    "color_accent": "#ffffff",
-    "color_muted": "#a7a19a",
+    "color_background": "#ffffff",
+    "color_text": "#050505",
+    "color_accent": "#050505",
+    "color_muted": "#5a5a5a",
     "instagram_handle": "_nineminds_",
     "brand_tagline": "Luxury streetwear for the ones who move different.",
     "content_for_index": []
