@@ -6,7 +6,21 @@
   <div class="nm-hero">
     <div class="nm-hero__copy">
       <div class="nm-eyebrow"><span class="nm-dot"></span>{{ section.settings.eyebrow }}</div>
-      <h1>NINE<br><span>MINDS</span></h1>
+      {%- liquid
+        # Wordmark artwork. The theme-editor setting wins; otherwise fall back to
+        # the file of this name in Shopify admin under Content > Files.
+        assign wordmark = section.settings.wordmark
+        assign wordmark_file_url = 'NineMindsLogoText.png' | file_url
+      -%}
+      <h1 class="nm-wordmark">
+        {%- if wordmark != blank -%}
+          {{ wordmark | image_url: width: 1200 | image_tag: class: 'nm-wordmark__image', loading: 'eager', alt: shop.name }}
+        {%- elsif wordmark_file_url != blank -%}
+          <img class="nm-wordmark__image" src="{{ wordmark_file_url }}" alt="{{ shop.name }}" loading="eager">
+        {%- else -%}
+          NINE<br><span>MINDS</span>
+        {%- endif -%}
+      </h1>
       <p class="nm-lead">{{ section.settings.lead }}</p>
 
       {% form 'customer', class: 'nm-waitlist-form' %}
@@ -30,7 +44,6 @@
           <p class="nm-form-message nm-form-message--error">{{ form.errors | default_errors }}</p>
         {% endif %}
       {% endform %}
-
     </div>
 
     <div class="nm-visual" aria-label="Nine Minds first drop product">
@@ -65,6 +78,7 @@
 {
   "name": "Nine Minds landing",
   "settings": [
+    { "type": "image_picker", "id": "wordmark", "label": "Wordmark image (white artwork)", "info": "Defaults to NineMindsLogoText.png from Content > Files." },
     { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "ORDER NOW / FIRST DROP" },
     { "type": "textarea", "id": "lead", "label": "Lead text", "default": "A monochrome clothing brand for the ones who live between moods. Clean silhouettes, dark visuals, octopus energy and a premium streetwear feel." },
     { "type": "text", "id": "primary_label", "label": "Updates button label", "default": "Sign up to updates" }

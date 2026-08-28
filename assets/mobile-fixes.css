@@ -89,12 +89,47 @@
     width:17px!important;
     height:17px!important;
   }
+  /* The mobile header is position:sticky, so it occupies flow space and the
+     hero does not need to reserve room for it. Zero padding puts the eyebrow
+     directly under the header separator. */
   .template-index .nm-hero {
-    padding-top:5.4rem!important;
+    padding-top:0!important;
+  }
+  /* Mobile only: move the signup below the product visual.
+     .nm-hero__copy becomes display:contents so its children are promoted into
+     the hero grid and can be ordered against .nm-visual. Desktop is untouched -
+     there the form stays nested inside the copy column exactly as before. */
+  .template-index .nm-hero__copy {
+    display:contents!important;
+  }
+  .template-index .nm-hero {
+    row-gap:0!important;
+  }
+  .template-index .nm-eyebrow,
+  .template-index .nm-wordmark,
+  .template-index .nm-lead,
+  .template-index .nm-waitlist-form {
+    position:relative!important;
+    z-index:1!important;
+  }
+  .template-index .nm-eyebrow {
+    order:1!important;
+    justify-self:start!important;
+  }
+  .template-index .nm-wordmark {
+    order:2!important;
+  }
+  .template-index .nm-lead {
+    order:3!important;
+  }
+  .template-index .nm-visual {
+    order:4!important;
   }
   .template-index .nm-waitlist-form {
+    order:5!important;
     max-width:none!important;
     width:100%!important;
+    margin-top:1.75rem!important;
     margin-bottom:2rem!important;
   }
   .template-index .nm-waitlist-row {

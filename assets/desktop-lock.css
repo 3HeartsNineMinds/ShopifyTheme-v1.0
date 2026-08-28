@@ -22,7 +22,7 @@
     overflow:hidden;
   }
   .template-index .nm-hero {
-    padding-top:96px;
+    padding-top:var(--site-header-h);
     padding-bottom:34px;
   }
   .template-index .nm-visual {

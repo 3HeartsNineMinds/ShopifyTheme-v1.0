@@ -18,6 +18,10 @@
   --surface:#0d0d0f;
   --line:rgba(255,255,255,.12);
   --page-width:1240px;
+  /* Height of the fixed .site-header: 1rem padding top+bottom + 56px logo +
+     1px border. The hero pads by exactly this so its first line sits flush
+     under the header separator. Overridden for mobile in mobile-fixes.css. */
+  --site-header-h:89px;
 }
 
 * {
@@ -649,7 +653,7 @@ body {
   grid-template-columns:1.05fr .95fr;
   gap:44px;
   align-items:center;
-  padding:120px clamp(20px,5vw,84px) 70px;
+  padding:var(--site-header-h) clamp(20px,5vw,84px) 70px;
   position:relative;
   overflow:hidden;
 }
@@ -670,6 +674,12 @@ body {
 .nm-visual {
   position:relative;
   z-index:1;
+}
+
+/* Top-aligned so the eyebrow sits directly beneath the header separator.
+   .nm-visual keeps the grid's align-items:center. */
+.nm-hero__copy {
+  align-self:start;
 }
 
 .nm-eyebrow {
@@ -698,6 +708,18 @@ body {
   letter-spacing:-.08em;
   margin:0 0 26px;
   font-weight:900;
+}
+
+.nm-wordmark {
+  margin:0 0 26px;
+  line-height:0;
+}
+
+.nm-wordmark__image {
+  display:block;
+  width:min(100%,560px);
+  height:auto;
+  transition:filter .25s ease;
 }
 
 .nm-hero h1 span {
@@ -960,7 +982,7 @@ body {
     max-width:none;
   }
   .nm-hero {
-    padding-top:105px;
+    padding-top:var(--site-header-h);
   }
   .nm-visual {
     min-height:520px;
