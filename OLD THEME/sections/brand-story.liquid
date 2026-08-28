@@ -1,0 +1,30 @@
+<section class="section section--surface">
+  <div class="page-width brand-grid">
+    <div class="brand-panel">
+      <p class="section-kicker">{{ section.settings.kicker }}</p>
+      <h2 class="brand-statement">{{ section.settings.heading }}</h2>
+    </div>
+    <div class="brand-panel brand-panel--quiet">
+      <div>
+        <p class="section-intro">{{ section.settings.text }}</p>
+      </div>
+      <ul class="brand-list">
+        <li>Quiet silhouettes. Heavy presence.</li>
+        <li>Minimal graphics with meaning underneath.</li>
+        <li>Built around identity, discipline and depth.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Brand story",
+  "settings": [
+    { "type": "text", "id": "kicker", "label": "Kicker", "default": "The mindset" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Not loud. Not empty. Nine Minds lives in the detail." },
+    { "type": "textarea", "id": "text", "label": "Text", "default": "Nine Minds is made for people who carry more than they show. A premium streetwear identity shaped through shadow, control and subtle symbolism." }
+  ],
+  "presets": [{ "name": "Brand story" }]
+}
+{% endschema %}

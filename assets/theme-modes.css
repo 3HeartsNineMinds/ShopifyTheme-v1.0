@@ -75,73 +75,25 @@ html[data-theme='dark'] .site-header {
 }
 
 .cart-link--prominent,
-.instagram-brand-link,
-.theme-toggle {
+.instagram-brand-link {
   border-color:var(--mode-line)!important;
   background:var(--mode-panel)!important;
   color:var(--mode-text)!important;
 }
 
+/* The centre logo doubles as the light/dark switch, so it flips with the
+   theme: a dark logo artwork becomes light-on-dark when data-theme=dark. */
+.site-brand--center {
+  color:var(--mode-text)!important;
+}
+
+html[data-theme='dark'] .site-logo {
+  filter:invert(1)!important;
+}
+
 .cart-link--prominent strong {
   background:var(--mode-inverse)!important;
   color:var(--mode-inverse-text)!important;
-}
-
-/* ==========================================================
-   LIGHT/DARK TOGGLE BUTTON
-   ========================================================== */
-.theme-toggle {
-  display:inline-grid!important;
-  grid-template-columns:1fr 1fr;
-  align-items:center;
-  gap:.12rem;
-  width:46px;
-  height:46px;
-  border:1px solid;
-  border-radius:999px;
-  padding:.22rem;
-  cursor:pointer;
-  transition:transform .2s ease,background .2s ease,border-color .2s ease;
-  appearance:none;
-  -webkit-appearance:none;
-  position:relative;
-  z-index:3;
-}
-
-.theme-toggle:hover {
-  transform:translateY(-2px);
-}
-
-.theme-toggle span {
-  display:grid;
-  place-items:center;
-  width:100%;
-  height:100%;
-  border-radius:999px;
-  font-size:.72rem;
-  font-weight:900;
-  line-height:1;
-  pointer-events:none;
-}
-
-html[data-theme='light'] .theme-toggle__sun {
-  background:var(--mode-inverse)!important;
-  color:var(--mode-inverse-text)!important;
-}
-
-html[data-theme='light'] .theme-toggle__moon {
-  background:transparent!important;
-  color:var(--mode-text)!important;
-}
-
-html[data-theme='dark'] .theme-toggle__moon {
-  background:var(--mode-inverse)!important;
-  color:var(--mode-inverse-text)!important;
-}
-
-html[data-theme='dark'] .theme-toggle__sun {
-  background:transparent!important;
-  color:var(--mode-text)!important;
 }
 
 /* ==========================================================
@@ -256,7 +208,8 @@ html[data-theme='dark'] .product-title {
 /* ==========================================================
    LANDING PAGE (nm-*)
    ========================================================== */
-.nm-landing {
+.nm-landing,
+.nm-surface {
   --bg:var(--mode-bg)!important;
   --text:var(--mode-text)!important;
   --muted:var(--mode-muted)!important;
@@ -359,14 +312,6 @@ html[data-theme='dark'] .product-media-next {
   }
   html[data-theme='dark'] .site-header {
     background:rgba(5,5,5,.92)!important;
-  }
-  .theme-toggle {
-    width:36px!important;
-    height:36px!important;
-    min-width:36px!important;
-  }
-  .theme-toggle span {
-    font-size:.58rem!important;
   }
   [data-product-section] .product-title {
     color:#050505!important;

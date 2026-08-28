@@ -1,3 +1,11 @@
+{%- liquid
+  # Prefer the theme's Logo setting, then fall back to the logo uploaded in
+  # Shopify admin under Settings > Brand, then to the wordmark.
+  assign brand_logo = settings.logo
+  if brand_logo == blank
+    assign brand_logo = shop.brand.logo
+  endif
+-%}
 <header class="site-header">
   <div class="page-width site-header__inner">
     <div class="site-nav site-actions site-actions--left">
@@ -10,32 +18,32 @@
       </a>
     </div>
 
-    <a class="site-brand site-brand--center" href="{{ routes.root_url }}" aria-label="Nine Minds home">
-      {% if settings.logo != blank %}
-        {{ settings.logo | image_url: width: 240 | image_tag: class: 'site-logo', loading: 'eager', alt: shop.name }}
+    {%- comment -%}
+      The centre logo is the light/dark switch. theme.js listens for
+      [data-theme-toggle] and flips html[data-theme]; the logo inverts in CSS.
+    {%- endcomment -%}
+    <button class="site-brand site-brand--center" type="button" data-theme-toggle aria-pressed="false" aria-label="Switch to dark mode">
+      {% if brand_logo != blank %}
+        {{ brand_logo | image_url: width: 240 | image_tag: class: 'site-logo', loading: 'eager', alt: shop.name }}
       {% else %}
         NINE<span>MINDS</span>
       {% endif %}
-    </a>
+    </button>
 
     <div class="site-nav site-actions site-actions--right">
-      {% if section.settings.menu != blank %}
-        <nav class="site-nav site-nav--inline" aria-label="Primary navigation">
+      <nav class="site-nav site-nav--inline" aria-label="Primary navigation">
+        <a href="{{ routes.root_url }}">Home</a>
+        {% if section.settings.menu != blank %}
           {% for link in section.settings.menu.links %}
             <a href="{{ link.url }}">{{ link.title }}</a>
           {% endfor %}
-        </nav>
-      {% endif %}
+        {% endif %}
+      </nav>
 
       <a class="cart-link cart-link--prominent" href="{{ routes.cart_url }}" aria-label="View cart with {{ cart.item_count }} items">
         <span>Cart</span>
         <strong>{{ cart.item_count }}</strong>
       </a>
-
-      <button class="theme-toggle" type="button" data-theme-toggle aria-label="Switch to dark mode" aria-pressed="false">
-        <span class="theme-toggle__sun" aria-hidden="true">☼</span>
-        <span class="theme-toggle__moon" aria-hidden="true">●</span>
-      </button>
     </div>
   </div>
 </header>

@@ -1,0 +1,30 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "nine_minds_landing": {
+      "type": "nine-minds-landing",
+      "settings": {
+        "eyebrow": "ORDER NOW / FIRST DROP",
+        "lead": "A monochrome clothing brand for the ones who live between moods. Clean silhouettes, dark visuals, octopus energy and a premium streetwear feel.",
+        "primary_label": "Sign up to updates",
+        "stat_one_value": "3.5K",
+        "stat_one_label": "30 day views",
+        "stat_two_value": "9",
+        "stat_two_label": "Launch posts",
+        "stat_three_value": "01",
+        "stat_three_label": "Signature hoodie"
+      }
+    }
+  },
+  "order": [
+    "nine_minds_landing"
+  ]
+}

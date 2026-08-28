@@ -1,0 +1,64 @@
+<!doctype html>
+<html class="no-js template-{{ template.name }}" lang="{{ request.locale.iso_code }}" data-theme="light">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="theme-color" content="{{ settings.color_accent }}">
+
+    <link rel="canonical" href="{{ canonical_url }}">
+
+    {%- if settings.favicon != blank -%}
+      <link rel="icon" type="image/png" href="{{ settings.favicon | image_url: width: 32, height: 32 }}">
+    {%- endif -%}
+
+    <title>
+      {{ page_title }}{% if current_tags %} &ndash; tagged "{{ current_tags | join: ', ' }}"{% endif %}{% if current_page != 1 %} &ndash; Page {{ current_page }}{% endif %}{% unless page_title contains shop.name %} &ndash; {{ shop.name }}{% endunless %}
+    </title>
+
+    {% if page_description %}
+      <meta name="description" content="{{ page_description | escape }}">
+    {% endif %}
+
+    <script>
+      (function () {
+        var savedTheme = localStorage.getItem('nine-minds-theme');
+        document.documentElement.setAttribute('data-theme', savedTheme === 'dark' ? 'dark' : 'light');
+      })();
+    </script>
+
+    {{ content_for_header }}
+
+    {{ 'base.css' | asset_url | stylesheet_tag }}
+    {{ 'desktop-lock.css' | asset_url | stylesheet_tag }}
+    {{ 'mobile-fixes.css' | asset_url | stylesheet_tag }}
+    {{ 'theme-modes.css' | asset_url | stylesheet_tag }}
+    <script src="{{ 'theme.js' | asset_url }}" defer="defer"></script>
+  </head>
+
+  <body>
+    <a class="skip-link" href="#MainContent">Skip to content</a>
+
+    {% sections 'header-group' %}
+
+    <main id="MainContent" class="main-content" role="main" tabindex="-1">
+      {{ content_for_layout }}
+    </main>
+
+    <style id="nine-minds-final-theme-overrides">
+      html[data-theme='light'] [data-product-section] .product-title {
+        color: #050505 !important;
+        -webkit-text-fill-color: #050505 !important;
+        text-shadow: none !important;
+        opacity: 1 !important;
+        filter: none !important;
+      }
+
+      html[data-theme='dark'] [data-product-section] .product-title {
+        color: #f6f6f3 !important;
+        -webkit-text-fill-color: #f6f6f3 !important;
+        text-shadow: 0 0 34px rgba(236,231,220,.24) !important;
+      }
+    </style>
+  </body>
+</html>

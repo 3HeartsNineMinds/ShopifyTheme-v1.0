@@ -126,11 +126,31 @@ body {
   font-size:clamp(1.45rem,3vw,2.5rem);
 }
 
+/* The centre logo is a <button>: it toggles light/dark (see assets/theme.js).
+   These declarations strip the default button chrome so it still reads as a
+   logo, not a control. */
 .site-brand--center {
   display:inline-flex;
   align-items:center;
   justify-content:center;
   line-height:1;
+  padding:0;
+  margin:0;
+  border:0;
+  background:none;
+  font-family:inherit;
+  font-weight:900;
+  letter-spacing:-.04em;
+  color:inherit;
+  cursor:pointer;
+  -webkit-appearance:none;
+  appearance:none;
+}
+
+.site-brand--center:focus-visible {
+  outline:2px solid currentColor;
+  outline-offset:6px;
+  border-radius:.5rem;
 }
 
 .site-actions--left {
@@ -144,6 +164,7 @@ body {
   max-width:56px;
   max-height:56px;
   object-fit:contain;
+  transition:filter .25s ease;
 }
 
 .site-nav--inline {
@@ -596,6 +617,21 @@ body {
   color:var(--text);
   min-height:100vh;
   overflow:hidden;
+}
+
+/* .nm-surface is the landing page's backdrop, reusable on other templates
+   (product pages use it) so their backgrounds match. Deliberately without
+   .nm-landing's overflow:hidden, which would clip the product gallery. */
+.nm-surface {
+  --bg:#050505;
+  --text:#f6f6f3;
+  --muted:#a7a7a7;
+  --line:rgba(255,255,255,.12);
+  --cream:#ece7dc;
+  background:var(--bg);
+  color:var(--text);
+  min-height:100vh;
+  position:relative;
 }
 
 .nm-grain {
