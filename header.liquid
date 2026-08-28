@@ -1,0 +1,50 @@
+<header class="site-header">
+  <div class="page-width site-header__inner">
+    <div class="site-nav site-actions site-actions--left">
+      <a class="instagram-brand-link" href="{{ settings.instagram_url | default: 'https://www.instagram.com/_nineminds_/' }}" target="_blank" rel="noopener" aria-label="Open Nine Minds on Instagram">
+        <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+          <rect x="3" y="3" width="18" height="18" rx="5" fill="none" stroke="currentColor" stroke-width="1.8"/>
+          <circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="1.8"/>
+          <circle cx="17.2" cy="6.8" r="1.2" fill="currentColor"/>
+        </svg>
+      </a>
+    </div>
+
+    <a class="site-brand site-brand--center" href="{{ routes.root_url }}" aria-label="Nine Minds home">
+      {% if settings.logo != blank %}
+        {{ settings.logo | image_url: width: 240 | image_tag: class: 'site-logo', loading: 'eager', alt: shop.name }}
+      {% else %}
+        NINE<span>MINDS</span>
+      {% endif %}
+    </a>
+
+    <div class="site-nav site-actions site-actions--right">
+      {% if section.settings.menu != blank %}
+        <nav class="site-nav site-nav--inline" aria-label="Primary navigation">
+          {% for link in section.settings.menu.links %}
+            <a href="{{ link.url }}">{{ link.title }}</a>
+          {% endfor %}
+        </nav>
+      {% endif %}
+
+      <a class="cart-link cart-link--prominent" href="{{ routes.cart_url }}" aria-label="View cart with {{ cart.item_count }} items">
+        <span>Cart</span>
+        <strong>{{ cart.item_count }}</strong>
+      </a>
+
+      <button class="theme-toggle" type="button" data-theme-toggle aria-label="Switch to dark mode" aria-pressed="false">
+        <span class="theme-toggle__sun" aria-hidden="true">☼</span>
+        <span class="theme-toggle__moon" aria-hidden="true">●</span>
+      </button>
+    </div>
+  </div>
+</header>
+
+{% schema %}
+{
+  "name": "Header",
+  "settings": [
+    { "type": "link_list", "id": "menu", "label": "Menu" }
+  ]
+}
+{% endschema %}
