@@ -9,6 +9,13 @@
 /* ==========================================================
    TOKENS & RESET
    ========================================================== */
+/* Cross-document view transitions: the browser morphs the landing card's photo
+   into the product page's photo (they share a view-transition-name below).
+   Browsers without support just navigate normally. */
+@view-transition {
+  navigation: auto;
+}
+
 :root {
   --color-background:{{ settings.color_background }};
   --color-text:{{ settings.color_text }};
@@ -449,6 +456,10 @@ body {
   box-shadow:0 28px 80px rgba(0,0,0,.42);
 }
 
+.product-media-slide--1 .product-media {
+  view-transition-name:nm-product;
+}
+
 .product-media {
   border-radius:1.25rem;
   aspect-ratio:4/5;
@@ -735,7 +746,7 @@ body {
   align-items:center;
   justify-content:space-between;
   gap:clamp(14px,2.4vh,26px);
-  padding:calc(var(--site-header-h) + clamp(10px,2vh,22px)) clamp(16px,5vw,84px) calc(var(--site-footer-h) + clamp(10px,2vh,22px));
+  padding:calc(var(--site-header-h) + clamp(10px,2vh,22px)) clamp(16px,5vw,84px) calc(var(--site-footer-h) + clamp(2px,.6vh,8px));
 }
 
 /* ---- Rotating strapline ---------------------------------- */
@@ -866,7 +877,7 @@ body {
   z-index:1;
   display:grid;
   gap:.2rem;
-  padding:clamp(10px,2vh,16px) clamp(12px,4%,22px) clamp(10px,2vh,18px);
+  padding:clamp(10px,2vh,16px) clamp(12px,4%,22px) clamp(4px,.8vh,9px);
   justify-items:center;
   color:#f6f6f3;
   background:none;
@@ -907,6 +918,34 @@ body {
   content:"→";
   font-size:1.1em;
   line-height:1;
+}
+
+/* Filter definitions. Not display:none - Safari drops filter references then. */
+.nm-filter-defs {
+  position:absolute;
+  width:0;
+  height:0;
+  overflow:hidden;
+  pointer-events:none;
+}
+
+/* The photo warps like water while the tap resolves into the navigation. */
+.nm-drop-card.is-rippling .nm-drop-card__image {
+  filter:url(#nm-water);
+  /* Slightly oversized while warping, so displaced pixels never expose the
+     image edge and notch the card. */
+  transform:scale(calc(var(--nm-card-zoom,1) * 1.06));
+}
+
+/* Paired with the product page image so the two morph into each other. */
+.nm-drop-card__image {
+  view-transition-name:nm-product;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nm-drop-card.is-rippling .nm-drop-card__image {
+    filter:none;
+  }
 }
 
 .nm-product-placeholder {

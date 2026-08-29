@@ -244,3 +244,69 @@ if (document.readyState === 'loading') {
 } else {
   initRegisterModal();
 }
+
+/* Tapping the product picture warps it like water, then loads the product page.
+   The warp is an SVG displacement filter whose scale is animated here; the
+   hand-off itself is a view transition (see @view-transition in base.css).
+   Modified clicks and reduced-motion visitors navigate straight through. */
+const WATER_MS = 620;
+const WATER_PEAK = 26;
+
+const runWaterWarp = (card, done) => {
+  const map = document.querySelector('[data-water-map]');
+  if (!map) {
+    done();
+    return;
+  }
+
+  card.classList.add('is-rippling');
+  const start = performance.now();
+
+  const step = (now) => {
+    const t = Math.min(1, (now - start) / WATER_MS);
+    // Ramp up fast, settle back down: a disturbance that resolves.
+    const envelope = Math.sin(Math.PI * Math.min(1, t * 1.15)) ** 0.85;
+    map.setAttribute('scale', String(WATER_PEAK * envelope));
+    if (t < 1) {
+      window.requestAnimationFrame(step);
+    } else {
+      map.setAttribute('scale', '0');
+      card.classList.remove('is-rippling');
+      done();
+    }
+  };
+
+  window.requestAnimationFrame(step);
+};
+
+const initCardRipple = () => {
+  document.querySelectorAll('[data-ripple-link]').forEach((link) => {
+    link.addEventListener('click', (event) => {
+      if (event.defaultPrevented) return;
+      if (event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+
+      const href = link.getAttribute('href');
+      if (!href) return;
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+      event.preventDefault();
+
+      let navigated = false;
+      const go = () => {
+        if (navigated) return;
+        navigated = true;
+        window.location.href = href;
+      };
+
+      // Navigate on the warp finishing, with a guard in case a frame is dropped.
+      runWaterWarp(link, go);
+      window.setTimeout(go, WATER_MS + 220);
+    });
+  });
+};
+
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', initCardRipple);
+} else {
+  initCardRipple();
+}

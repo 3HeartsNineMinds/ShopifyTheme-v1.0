@@ -37,7 +37,7 @@
       </span>
     </p>
 
-    <a class="nm-drop-card" style="--nm-card-zoom:{{ section.settings.card_zoom | default: 100 | divided_by: 100.0 }};--nm-card-box-opacity:{{ section.settings.card_box_opacity | default: 0 | divided_by: 100.0 }};--nm-card-box-color:{{ section.settings.card_box_color | default: '#050505' }}" href="{{ drop_product.url | default: routes.all_products_collection_url }}" aria-label="{% if drop_product != blank %}View {{ drop_product.title }}{% else %}View the first drop{% endif %}">
+    <a class="nm-drop-card" data-ripple-link style="--nm-card-zoom:{{ section.settings.card_zoom | default: 100 | divided_by: 100.0 }};--nm-card-box-opacity:{{ section.settings.card_box_opacity | default: 0 | divided_by: 100.0 }};--nm-card-box-color:{{ section.settings.card_box_color | default: '#050505' }}" href="{{ drop_product.url | default: routes.all_products_collection_url }}" aria-label="{% if drop_product != blank %}View {{ drop_product.title }}{% else %}View the first drop{% endif %}">
       <span class="nm-drop-card__box" aria-hidden="true"></span>
 
       {%- if drop_product.featured_image -%}
@@ -116,6 +116,20 @@
       <p class="nm-modal__thanks" data-modal-thanks hidden>{{ section.settings.modal_thanks }}</p>
     </div>
   </dialog>
+  {%- comment -%}
+    Water warp for the product picture. theme.js animates the displacement
+    scale on tap, then hands over to the view transition into the product page.
+    The SVG must stay in the layout (not display:none) or Safari drops the
+    filter reference.
+  {%- endcomment -%}
+  <svg class="nm-filter-defs" aria-hidden="true" focusable="false">
+    <filter id="nm-water" x="-25%" y="-25%" width="150%" height="150%" color-interpolation-filters="sRGB">
+      <feTurbulence type="fractalNoise" baseFrequency="0.010 0.016" numOctaves="2" seed="7" result="noise">
+        <animate attributeName="baseFrequency" dur="6s" values="0.010 0.016;0.014 0.011;0.010 0.016" repeatCount="indefinite"/>
+      </feTurbulence>
+      <feDisplacementMap in="SourceGraphic" in2="noise" scale="0" xChannelSelector="R" yChannelSelector="G" data-water-map/>
+    </filter>
+  </svg>
 </section>
 
 {% schema %}
