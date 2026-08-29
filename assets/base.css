@@ -723,10 +723,12 @@ body {
   background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 250 250' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.55'/%3E%3C/svg%3E");
 }
 
-/* Centred stack. Padded clear of the fixed header and footer bars. */
+/* Centred stack. Padded clear of the fixed header and footer bars.
+   z-index sits above .nm-grain (5) so the noise textures the artwork behind
+   rather than washing over the product photo and the wordmark. */
 .nm-hero {
   position:relative;
-  z-index:1;
+  z-index:6;
   min-height:100vh;
   display:flex;
   flex-direction:column;
@@ -779,6 +781,14 @@ body {
 .nm-eyebrow__item.is-active {
   opacity:1;
   visibility:visible;
+}
+
+/* Reduced motion drops the fade, but the messages must still swap - the second
+   one carries the only link to the register popup. */
+@media (prefers-reduced-motion: reduce) {
+  .nm-eyebrow__item {
+    transition:none;
+  }
 }
 
 .nm-eyebrow__item--link {

@@ -18,7 +18,7 @@
     assign art_url = section.settings.background_file | file_url
   endif
 -%}
-<section class="nm-landing" id="top" style="--nm-art-opacity:{{ section.settings.art_opacity | divided_by: 100.0 }}">
+<section class="nm-landing" id="top" style="--nm-art-opacity:{{ section.settings.art_opacity | default: 100 | divided_by: 100.0 }}">
   {%- if art_url != blank -%}
     <div class="nm-landing__art" aria-hidden="true" style="background-image:url('{{ art_url }}')"></div>
   {%- endif -%}
@@ -29,7 +29,7 @@
       Rotating strapline. theme.js alternates the items; the register message is
       a link, so it is kept clickable and rotation pauses on hover/focus.
     {%- endcomment -%}
-    <p class="nm-eyebrow" data-eyebrow-rotator data-eyebrow-interval="{{ section.settings.rotate_seconds }}">
+    <p class="nm-eyebrow" data-eyebrow-rotator data-eyebrow-interval="{{ section.settings.rotate_seconds | default: 3.4 }}">
       <span class="nm-dot" aria-hidden="true"></span>
       <span class="nm-eyebrow__slot">
         <span class="nm-eyebrow__item is-active" data-eyebrow-item>{{ section.settings.eyebrow }}</span>
@@ -37,7 +37,7 @@
       </span>
     </p>
 
-    <a class="nm-drop-card" style="--nm-card-zoom:{{ section.settings.card_zoom | divided_by: 100.0 }};--nm-card-opacity:{{ section.settings.card_opacity | divided_by: 100.0 }};--nm-card-box-opacity:{{ section.settings.card_box_opacity | divided_by: 100.0 }}" href="{{ drop_product.url | default: routes.all_products_collection_url }}" aria-label="{% if drop_product != blank %}View {{ drop_product.title }}{% else %}View the first drop{% endif %}">
+    <a class="nm-drop-card" style="--nm-card-zoom:{{ section.settings.card_zoom | default: 100 | divided_by: 100.0 }};--nm-card-opacity:{{ section.settings.card_opacity | default: 100 | divided_by: 100.0 }};--nm-card-box-opacity:{{ section.settings.card_box_opacity | default: 20 | divided_by: 100.0 }}" href="{{ drop_product.url | default: routes.all_products_collection_url }}" aria-label="{% if drop_product != blank %}View {{ drop_product.title }}{% else %}View the first drop{% endif %}">
       <span class="nm-drop-card__box" aria-hidden="true"></span>
 
       {%- if drop_product.featured_image -%}

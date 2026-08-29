@@ -104,14 +104,14 @@ document.addEventListener('submit', async (event) => {
 
 /* Rotating strapline on the landing page. Alternates the messages inside
    [data-eyebrow-rotator]; pauses while the visitor hovers or tabs into it so
-   the linked message stays clickable. Honours prefers-reduced-motion by not
-   rotating at all. */
+   the linked message stays clickable. Rotation must keep running even under
+   prefers-reduced-motion: one of the messages is the only link to the register
+   popup, and an inactive message is visibility:hidden and so unclickable.
+   The CSS drops the cross-fade in that case instead. */
 const initEyebrowRotators = () => {
-  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
   document.querySelectorAll('[data-eyebrow-rotator]').forEach((rotator) => {
     const items = Array.from(rotator.querySelectorAll('[data-eyebrow-item]'));
-    if (items.length < 2 || reduceMotion) return;
+    if (items.length < 2) return;
 
     const seconds = Number(rotator.dataset.eyebrowInterval) || 4;
     let index = items.findIndex((item) => item.classList.contains('is-active'));
