@@ -245,10 +245,40 @@ if (document.readyState === 'loading') {
   initRegisterModal();
 }
 
-/* Tapping the hero card sends a ripple out from the touch point before the
-   product page loads. Plain navigation is preserved for modified clicks (new
-   tab, middle click) and when the visitor asks for reduced motion. */
-const RIPPLE_MS = 420;
+/* Tapping the hero card sends water-style ripples across the whole page before
+   the product loads. The element is appended to <body> and fixed to the
+   viewport so nothing clips it. Plain navigation is preserved for modified
+   clicks (new tab, middle click) and when reduced motion is requested. */
+const RIPPLE_NAV_MS = 620;
+
+const spawnRipple = (clientX, clientY) => {
+  const { innerWidth: w, innerHeight: h } = window;
+  // Reach the furthest viewport corner so the waves clear the screen.
+  const reach = Math.max(
+    Math.hypot(clientX, clientY),
+    Math.hypot(w - clientX, clientY),
+    Math.hypot(clientX, h - clientY),
+    Math.hypot(w - clientX, h - clientY),
+  );
+
+  const ripple = document.createElement('span');
+  ripple.className = 'nm-ripple';
+  ripple.style.setProperty('--nm-x', `${clientX}px`);
+  ripple.style.setProperty('--nm-y', `${clientY}px`);
+  ripple.style.setProperty('--nm-size', `${Math.ceil(reach * 2)}px`);
+
+  const splash = document.createElement('i');
+  splash.className = 'nm-ripple__splash';
+  ripple.appendChild(splash);
+  for (let i = 0; i < 3; i += 1) {
+    const wave = document.createElement('i');
+    wave.className = 'nm-ripple__wave';
+    ripple.appendChild(wave);
+  }
+
+  document.body.appendChild(ripple);
+  window.setTimeout(() => ripple.remove(), 1500);
+};
 
 const initCardRipple = () => {
   document.querySelectorAll('[data-ripple-link]').forEach((link) => {
@@ -263,22 +293,14 @@ const initCardRipple = () => {
       event.preventDefault();
 
       const box = link.getBoundingClientRect();
-      const x = (event.clientX || box.left + box.width / 2) - box.left;
-      const y = (event.clientY || box.top + box.height / 2) - box.top;
-      // Reach the furthest corner so the ripple always covers the card.
-      const size = Math.hypot(Math.max(x, box.width - x), Math.max(y, box.height - y)) * 2;
-
-      const ripple = document.createElement('span');
-      ripple.className = 'nm-ripple';
-      ripple.style.width = `${size}px`;
-      ripple.style.height = `${size}px`;
-      ripple.style.left = `${x}px`;
-      ripple.style.top = `${y}px`;
-      link.appendChild(ripple);
+      spawnRipple(
+        event.clientX || box.left + box.width / 2,
+        event.clientY || box.top + box.height / 2,
+      );
 
       window.setTimeout(() => {
         window.location.href = href;
-      }, RIPPLE_MS);
+      }, RIPPLE_NAV_MS);
     });
   });
 };
