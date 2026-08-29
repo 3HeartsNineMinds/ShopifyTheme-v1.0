@@ -37,7 +37,7 @@
       </span>
     </p>
 
-    <a class="nm-drop-card" data-ripple-link style="--nm-card-zoom:{{ section.settings.card_zoom | default: 100 | divided_by: 100.0 }};--nm-card-box-opacity:{{ section.settings.card_box_opacity | default: 10 | divided_by: 100.0 }};--nm-card-box-color:{{ section.settings.card_box_color | default: '#050505' }}" href="{{ drop_product.url | default: routes.all_products_collection_url }}" aria-label="{% if drop_product != blank %}View {{ drop_product.title }}{% else %}View the first drop{% endif %}">
+    <a class="nm-drop-card" style="--nm-card-zoom:{{ section.settings.card_zoom | default: 100 | divided_by: 100.0 }};--nm-card-box-opacity:{{ section.settings.card_box_opacity | default: 0 | divided_by: 100.0 }};--nm-card-box-color:{{ section.settings.card_box_color | default: '#050505' }}" href="{{ drop_product.url | default: routes.all_products_collection_url }}" aria-label="{% if drop_product != blank %}View {{ drop_product.title }}{% else %}View the first drop{% endif %}">
       <span class="nm-drop-card__box" aria-hidden="true"></span>
 
       {%- if drop_product.featured_image -%}
@@ -143,7 +143,7 @@
     { "type": "text", "id": "card_kicker", "label": "Card kicker", "default": "First drop" },
     { "type": "text", "id": "card_cta", "label": "Card call to action", "default": "Tap to view product" },
     { "type": "color", "id": "card_box_color", "label": "Card panel colour", "default": "#050505" },
-    { "type": "range", "id": "card_box_opacity", "label": "Card panel opacity", "min": 0, "max": 100, "step": 5, "unit": "%", "default": 10, "info": "The panel behind the photo. Only visible where the photo is transparent - see the theme README." },
+    { "type": "range", "id": "card_box_opacity", "label": "Card panel opacity", "min": 0, "max": 100, "step": 5, "unit": "%", "default": 0, "info": "The panel behind the photo. Only visible where the photo is transparent - see the theme README." },
     { "type": "range", "id": "card_zoom", "label": "Image zoom", "min": 100, "max": 175, "step": 5, "unit": "%", "default": 100, "info": "Crops white margins baked into the product photo." }
   ],
   "presets": [{ "name": "Nine Minds landing" }]
