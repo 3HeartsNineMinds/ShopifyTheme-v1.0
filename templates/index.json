@@ -12,15 +12,12 @@
     "nine_minds_landing": {
       "type": "nine-minds-landing",
       "settings": {
-        "eyebrow": "ORDER NOW / FIRST DROP",
-        "lead": "A monochrome clothing brand for the ones who live between moods. Clean silhouettes, dark visuals, octopus energy and a premium streetwear feel.",
-        "primary_label": "Sign up to updates",
-        "stat_one_value": "3.5K",
-        "stat_one_label": "30 day views",
-        "stat_two_value": "9",
-        "stat_two_label": "Launch posts",
-        "stat_three_value": "01",
-        "stat_three_label": "Signature hoodie"
+        "background_file": "WEBSITE_OCTOPUS_ART_EMBROIDERY.png",
+        "art_opacity": 100,
+        "eyebrow": "ORDER NOW / FIRST DROP / 99 PIECES",
+        "eyebrow_register": "REGISTER FOR 15% OFF",
+        "register_url": "/pages/register",
+        "rotate_seconds": 4
       }
     }
   },

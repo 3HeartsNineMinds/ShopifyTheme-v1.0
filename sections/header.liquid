@@ -22,7 +22,7 @@
       The centre logo is the light/dark switch. theme.js listens for
       [data-theme-toggle] and flips html[data-theme]; the logo inverts in CSS.
     {%- endcomment -%}
-    <button class="site-brand site-brand--center" type="button" data-theme-toggle aria-pressed="false" aria-label="Switch to dark mode">
+    <button class="site-brand site-brand--center" type="button" data-theme-toggle aria-pressed="true" aria-label="Switch to light mode">
       {% if brand_logo != blank %}
         {{ brand_logo | image_url: width: 240 | image_tag: class: 'site-logo', loading: 'eager', alt: shop.name }}
       {% else %}

@@ -89,69 +89,35 @@
     width:17px!important;
     height:17px!important;
   }
-  /* The mobile header is position:sticky, so it occupies flow space and the
-     hero does not need to reserve room for it. Zero padding puts the eyebrow
-     directly under the header separator. */
-  .template-index .nm-hero {
-    padding-top:0!important;
-  }
-  /* Mobile only: move the signup below the product visual.
-     .nm-hero__copy becomes display:contents so its children are promoted into
-     the hero grid and can be ordered against .nm-visual. Desktop is untouched -
-     there the form stays nested inside the copy column exactly as before. */
-  .template-index .nm-hero__copy {
-    display:contents!important;
+  /* The mobile header is position:sticky, so it occupies flow space; the hero
+     only needs to clear the fixed footer bar. */
+  :root {
+    --site-footer-h:44px;
   }
   .template-index .nm-hero {
-    row-gap:0!important;
+    padding-top:clamp(10px,2vh,18px)!important;
+    gap:clamp(12px,2vh,20px)!important;
   }
-  .template-index .nm-eyebrow,
-  .template-index .nm-wordmark,
-  .template-index .nm-lead,
-  .template-index .nm-waitlist-form {
-    position:relative!important;
-    z-index:1!important;
-  }
-  .template-index .nm-eyebrow {
-    order:1!important;
-    justify-self:start!important;
+  .template-index .nm-drop-card {
+    --nm-card-width:min(78vw,360px);
   }
   .template-index .nm-wordmark {
-    order:2!important;
+    --nm-wordmark-width:100%;
   }
-  .template-index .nm-lead {
-    order:3!important;
+  .site-footer {
+    padding:.6rem 1rem!important;
   }
-  .template-index .nm-visual {
-    order:4!important;
-  }
-  .template-index .nm-waitlist-form {
-    order:5!important;
-    max-width:none!important;
-    width:100%!important;
-    margin-top:1.75rem!important;
-    margin-bottom:2rem!important;
-  }
-  .template-index .nm-waitlist-row {
-    display:grid!important;
-    grid-template-columns:minmax(0,1fr) auto!important;
+  .site-footer__inner {
     gap:.5rem!important;
-    align-items:center!important;
+  }
+  .site-footer__nav {
+    gap:.75rem!important;
     flex-wrap:nowrap!important;
-    width:100%!important;
+    overflow-x:auto!important;
+    scrollbar-width:none!important;
   }
-  .template-index .nm-waitlist-input {
-    min-width:0!important;
-    width:100%!important;
-    padding:14px 15px!important;
-    font-size:.9rem!important;
-  }
-  .template-index .nm-waitlist-row .nm-btn {
-    white-space:nowrap!important;
-    padding:14px 15px!important;
-    font-size:.66rem!important;
-    letter-spacing:.08em!important;
-    min-height:48px!important;
+  .site-footer__nav::-webkit-scrollbar {
+    display:none!important;
   }
   .template-product .product-section,
   [data-product-section].product-section {

@@ -1,5 +1,5 @@
 <!doctype html>
-<html class="no-js template-{{ template.name }}" lang="{{ request.locale.iso_code }}" data-theme="light">
+<html class="no-js template-{{ template.name }}" lang="{{ request.locale.iso_code }}" data-theme="dark">
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -21,9 +21,14 @@
     {% endif %}
 
     <script>
+      // Dark is the default and is already set on <html> above, so it survives
+      // with JavaScript disabled. Only override when the visitor chose light.
       (function () {
-        var savedTheme = localStorage.getItem('nine-minds-theme');
-        document.documentElement.setAttribute('data-theme', savedTheme === 'dark' ? 'dark' : 'light');
+        try {
+          if (localStorage.getItem('nine-minds-theme') === 'light') {
+            document.documentElement.setAttribute('data-theme', 'light');
+          }
+        } catch (error) {}
       })();
     </script>
 
@@ -44,6 +49,8 @@
     <main id="MainContent" class="main-content" role="main" tabindex="-1">
       {{ content_for_layout }}
     </main>
+
+    {% sections 'footer-group' %}
 
     <style id="nine-minds-final-theme-overrides">
       html[data-theme='light'] [data-product-section] .product-title {

@@ -21,13 +21,13 @@
     min-height:100vh;
     overflow:hidden;
   }
-  .template-index .nm-hero {
-    padding-top:var(--site-header-h);
-    padding-bottom:34px;
+  /* Desktop shows the same centred stack as mobile, still pinned to one
+     screen. The card takes the space left between the two fixed bars. */
+  .template-index .nm-drop-card {
+    --nm-card-width:min(46vh,520px);
   }
-  .template-index .nm-visual {
-    min-height:0;
-    height:calc(100vh - 130px);
+  .template-index .nm-wordmark {
+    --nm-wordmark-width:900px;
   }
   .site-header__inner {
     display:grid;

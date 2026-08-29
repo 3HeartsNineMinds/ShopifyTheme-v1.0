@@ -35,7 +35,7 @@ const setThemeMode = (theme) => {
 
 const initThemeMode = () => {
   const existingTheme = document.documentElement.getAttribute('data-theme');
-  setThemeMode(readStoredTheme() || existingTheme || 'light');
+  setThemeMode(readStoredTheme() || existingTheme || 'dark');
 };
 
 if (document.readyState === 'loading') {
@@ -49,7 +49,7 @@ document.addEventListener('click', (event) => {
   if (!toggle) return;
 
   event.preventDefault();
-  const currentTheme = document.documentElement.getAttribute('data-theme') || 'light';
+  const currentTheme = document.documentElement.getAttribute('data-theme') || 'dark';
   setThemeMode(currentTheme === 'dark' ? 'light' : 'dark');
 });
 
@@ -101,3 +101,50 @@ document.addEventListener('submit', async (event) => {
     if (button) button.removeAttribute('disabled');
   }
 });
+
+/* Rotating strapline on the landing page. Alternates the messages inside
+   [data-eyebrow-rotator]; pauses while the visitor hovers or tabs into it so
+   the linked message stays clickable. Honours prefers-reduced-motion by not
+   rotating at all. */
+const initEyebrowRotators = () => {
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  document.querySelectorAll('[data-eyebrow-rotator]').forEach((rotator) => {
+    const items = Array.from(rotator.querySelectorAll('[data-eyebrow-item]'));
+    if (items.length < 2 || reduceMotion) return;
+
+    const seconds = Number(rotator.dataset.eyebrowInterval) || 4;
+    let index = items.findIndex((item) => item.classList.contains('is-active'));
+    if (index < 0) index = 0;
+    let timer = null;
+
+    const show = (next) => {
+      items.forEach((item, i) => item.classList.toggle('is-active', i === next));
+      index = next;
+    };
+
+    const start = () => {
+      if (timer) return;
+      timer = window.setInterval(() => show((index + 1) % items.length), seconds * 1000);
+    };
+
+    const stop = () => {
+      window.clearInterval(timer);
+      timer = null;
+    };
+
+    rotator.addEventListener('mouseenter', stop);
+    rotator.addEventListener('mouseleave', start);
+    rotator.addEventListener('focusin', stop);
+    rotator.addEventListener('focusout', start);
+    document.addEventListener('visibilitychange', () => (document.hidden ? stop() : start()));
+
+    start();
+  });
+};
+
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', initEyebrowRotators);
+} else {
+  initEyebrowRotators();
+}

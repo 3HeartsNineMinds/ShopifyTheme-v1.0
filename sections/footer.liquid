@@ -1,20 +1,30 @@
 <footer class="site-footer">
-  <div class="page-width site-footer__inner">
-    <div class="footer-brand">
-      <a class="site-brand" href="{{ routes.root_url }}">NINE<span>MINDS</span></a>
-      <p>{{ settings.brand_tagline }}</p>
-      {% if settings.instagram_handle != blank %}
-        <p><a class="social-link" href="{{ settings.instagram_url | default: 'https://www.instagram.com/_nineminds_/' }}" target="_blank" rel="noopener">Follow {{ settings.instagram_handle }}</a></p>
-      {% endif %}
-    </div>
-    {% if section.settings.menu != blank %}
-      <nav class="site-nav" aria-label="Footer navigation">
-        {% for link in section.settings.menu.links %}
-          <a href="{{ link.url }}">{{ link.title }}</a>
-        {% endfor %}
-      </nav>
-    {% endif %}
-    <p>&copy; {{ 'now' | date: '%Y' }} {{ shop.name }}</p>
+  <div class="site-footer__inner">
+    <nav class="site-footer__nav" aria-label="Footer navigation">
+      {%- for i in (1..4) -%}
+        {%- liquid
+          case i
+            when 1
+              assign label = section.settings.link_one_label
+              assign url = section.settings.link_one_url
+            when 2
+              assign label = section.settings.link_two_label
+              assign url = section.settings.link_two_url
+            when 3
+              assign label = section.settings.link_three_label
+              assign url = section.settings.link_three_url
+            when 4
+              assign label = section.settings.link_four_label
+              assign url = section.settings.link_four_url
+          endcase
+        -%}
+        {%- if label != blank -%}
+          <a class="site-footer__link" href="{{ url | default: routes.root_url }}">{{ label }}</a>
+        {%- endif -%}
+      {%- endfor -%}
+    </nav>
+
+    <p class="site-footer__legal">&copy;{{ 'now' | date: '%Y' }} {{ shop.name | upcase }}</p>
   </div>
 </footer>
 
@@ -22,7 +32,15 @@
 {
   "name": "Footer",
   "settings": [
-    { "type": "link_list", "id": "menu", "label": "Menu" }
+    { "type": "paragraph", "content": "Each link points at a Shopify page. Create them under Content > Pages with matching handles." },
+    { "type": "text", "id": "link_one_label", "label": "Link 1 label", "default": "ABOUT US" },
+    { "type": "url", "id": "link_one_url", "label": "Link 1 URL" },
+    { "type": "text", "id": "link_two_label", "label": "Link 2 label", "default": "SIZE GUIDE" },
+    { "type": "url", "id": "link_two_url", "label": "Link 2 URL" },
+    { "type": "text", "id": "link_three_label", "label": "Link 3 label", "default": "CONTACT US" },
+    { "type": "url", "id": "link_three_url", "label": "Link 3 URL" },
+    { "type": "text", "id": "link_four_label", "label": "Link 4 label", "default": "LEGAL SHIT" },
+    { "type": "url", "id": "link_four_url", "label": "Link 4 URL" }
   ]
 }
 {% endschema %}

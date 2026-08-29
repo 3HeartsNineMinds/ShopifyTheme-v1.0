@@ -1,76 +1,59 @@
-<section class="nm-landing" id="top">
+{%- liquid
+  # Product shown in the hero card. Falls back to the 'hoodie' handle so the
+  # card still renders before the setting is picked in the theme editor.
+  assign drop_product = section.settings.drop_product
+  if drop_product == blank
+    assign drop_product = all_products['hoodie']
+  endif
+
+  # Wordmark artwork: theme-editor setting first, then Content > Files.
+  assign wordmark = section.settings.wordmark
+  assign wordmark_file_url = 'NineMindsLogoText.png' | file_url
+
+  # Background embroidery art: theme-editor setting first, then Content > Files.
+  assign art_url = ''
+  if section.settings.background_image != blank
+    assign art_url = section.settings.background_image | image_url: width: 2400
+  elsif section.settings.background_file != blank
+    assign art_url = section.settings.background_file | file_url
+  endif
+-%}
+<section class="nm-landing" id="top" style="--nm-art-opacity:{{ section.settings.art_opacity | divided_by: 100.0 }}">
+  {%- if art_url != blank -%}
+    <div class="nm-landing__art" aria-hidden="true" style="background-image:url('{{ art_url }}')"></div>
+  {%- endif -%}
   <div class="nm-grain" aria-hidden="true"></div>
 
-  {% assign first_drop_product = all_products['hoodie'] %}
-
   <div class="nm-hero">
-    <div class="nm-hero__copy">
-      <div class="nm-eyebrow"><span class="nm-dot"></span>{{ section.settings.eyebrow }}</div>
-      {%- liquid
-        # Wordmark artwork. The theme-editor setting wins; otherwise fall back to
-        # the file of this name in Shopify admin under Content > Files.
-        assign wordmark = section.settings.wordmark
-        assign wordmark_file_url = 'NineMindsLogoText.png' | file_url
-      -%}
-      <h1 class="nm-wordmark">
-        {%- if wordmark != blank -%}
-          {{ wordmark | image_url: width: 1200 | image_tag: class: 'nm-wordmark__image', loading: 'eager', alt: shop.name }}
-        {%- elsif wordmark_file_url != blank -%}
-          <img class="nm-wordmark__image" src="{{ wordmark_file_url }}" alt="{{ shop.name }}" loading="eager">
-        {%- else -%}
-          NINE<br><span>MINDS</span>
-        {%- endif -%}
-      </h1>
-      <p class="nm-lead">{{ section.settings.lead }}</p>
+    {%- comment -%}
+      Rotating strapline. theme.js alternates the items; the register message is
+      a link, so it is kept clickable and rotation pauses on hover/focus.
+    {%- endcomment -%}
+    <p class="nm-eyebrow" data-eyebrow-rotator data-eyebrow-interval="{{ section.settings.rotate_seconds }}">
+      <span class="nm-dot" aria-hidden="true"></span>
+      <span class="nm-eyebrow__slot">
+        <span class="nm-eyebrow__item is-active" data-eyebrow-item>{{ section.settings.eyebrow }}</span>
+        <a class="nm-eyebrow__item nm-eyebrow__item--link" data-eyebrow-item href="{{ section.settings.register_url | default: routes.root_url }}">{{ section.settings.eyebrow_register }}</a>
+      </span>
+    </p>
 
-      {% form 'customer', class: 'nm-waitlist-form' %}
-        <input type="hidden" name="contact[tags]" value="newsletter, waitlist, nine-minds-first-drop">
-        <div class="nm-waitlist-row">
-          <input
-            class="nm-waitlist-input"
-            type="email"
-            name="contact[email]"
-            autocomplete="email"
-            autocorrect="off"
-            autocapitalize="off"
-            placeholder="Email address"
-            required
-          >
-          <button class="nm-btn" type="submit">{{ section.settings.primary_label }}</button>
-        </div>
-        {% if form.posted_successfully? %}
-          <p class="nm-form-message">You’re on the list. We’ll send updates before the first drop.</p>
-        {% elsif form.errors %}
-          <p class="nm-form-message nm-form-message--error">{{ form.errors | default_errors }}</p>
-        {% endif %}
-      {% endform %}
-    </div>
+    <a class="nm-drop-card" href="{{ drop_product.url | default: routes.all_products_collection_url }}" aria-label="{% if drop_product != blank %}View {{ drop_product.title }}{% else %}View the first drop{% endif %}">
+      {%- if drop_product.featured_image -%}
+        {{ drop_product.featured_image | image_url: width: 900 | image_tag: class: 'nm-drop-card__image', loading: 'eager', alt: drop_product.title }}
+      {%- else -%}
+        <span class="nm-product-placeholder"><span>NINE MINDS</span></span>
+      {%- endif -%}
+    </a>
 
-    <div class="nm-visual" aria-label="Nine Minds first drop product">
-      <div class="nm-logo-mark" aria-hidden="true">
-        <svg viewBox="0 0 500 500" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M250 74c-47 0-84 36-84 82 0 22 6 40 19 55-26 7-52 20-76 39-28 22-47 49-58 80 31-20 61-30 89-30 20 0 37 5 51 15-37 26-62 63-75 111 29-24 58-36 86-36 22 0 41 8 58 24-4-43 4-79 25-108 21 29 29 65 25 108 17-16 36-24 58-24 28 0 57 12 86 36-13-48-38-85-75-111 14-10 31-15 51-15 28 0 58 10 89 30-11-31-30-58-58-80-24-19-50-32-76-39 13-15 19-33 19-55 0-46-37-82-84-82Z" fill="currentColor"/>
-          <path d="M169 201c-58 6-100 38-121 92 45-29 84-36 118-20 17 8 31 21 42 39M331 201c58 6 100 38 121 92-45-29-84-36-118-20-17 8-31 21-42 39M214 277c-55 45-72 97-51 154 22-38 52-59 89-62M286 277c55 45 72 97 51 154-22-38-52-59-89-62" stroke="currentColor" stroke-width="26" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
-      </div>
-
-      <a class="nm-drop-card" href="/products/hoodie" aria-label="View the Nine Minds hoodie product">
-        <div class="nm-drop-card__image">
-          {% if first_drop_product.featured_image %}
-            {{ first_drop_product.featured_image | image_url: width: 680 | image_tag: loading: 'eager', alt: first_drop_product.title }}
-          {% else %}
-            <div class="nm-product-placeholder">
-              <span>NINE MINDS</span>
-            </div>
-          {% endif %}
-        </div>
-        <div class="nm-drop-card__content">
-          <span>First drop</span>
-          <strong>{% if first_drop_product != blank %}{{ first_drop_product.title }}{% else %}NINE MINDS HOODIE{% endif %}</strong>
-          <small>Tap to view product</small>
-        </div>
-      </a>
-    </div>
+    <h1 class="nm-wordmark">
+      {%- if wordmark != blank -%}
+        {{ wordmark | image_url: width: 1400 | image_tag: class: 'nm-wordmark__image', loading: 'eager', alt: shop.name }}
+      {%- elsif wordmark_file_url != blank -%}
+        <img class="nm-wordmark__image" src="{{ wordmark_file_url }}" alt="{{ shop.name }}" loading="eager">
+      {%- else -%}
+        NINE MINDS
+      {%- endif -%}
+    </h1>
   </div>
 </section>
 
@@ -78,10 +61,18 @@
 {
   "name": "Nine Minds landing",
   "settings": [
+    { "type": "header", "content": "Artwork" },
+    { "type": "image_picker", "id": "background_image", "label": "Background art" },
+    { "type": "text", "id": "background_file", "label": "Background art filename", "default": "WEBSITE_OCTOPUS_ART_EMBROIDERY.png", "info": "Used only when no background art is picked above. Must match a file in Content > Files, including its extension." },
+    { "type": "range", "id": "art_opacity", "label": "Background art opacity", "min": 0, "max": 100, "step": 5, "unit": "%", "default": 100 },
     { "type": "image_picker", "id": "wordmark", "label": "Wordmark image (white artwork)", "info": "Defaults to NineMindsLogoText.png from Content > Files." },
-    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "ORDER NOW / FIRST DROP" },
-    { "type": "textarea", "id": "lead", "label": "Lead text", "default": "A monochrome clothing brand for the ones who live between moods. Clean silhouettes, dark visuals, octopus energy and a premium streetwear feel." },
-    { "type": "text", "id": "primary_label", "label": "Updates button label", "default": "Sign up to updates" }
+    { "type": "header", "content": "Strapline" },
+    { "type": "text", "id": "eyebrow", "label": "Message one", "default": "ORDER NOW / FIRST DROP / 99 PIECES" },
+    { "type": "text", "id": "eyebrow_register", "label": "Message two (link)", "default": "REGISTER FOR 15% OFF" },
+    { "type": "url", "id": "register_url", "label": "Message two link" },
+    { "type": "range", "id": "rotate_seconds", "label": "Seconds per message", "min": 2, "max": 12, "step": 1, "unit": "s", "default": 4 },
+    { "type": "header", "content": "Hero product" },
+    { "type": "product", "id": "drop_product", "label": "Product card" }
   ],
   "presets": [{ "name": "Nine Minds landing" }]
 }

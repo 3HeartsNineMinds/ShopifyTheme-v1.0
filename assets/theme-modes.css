@@ -99,8 +99,7 @@ html[data-theme='dark'] .site-logo {
 /* ==========================================================
    BUTTONS
    ========================================================== */
-.button,
-.nm-btn {
+.button {
   background:var(--mode-inverse)!important;
   color:var(--mode-inverse-text)!important;
   border-color:var(--mode-inverse)!important;
@@ -164,15 +163,13 @@ html[data-theme='dark'] .product-title {
 /* ==========================================================
    FORM INPUTS
    ========================================================== */
-.input,
-.nm-waitlist-input {
+.input {
   background:var(--mode-panel-strong)!important;
   color:var(--mode-text)!important;
   border-color:var(--mode-line)!important;
 }
 
-.input::placeholder,
-.nm-waitlist-input::placeholder {
+.input::placeholder {
   color:var(--mode-muted)!important;
 }
 
@@ -229,14 +226,13 @@ html[data-theme='dark'] .nm-grain {
   mix-blend-mode:normal!important;
 }
 
-.nm-hero:before {
-  background:none!important;
-  display:none!important;
+/* The embroidery artwork is dark, so it is dialled back on a light page. */
+.nm-landing__art {
+  opacity:calc(var(--nm-art-opacity) * .14)!important;
 }
 
-html[data-theme='dark'] .nm-hero:before {
-  display:block!important;
-  background:radial-gradient(circle,rgba(236,231,220,.12),rgba(255,255,255,.035) 34%,transparent 68%)!important;
+html[data-theme='dark'] .nm-landing__art {
+  opacity:var(--nm-art-opacity)!important;
 }
 
 /* NineMindsLogoText.png is white artwork: invert it to black on light
@@ -249,29 +245,29 @@ html[data-theme='dark'] .nm-wordmark__image {
   filter:none!important;
 }
 
-.nm-lead {
-  color:var(--mode-muted)!important;
-}
-
-.nm-logo-mark {
-  color:var(--mode-text)!important;
-  opacity:.16!important;
-}
-
-html[data-theme='dark'] .nm-logo-mark {
-  color:#fff!important;
-  opacity:.22!important;
-}
-
+/* The hero card is the white block from the draft in both modes; in light
+   mode it needs an edge so it does not merge into the page. */
 .nm-drop-card {
-  background:linear-gradient(180deg,#ffffff,#d8d2c7)!important;
+  background:#fff!important;
   color:#050505!important;
-  border-color:#111!important;
+  border:1px solid var(--mode-line)!important;
 }
 
 html[data-theme='dark'] .nm-drop-card {
-  background:linear-gradient(180deg,#f5f1e7,#b7b3aa)!important;
-  color:#050505!important;
+  border-color:transparent!important;
+}
+
+/* ==========================================================
+   FOOTER BAR
+   ========================================================== */
+.site-footer {
+  background:rgba(255,255,255,.88)!important;
+  border-top:1px solid var(--mode-line)!important;
+  color:var(--mode-text)!important;
+}
+
+html[data-theme='dark'] .site-footer {
+  background:rgba(5,5,5,.82)!important;
 }
 
 /* ==========================================================

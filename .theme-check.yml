@@ -2,4 +2,3 @@ root: .
 extend: theme-check:recommended
 ignore:
   - node_modules/**
-  - "OLD THEME/**"
