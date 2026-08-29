@@ -49,7 +49,14 @@
       {%- if wordmark != blank -%}
         {{ wordmark | image_url: width: 1400 | image_tag: class: 'nm-wordmark__image', loading: 'eager', alt: shop.name }}
       {%- elsif wordmark_file_url != blank -%}
+        {%- comment -%}
+          A Content > Files URL carries no dimensions, so width/height cannot be
+          emitted here. CSS reserves the box instead (see .nm-wordmark__image).
+          Pick the image in the theme editor to get a proper responsive tag.
+        {%- endcomment -%}
+        {% # theme-check-disable ImgWidthAndHeight %}
         <img class="nm-wordmark__image" src="{{ wordmark_file_url }}" alt="{{ shop.name }}" loading="eager">
+        {% # theme-check-enable ImgWidthAndHeight %}
       {%- else -%}
         NINE MINDS
       {%- endif -%}

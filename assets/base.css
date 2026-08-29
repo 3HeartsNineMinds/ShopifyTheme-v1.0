@@ -217,12 +217,15 @@ body {
   justify-content:flex-start;
 }
 
+/* A definite width, not auto: the logo sits in a shrink-to-fit grid track, so
+   width:auto has no containing block to resolve against and an SVG logo (no
+   intrinsic pixel size) collapses to 0x0. object-fit keeps the ratio. */
 .site-logo {
   display:block;
-  width:auto;
+  width:var(--site-logo-size,56px);
   height:auto;
-  max-width:56px;
-  max-height:56px;
+  max-width:var(--site-logo-size,56px);
+  max-height:var(--site-logo-size,56px);
   object-fit:contain;
   transition:filter .25s ease;
 }
@@ -784,14 +787,17 @@ body {
 }
 
 /* ---- Hero product card ----------------------------------- */
+/* Width is the smaller of the width cap and what the leftover height allows,
+   so aspect-ratio always decides the height and the card never stretches or
+   overflows the locked screen. --nm-card-max-h is set per breakpoint. */
 .nm-drop-card {
   display:block;
   position:relative;
-  flex:1 1 auto;
+  flex:0 1 auto;
   min-height:0;
   aspect-ratio:3 / 4;
-  width:auto;
-  max-width:min(100%,var(--nm-card-width,420px));
+  width:min(100%,var(--nm-card-width,420px),calc(var(--nm-card-max-h,52vh) * 3 / 4));
+  height:auto;
   overflow:hidden;
   background:#fff;
   color:#050505;

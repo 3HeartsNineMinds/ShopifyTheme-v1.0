@@ -41,12 +41,7 @@
     white-space:nowrap!important;
   }
   .site-logo {
-    display:block!important;
-    width:auto!important;
-    height:auto!important;
-    max-width:38px!important;
-    max-height:38px!important;
-    object-fit:contain!important;
+    --site-logo-size:38px;
   }
   .site-actions--right {
     grid-column:3!important;
@@ -92,7 +87,16 @@
   /* The mobile header is position:sticky, so it occupies flow space; the hero
      only needs to clear the fixed footer bar. */
   :root {
-    --site-footer-h:44px;
+    /* Sticky (in-flow) header: .55rem padding top+bottom + 38px logo + border. */
+    --site-header-h:57px;
+    --site-footer-h:52px;
+  }
+  /* The header is in flow here, so the landing must be a viewport MINUS the
+     header - otherwise the page overruns by the header height and the wordmark
+     slides under the fixed footer bar. dvh tracks mobile browser chrome. */
+  .template-index .nm-landing,
+  .template-index .nm-hero {
+    min-height:calc(100dvh - var(--site-header-h))!important;
   }
   .template-index .nm-hero {
     padding-top:clamp(10px,2vh,18px)!important;
@@ -100,24 +104,38 @@
   }
   .template-index .nm-drop-card {
     --nm-card-width:min(78vw,360px);
+    --nm-card-max-h:56dvh;
   }
   .template-index .nm-wordmark {
     --nm-wordmark-width:100%;
   }
+  /* All five items fit on one row on a wider phone but not a narrow one, so
+     the row is allowed to wrap: the copyright drops to a second line only when
+     it has to, rather than always. */
   .site-footer {
-    padding:.6rem 1rem!important;
+    padding:.5rem .75rem!important;
   }
   .site-footer__inner {
-    gap:.5rem!important;
+    flex-wrap:wrap!important;
+    align-items:center!important;
+    gap:.15rem .5rem!important;
   }
   .site-footer__nav {
-    gap:.75rem!important;
+    flex:1 1 auto!important;
+    min-width:0!important;
+    justify-content:space-between!important;
+    gap:.3rem!important;
     flex-wrap:nowrap!important;
-    overflow-x:auto!important;
-    scrollbar-width:none!important;
   }
-  .site-footer__nav::-webkit-scrollbar {
-    display:none!important;
+  .site-footer__link {
+    font-size:9px!important;
+    letter-spacing:.02em!important;
+  }
+  .site-footer__legal {
+    flex:1 0 auto!important;
+    text-align:right!important;
+    font-size:8px!important;
+    opacity:.7!important;
   }
   .template-product .product-section,
   [data-product-section].product-section {

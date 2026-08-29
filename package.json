@@ -1,1 +1,16 @@
-{"name":"nine-minds-shopify-theme","version":"1.0.0","private":true,"scripts":{"dev":"shopify theme dev","push":"shopify theme push","pull":"shopify theme pull","check":"shopify theme check"},"devDependencies":{"@shopify/theme-check":"latest"}}
+{
+  "name": "nine-minds-shopify-theme",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "shopify theme dev",
+    "push": "shopify theme push",
+    "pull": "shopify theme pull",
+    "check": "shopify theme check",
+    "shot": "node scripts/screenshot.mjs"
+  },
+  "devDependencies": {
+    "@shopify/cli": "^4.7.0",
+    "playwright": "^1.62.1"
+  }
+}

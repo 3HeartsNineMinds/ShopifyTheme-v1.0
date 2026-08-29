@@ -24,7 +24,8 @@
   /* Desktop shows the same centred stack as mobile, still pinned to one
      screen. The card takes the space left between the two fixed bars. */
   .template-index .nm-drop-card {
-    --nm-card-width:min(46vh,520px);
+    --nm-card-width:520px;
+    --nm-card-max-h:50vh;
   }
   .template-index .nm-wordmark {
     --nm-wordmark-width:900px;
@@ -45,14 +46,6 @@
   .site-actions--right {
     grid-column:3;
     justify-self:end;
-  }
-  .site-logo {
-    display:block;
-    max-width:56px;
-    max-height:56px;
-    width:auto;
-    height:auto;
-    object-fit:contain;
   }
   html.template-product,
   html.template-product body {

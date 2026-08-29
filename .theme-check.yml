@@ -1,4 +1,5 @@
 root: .
-extend: theme-check:recommended
+extends: theme-check:recommended
 ignore:
   - node_modules/**
+  - docs/**
