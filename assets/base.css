@@ -816,6 +816,17 @@ body {
   outline-offset:6px;
 }
 
+/* The panel the photo sits on. Separate layer so it can be faded independently
+   of the product image - it only shows through where the photo has
+   transparency, so it needs a cut-out PNG to be visible at all. */
+.nm-drop-card__box {
+  position:absolute;
+  inset:0;
+  z-index:0;
+  background:#fff;
+  opacity:var(--nm-card-box-opacity,.2);
+}
+
 /* Absolutely positioned so the width/height attributes Shopify's image_tag
    emits cannot reintroduce an intrinsic ratio and letterbox the card.
    --nm-card-zoom crops any white margin baked into the product photo. */
@@ -830,6 +841,7 @@ body {
   transform:scale(var(--nm-card-zoom,1));
   transform-origin:center;
   opacity:var(--nm-card-opacity,1);
+  z-index:1;
 }
 
 /* Caption over the bottom of the photo, scrimmed so it stays readable on a
@@ -896,6 +908,118 @@ body {
   font-size:clamp(16px,2.4vw,22px);
   font-weight:900;
   letter-spacing:-.05em;
+}
+
+/* ---- Register popup -------------------------------------- */
+.nm-modal {
+  width:min(92vw,420px);
+  max-width:none;
+  padding:0;
+  border:0;
+  background:transparent;
+  color:var(--text);
+  overscroll-behavior:contain;
+}
+
+.nm-modal::backdrop {
+  background:rgba(5,5,5,.72);
+  backdrop-filter:blur(4px);
+}
+
+.nm-modal__panel {
+  position:relative;
+  padding:clamp(1.4rem,5vw,2rem);
+  border:1px solid var(--line);
+  border-radius:1.25rem;
+  background:var(--surface);
+  box-shadow:0 40px 120px rgba(0,0,0,.55);
+}
+
+.nm-modal__close {
+  position:absolute;
+  top:.55rem;
+  right:.7rem;
+  min-width:44px;
+  min-height:44px;
+  padding:0;
+  border:0;
+  background:none;
+  color:inherit;
+  font-size:1.6rem;
+  line-height:1;
+  cursor:pointer;
+  opacity:.7;
+}
+
+.nm-modal__close:hover,
+.nm-modal__close:focus-visible {
+  opacity:1;
+}
+
+.nm-modal__heading {
+  margin:0 0 1.1rem;
+  padding-right:2rem;
+  font-size:clamp(1.15rem,4vw,1.6rem);
+  line-height:1.05;
+  letter-spacing:-.04em;
+  text-transform:uppercase;
+  font-weight:900;
+}
+
+.nm-modal__form {
+  display:grid;
+  gap:1rem;
+}
+
+.nm-modal__field {
+  display:grid;
+  gap:.4rem;
+}
+
+.nm-modal__field > span {
+  text-transform:uppercase;
+  letter-spacing:.14em;
+  font-size:.7rem;
+  font-weight:800;
+  color:var(--muted);
+}
+
+.nm-modal__check {
+  display:flex;
+  align-items:flex-start;
+  gap:.6rem;
+  font-size:.85rem;
+  line-height:1.35;
+  color:var(--muted);
+  cursor:pointer;
+}
+
+.nm-modal__check input {
+  flex:none;
+  width:20px;
+  height:20px;
+  margin:.05rem 0 0;
+  accent-color:var(--text);
+  cursor:pointer;
+}
+
+.nm-modal__submit {
+  width:100%;
+}
+
+.nm-modal__error {
+  margin:0;
+  color:#ffb4b4;
+  font-size:.85rem;
+}
+
+.nm-modal__thanks {
+  margin:0;
+  padding:.5rem 0;
+  text-align:center;
+  font-size:clamp(.95rem,3.4vw,1.1rem);
+  font-weight:800;
+  line-height:1.35;
 }
 
 /* ---- Wordmark -------------------------------------------- */

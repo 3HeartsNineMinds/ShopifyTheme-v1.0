@@ -148,3 +148,54 @@ if (document.readyState === 'loading') {
 } else {
   initEyebrowRotators();
 }
+
+/* Register popup on the landing page. The strapline link opens a native
+   <dialog> (focus trap and Esc handling come free). The form is a normal
+   Shopify customer form, so submitting reloads the page; on the way back we
+   reopen the dialog showing the thank you, then close it after the delay. */
+const initRegisterModal = () => {
+  const modal = document.querySelector('[data-register-modal]');
+  if (!modal || typeof modal.showModal !== 'function') return;
+
+  const formBody = modal.querySelector('[data-modal-form]');
+  const thanks = modal.querySelector('[data-modal-thanks]');
+  const delay = Number(modal.dataset.closeDelay) || 2000;
+
+  const open = () => {
+    if (!modal.open) modal.showModal();
+  };
+  const close = () => {
+    if (modal.open) modal.close();
+  };
+
+  document.querySelectorAll('[data-register-open]').forEach((trigger) => {
+    trigger.addEventListener('click', (event) => {
+      event.preventDefault();
+      open();
+    });
+  });
+
+  modal.querySelectorAll('[data-modal-close]').forEach((button) => {
+    button.addEventListener('click', close);
+  });
+
+  // Clicking the backdrop closes; clicking the panel must not.
+  modal.addEventListener('click', (event) => {
+    if (event.target === modal) close();
+  });
+
+  if (modal.querySelector('[data-register-success]')) {
+    if (formBody) formBody.hidden = true;
+    if (thanks) thanks.hidden = false;
+    open();
+    window.setTimeout(close, delay);
+  } else if (modal.querySelector('[data-register-errors]')) {
+    open();
+  }
+};
+
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', initRegisterModal);
+} else {
+  initRegisterModal();
+}

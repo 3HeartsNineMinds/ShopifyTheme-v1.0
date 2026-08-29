@@ -254,6 +254,26 @@ html[data-theme='dark'] .nm-wordmark__image {
   border:0!important;
 }
 
+/* Popup surface follows the mode tokens like every other panel. */
+.nm-modal__panel {
+  background:var(--mode-panel-strong)!important;
+  border-color:var(--mode-line)!important;
+  color:var(--mode-text)!important;
+}
+
+.nm-modal__field > span,
+.nm-modal__check {
+  color:var(--mode-muted)!important;
+}
+
+.nm-modal::backdrop {
+  background:rgba(255,255,255,.68)!important;
+}
+
+html[data-theme='dark'] .nm-modal::backdrop {
+  background:rgba(5,5,5,.72)!important;
+}
+
 /* ==========================================================
    FOOTER BAR
    ========================================================== */

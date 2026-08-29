@@ -33,11 +33,13 @@
       <span class="nm-dot" aria-hidden="true"></span>
       <span class="nm-eyebrow__slot">
         <span class="nm-eyebrow__item is-active" data-eyebrow-item>{{ section.settings.eyebrow }}</span>
-        <a class="nm-eyebrow__item nm-eyebrow__item--link" data-eyebrow-item href="{{ section.settings.register_url | default: routes.root_url }}">{{ section.settings.eyebrow_register }}</a>
+        <a class="nm-eyebrow__item nm-eyebrow__item--link" data-eyebrow-item data-register-open href="{{ section.settings.register_url | default: routes.root_url }}">{{ section.settings.eyebrow_register }}</a>
       </span>
     </p>
 
-    <a class="nm-drop-card" style="--nm-card-zoom:{{ section.settings.card_zoom | divided_by: 100.0 }};--nm-card-opacity:{{ section.settings.card_opacity | divided_by: 100.0 }}" href="{{ drop_product.url | default: routes.all_products_collection_url }}" aria-label="{% if drop_product != blank %}View {{ drop_product.title }}{% else %}View the first drop{% endif %}">
+    <a class="nm-drop-card" style="--nm-card-zoom:{{ section.settings.card_zoom | divided_by: 100.0 }};--nm-card-opacity:{{ section.settings.card_opacity | divided_by: 100.0 }};--nm-card-box-opacity:{{ section.settings.card_box_opacity | divided_by: 100.0 }}" href="{{ drop_product.url | default: routes.all_products_collection_url }}" aria-label="{% if drop_product != blank %}View {{ drop_product.title }}{% else %}View the first drop{% endif %}">
+      <span class="nm-drop-card__box" aria-hidden="true"></span>
+
       {%- if drop_product.featured_image -%}
         {{ drop_product.featured_image | image_url: width: 900 | image_tag: class: 'nm-drop-card__image', loading: 'eager', alt: drop_product.title }}
       {%- else -%}
@@ -73,6 +75,47 @@
       {%- endif -%}
     </h1>
   </div>
+
+  {%- comment -%}
+    Register popup. The strapline link opens this; with JavaScript off the link
+    still navigates to the register page, so nothing is lost. The form is a real
+    Shopify customer form, so submissions land in Customers with the tags below.
+  {%- endcomment -%}
+  <dialog class="nm-modal" data-register-modal data-close-delay="2000" aria-label="{{ section.settings.modal_heading }}">
+    <div class="nm-modal__panel">
+      <button class="nm-modal__close" type="button" data-modal-close aria-label="Close">&times;</button>
+
+      <div data-modal-form>
+        <h2 class="nm-modal__heading">{{ section.settings.modal_heading }}</h2>
+
+        {%- form 'customer', class: 'nm-modal__form' -%}
+          {%- if form.posted_successfully? -%}
+            <span data-register-success hidden></span>
+          {%- endif -%}
+          {%- if form.errors -%}
+            <span data-register-errors hidden></span>
+            <p class="nm-modal__error">{{ form.errors | default_errors }}</p>
+          {%- endif -%}
+
+          <input type="hidden" name="contact[tags]" value="newsletter, register-15-off">
+
+          <label class="nm-modal__field">
+            <span>Email address</span>
+            <input class="input" type="email" name="contact[email]" autocomplete="email" placeholder="you@example.com" required>
+          </label>
+
+          <label class="nm-modal__check">
+            <input type="checkbox" name="contact[accepts_marketing]" value="true" required>
+            <span>{{ section.settings.modal_terms }}</span>
+          </label>
+
+          <button class="button nm-modal__submit" type="submit">{{ section.settings.modal_submit }}</button>
+        {%- endform -%}
+      </div>
+
+      <p class="nm-modal__thanks" data-modal-thanks hidden>{{ section.settings.modal_thanks }}</p>
+    </div>
+  </dialog>
 </section>
 
 {% schema %}
@@ -88,13 +131,19 @@
     { "type": "text", "id": "eyebrow", "label": "Message one", "default": "ORDER NOW / FIRST DROP / 99 PIECES" },
     { "type": "text", "id": "eyebrow_register", "label": "Message two (link)", "default": "REGISTER FOR 15% OFF" },
     { "type": "url", "id": "register_url", "label": "Message two link" },
-    { "type": "range", "id": "rotate_seconds", "label": "Seconds per message", "min": 2, "max": 12, "step": 1, "unit": "s", "default": 4 },
+    { "type": "range", "id": "rotate_seconds", "label": "Seconds per message", "min": 1.5, "max": 12, "step": 0.1, "unit": "s", "default": 3.4 },
+    { "type": "header", "content": "Register popup" },
+    { "type": "text", "id": "modal_heading", "label": "Popup heading", "default": "Register for 15% off" },
+    { "type": "text", "id": "modal_terms", "label": "Marketing tick box label", "default": "I agree to receive marketing emails from Nine Minds." },
+    { "type": "text", "id": "modal_submit", "label": "Submit button label", "default": "Submit" },
+    { "type": "text", "id": "modal_thanks", "label": "Thank you message", "default": "Thanks, please open your emails for the promo code" },
     { "type": "header", "content": "Hero product" },
     { "type": "product", "id": "drop_product", "label": "Product card" },
     { "type": "checkbox", "id": "show_card_details", "label": "Show product details on the card", "default": true },
     { "type": "text", "id": "card_kicker", "label": "Card kicker", "default": "First drop" },
     { "type": "text", "id": "card_cta", "label": "Card call to action", "default": "Tap to view product" },
-    { "type": "range", "id": "card_opacity", "label": "Image opacity", "min": 20, "max": 100, "step": 5, "unit": "%", "default": 70, "info": "Lower values let the background artwork show through the product photo." },
+    { "type": "range", "id": "card_opacity", "label": "Product image opacity", "min": 20, "max": 100, "step": 5, "unit": "%", "default": 100 },
+    { "type": "range", "id": "card_box_opacity", "label": "Card panel opacity", "min": 0, "max": 100, "step": 5, "unit": "%", "default": 20, "info": "The panel behind the photo. Only visible where the photo is transparent - see the theme README." },
     { "type": "range", "id": "card_zoom", "label": "Image zoom", "min": 100, "max": 175, "step": 5, "unit": "%", "default": 100, "info": "Crops white margins baked into the product photo." }
   ],
   "presets": [{ "name": "Nine Minds landing" }]
