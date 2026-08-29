@@ -155,33 +155,61 @@ if (document.readyState === 'loading') {
    reopen the dialog showing the thank you, then close it after the delay. */
 const initRegisterModal = () => {
   const modal = document.querySelector('[data-register-modal]');
-  if (!modal || typeof modal.showModal !== 'function') return;
+  if (!modal) return;
 
   const formBody = modal.querySelector('[data-modal-form]');
   const thanks = modal.querySelector('[data-modal-thanks]');
   const delay = Number(modal.dataset.closeDelay) || 2000;
+  // <dialog>.showModal is unavailable on older Safari; fall back to the open
+  // attribute, which the stylesheet styles into the same overlay.
+  const native = typeof modal.showModal === 'function';
+
+  const isOpen = () => modal.hasAttribute('open');
 
   const open = () => {
-    if (!modal.open) modal.showModal();
-  };
-  const close = () => {
-    if (modal.open) modal.close();
+    if (isOpen()) return;
+    if (native) {
+      modal.showModal();
+    } else {
+      modal.setAttribute('open', '');
+    }
+    document.documentElement.style.overflow = 'hidden';
+    const field = modal.querySelector('input[type=email]');
+    if (field) field.focus();
   };
 
-  document.querySelectorAll('[data-register-open]').forEach((trigger) => {
-    trigger.addEventListener('click', (event) => {
+  const close = () => {
+    if (!isOpen()) return;
+    if (native) {
+      modal.close();
+    } else {
+      modal.removeAttribute('open');
+    }
+    document.documentElement.style.overflow = '';
+  };
+
+  // Delegated so the trigger works no matter when it is rendered, and even if
+  // the rotating strapline swaps the element out.
+  document.addEventListener('click', (event) => {
+    const trigger = event.target.closest('[data-register-open]');
+    if (trigger) {
       event.preventDefault();
       open();
-    });
-  });
-
-  modal.querySelectorAll('[data-modal-close]').forEach((button) => {
-    button.addEventListener('click', close);
-  });
-
-  // Clicking the backdrop closes; clicking the panel must not.
-  modal.addEventListener('click', (event) => {
+      return;
+    }
+    if (event.target.closest('[data-modal-close]')) {
+      close();
+      return;
+    }
     if (event.target === modal) close();
+  });
+
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape' && isOpen()) close();
+  });
+
+  modal.addEventListener('close', () => {
+    document.documentElement.style.overflow = '';
   });
 
   if (modal.querySelector('[data-register-success]')) {

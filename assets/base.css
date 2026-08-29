@@ -850,7 +850,6 @@ body {
   object-position:center;
   transform:scale(var(--nm-card-zoom,1));
   transform-origin:center;
-  opacity:var(--nm-card-opacity,1);
   z-index:1;
 }
 
@@ -921,14 +920,29 @@ body {
 }
 
 /* ---- Register popup -------------------------------------- */
+/* Styled as a full-screen overlay that centres its panel, so the native
+   showModal path and the older-Safari [open] fallback look identical. */
 .nm-modal {
-  width:min(92vw,420px);
+  display:none;
+  position:fixed;
+  inset:0;
+  z-index:200;
+  width:100%;
   max-width:none;
-  padding:0;
+  height:100%;
+  max-height:none;
+  margin:0;
+  padding:clamp(1rem,5vw,2rem);
   border:0;
   background:transparent;
   color:var(--text);
+  overflow:auto;
   overscroll-behavior:contain;
+}
+
+.nm-modal[open] {
+  display:grid;
+  place-items:center;
 }
 
 .nm-modal::backdrop {
@@ -936,8 +950,19 @@ body {
   backdrop-filter:blur(4px);
 }
 
+/* Scrim for the fallback path, which gets no ::backdrop. */
+.nm-modal[open]:before {
+  content:"";
+  position:fixed;
+  inset:0;
+  background:rgba(5,5,5,.72);
+  backdrop-filter:blur(4px);
+}
+
 .nm-modal__panel {
   position:relative;
+  z-index:1;
+  width:min(92vw,420px);
   padding:clamp(1.4rem,5vw,2rem);
   border:1px solid var(--line);
   border-radius:1.25rem;
