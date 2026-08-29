@@ -254,7 +254,7 @@ html[data-theme='dark'] .nm-wordmark__image {
 }
 
 html[data-theme='dark'] .nm-drop-card {
-  border-color:transparent!important;
+  border:0!important;
 }
 
 /* ==========================================================

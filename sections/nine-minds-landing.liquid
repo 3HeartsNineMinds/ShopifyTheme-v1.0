@@ -37,11 +37,22 @@
       </span>
     </p>
 
-    <a class="nm-drop-card" href="{{ drop_product.url | default: routes.all_products_collection_url }}" aria-label="{% if drop_product != blank %}View {{ drop_product.title }}{% else %}View the first drop{% endif %}">
+    <a class="nm-drop-card" style="--nm-card-zoom:{{ section.settings.card_zoom | divided_by: 100.0 }}" href="{{ drop_product.url | default: routes.all_products_collection_url }}" aria-label="{% if drop_product != blank %}View {{ drop_product.title }}{% else %}View the first drop{% endif %}">
       {%- if drop_product.featured_image -%}
         {{ drop_product.featured_image | image_url: width: 900 | image_tag: class: 'nm-drop-card__image', loading: 'eager', alt: drop_product.title }}
       {%- else -%}
         <span class="nm-product-placeholder"><span>NINE MINDS</span></span>
+      {%- endif -%}
+
+      {%- if section.settings.show_card_details -%}
+        <span class="nm-drop-card__content">
+          <span class="nm-drop-card__kicker">{{ section.settings.card_kicker }}</span>
+          <strong>{% if drop_product != blank %}{{ drop_product.title }}{% else %}NINE MINDS HOODIE{% endif %}</strong>
+          {%- if drop_product.price != blank -%}
+            <span class="nm-drop-card__price">{{ drop_product.price | money }}</span>
+          {%- endif -%}
+          <small>{{ section.settings.card_cta }}</small>
+        </span>
       {%- endif -%}
     </a>
 
@@ -79,7 +90,11 @@
     { "type": "url", "id": "register_url", "label": "Message two link" },
     { "type": "range", "id": "rotate_seconds", "label": "Seconds per message", "min": 2, "max": 12, "step": 1, "unit": "s", "default": 4 },
     { "type": "header", "content": "Hero product" },
-    { "type": "product", "id": "drop_product", "label": "Product card" }
+    { "type": "product", "id": "drop_product", "label": "Product card" },
+    { "type": "checkbox", "id": "show_card_details", "label": "Show product details on the card", "default": true },
+    { "type": "text", "id": "card_kicker", "label": "Card kicker", "default": "First drop" },
+    { "type": "text", "id": "card_cta", "label": "Card call to action", "default": "Tap to view product" },
+    { "type": "range", "id": "card_zoom", "label": "Image zoom", "min": 100, "max": 175, "step": 5, "unit": "%", "default": 100, "info": "Crops white margins baked into the product photo." }
   ],
   "presets": [{ "name": "Nine Minds landing" }]
 }

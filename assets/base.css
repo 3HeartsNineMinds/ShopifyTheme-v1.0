@@ -816,11 +816,68 @@ body {
   outline-offset:6px;
 }
 
+/* Absolutely positioned so the width/height attributes Shopify's image_tag
+   emits cannot reintroduce an intrinsic ratio and letterbox the card.
+   --nm-card-zoom crops any white margin baked into the product photo. */
 .nm-drop-card__image {
+  position:absolute;
+  inset:0;
   display:block;
   width:100%;
   height:100%;
   object-fit:cover;
+  object-position:center;
+  transform:scale(var(--nm-card-zoom,1));
+  transform-origin:center;
+}
+
+/* Caption over the bottom of the photo, scrimmed so it stays readable on a
+   light product shot. Dark-on-light, as it was before the redesign. */
+.nm-drop-card__content {
+  position:absolute;
+  left:0;
+  right:0;
+  bottom:0;
+  z-index:1;
+  display:grid;
+  gap:.2rem;
+  padding:clamp(28px,7vh,64px) clamp(12px,4%,22px) clamp(10px,2vh,18px);
+  color:#050505;
+  background:linear-gradient(180deg,rgba(255,255,255,0),rgba(255,255,255,.86) 46%,rgba(255,255,255,.96));
+  text-align:left;
+}
+
+.nm-drop-card__kicker,
+.nm-drop-card__content small {
+  text-transform:uppercase;
+  letter-spacing:.12em;
+  font-size:clamp(8px,1.5vw,11px);
+  font-weight:900;
+}
+
+.nm-drop-card__content strong {
+  font-size:clamp(15px,2.6vw,26px);
+  line-height:.95;
+  letter-spacing:-.05em;
+  font-weight:900;
+}
+
+.nm-drop-card__price {
+  font-size:clamp(12px,2vw,17px);
+  font-weight:800;
+}
+
+.nm-drop-card__content small {
+  display:inline-flex;
+  align-items:center;
+  gap:.4rem;
+  color:#2c2c2c;
+}
+
+.nm-drop-card__content small:after {
+  content:"→";
+  font-size:1.1em;
+  line-height:1;
 }
 
 .nm-product-placeholder {
