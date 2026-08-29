@@ -767,6 +767,9 @@ body {
   justify-items:center;
 }
 
+/* The outgoing message stays visible for the length of its fade (visibility is
+   delayed, not instant), and theme.js only fades the next one in once that has
+   finished - so the two are never on screen together. */
 .nm-eyebrow__item {
   grid-area:1 / 1;
   margin:0;
@@ -775,12 +778,13 @@ body {
   white-space:nowrap;
   opacity:0;
   visibility:hidden;
-  transition:opacity .35s ease;
+  transition:opacity .18s ease,visibility 0s linear .18s;
 }
 
 .nm-eyebrow__item.is-active {
   opacity:1;
   visibility:visible;
+  transition:opacity .18s ease,visibility 0s linear 0s;
 }
 
 /* Reduced motion drops the fade, but the messages must still swap - the second
@@ -900,6 +904,39 @@ body {
   content:"→";
   font-size:1.1em;
   line-height:1;
+}
+
+/* Tap ripple. Sits above the photo but below the caption, and is clipped by
+   the card's overflow:hidden. */
+.nm-ripple {
+  position:absolute;
+  z-index:2;
+  border-radius:50%;
+  transform:translate(-50%,-50%) scale(0);
+  background:radial-gradient(circle,rgba(255,255,255,.62),rgba(255,255,255,.22) 52%,rgba(255,255,255,0) 70%);
+  pointer-events:none;
+  will-change:transform,opacity;
+  animation:nm-ripple-out var(--nm-ripple-ms,420ms) cubic-bezier(.22,.61,.36,1) forwards;
+}
+
+@keyframes nm-ripple-out {
+  0% {
+    transform:translate(-50%,-50%) scale(0);
+    opacity:.95;
+  }
+  60% {
+    opacity:.6;
+  }
+  100% {
+    transform:translate(-50%,-50%) scale(1);
+    opacity:0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nm-ripple {
+    display:none;
+  }
 }
 
 .nm-product-placeholder {

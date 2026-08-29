@@ -37,7 +37,7 @@
       </span>
     </p>
 
-    <a class="nm-drop-card" style="--nm-card-zoom:{{ section.settings.card_zoom | default: 100 | divided_by: 100.0 }};--nm-card-box-opacity:{{ section.settings.card_box_opacity | default: 10 | divided_by: 100.0 }};--nm-card-box-color:{{ section.settings.card_box_color | default: '#050505' }}" href="{{ drop_product.url | default: routes.all_products_collection_url }}" aria-label="{% if drop_product != blank %}View {{ drop_product.title }}{% else %}View the first drop{% endif %}">
+    <a class="nm-drop-card" data-ripple-link style="--nm-card-zoom:{{ section.settings.card_zoom | default: 100 | divided_by: 100.0 }};--nm-card-box-opacity:{{ section.settings.card_box_opacity | default: 10 | divided_by: 100.0 }};--nm-card-box-color:{{ section.settings.card_box_color | default: '#050505' }}" href="{{ drop_product.url | default: routes.all_products_collection_url }}" aria-label="{% if drop_product != blank %}View {{ drop_product.title }}{% else %}View the first drop{% endif %}">
       <span class="nm-drop-card__box" aria-hidden="true"></span>
 
       {%- if drop_product.featured_image -%}

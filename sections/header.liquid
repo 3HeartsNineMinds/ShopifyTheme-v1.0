@@ -18,27 +18,22 @@
       </a>
     </div>
 
-    {%- comment -%}
-      The centre logo is the light/dark switch. theme.js listens for
-      [data-theme-toggle] and flips html[data-theme]; the logo inverts in CSS.
-    {%- endcomment -%}
-    <button class="site-brand site-brand--center" type="button" data-theme-toggle aria-pressed="true" aria-label="Switch to light mode">
+    <a class="site-brand site-brand--center" href="{{ routes.root_url }}" aria-label="{{ shop.name }} home">
       {% if brand_logo != blank %}
         {{ brand_logo | image_url: width: 240 | image_tag: class: 'site-logo', loading: 'eager', alt: shop.name }}
       {% else %}
         NINE<span>MINDS</span>
       {% endif %}
-    </button>
+    </a>
 
     <div class="site-nav site-actions site-actions--right">
-      <nav class="site-nav site-nav--inline" aria-label="Primary navigation">
-        <a href="{{ routes.root_url }}">Home</a>
-        {% if section.settings.menu != blank %}
+      {% if section.settings.menu != blank %}
+        <nav class="site-nav site-nav--inline" aria-label="Primary navigation">
           {% for link in section.settings.menu.links %}
             <a href="{{ link.url }}">{{ link.title }}</a>
           {% endfor %}
-        {% endif %}
-      </nav>
+        </nav>
+      {% endif %}
 
       <a class="cart-link cart-link--prominent" href="{{ routes.cart_url }}" aria-label="View cart with {{ cart.item_count }} items">
         <span>Cart</span>

@@ -21,14 +21,10 @@
     {% endif %}
 
     <script>
-      // Dark is the default and is already set on <html> above, so it survives
-      // with JavaScript disabled. Only override when the visitor chose light.
+      // Light mode is off: data-theme="dark" on <html> above is the only value.
+      // Clear any stored preference so returning visitors are not stuck light.
       (function () {
-        try {
-          if (localStorage.getItem('nine-minds-theme') === 'light') {
-            document.documentElement.setAttribute('data-theme', 'light');
-          }
-        } catch (error) {}
+        try { localStorage.removeItem('nine-minds-theme'); } catch (error) {}
       })();
     </script>
 

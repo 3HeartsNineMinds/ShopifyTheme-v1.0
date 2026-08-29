@@ -1,5 +1,10 @@
 document.documentElement.classList.remove('no-js');
 
+/* Light mode is switched off site-wide. All of the light styling still lives in
+   assets/theme-modes.css under html[data-theme='light'] - to bring it back, set
+   THEME_LOCK to null and re-add a [data-theme-toggle] control to the header. */
+const THEME_LOCK = 'dark';
+
 const readStoredTheme = () => {
   try {
     return window.localStorage.getItem('nine-minds-theme');
@@ -34,6 +39,11 @@ const setThemeMode = (theme) => {
 };
 
 const initThemeMode = () => {
+  if (THEME_LOCK) {
+    document.documentElement.setAttribute('data-theme', THEME_LOCK);
+    document.body?.setAttribute('data-theme', THEME_LOCK);
+    return;
+  }
   const existingTheme = document.documentElement.getAttribute('data-theme');
   setThemeMode(readStoredTheme() || existingTheme || 'dark');
 };
@@ -45,6 +55,7 @@ if (document.readyState === 'loading') {
 }
 
 document.addEventListener('click', (event) => {
+  if (THEME_LOCK) return;
   const toggle = event.target.closest('[data-theme-toggle]');
   if (!toggle) return;
 
@@ -118,9 +129,15 @@ const initEyebrowRotators = () => {
     if (index < 0) index = 0;
     let timer = null;
 
+    // Fade the current one out first, then bring the next one in, so the two
+    // messages never overlap mid-transition.
+    const FADE = 180;
     const show = (next) => {
-      items.forEach((item, i) => item.classList.toggle('is-active', i === next));
-      index = next;
+      items[index].classList.remove('is-active');
+      window.setTimeout(() => {
+        items.forEach((item, i) => item.classList.toggle('is-active', i === next));
+        index = next;
+      }, FADE);
     };
 
     const start = () => {
@@ -226,4 +243,48 @@ if (document.readyState === 'loading') {
   document.addEventListener('DOMContentLoaded', initRegisterModal);
 } else {
   initRegisterModal();
+}
+
+/* Tapping the hero card sends a ripple out from the touch point before the
+   product page loads. Plain navigation is preserved for modified clicks (new
+   tab, middle click) and when the visitor asks for reduced motion. */
+const RIPPLE_MS = 420;
+
+const initCardRipple = () => {
+  document.querySelectorAll('[data-ripple-link]').forEach((link) => {
+    link.addEventListener('click', (event) => {
+      if (event.defaultPrevented) return;
+      if (event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+      const href = link.getAttribute('href');
+      if (!href) return;
+
+      event.preventDefault();
+
+      const box = link.getBoundingClientRect();
+      const x = (event.clientX || box.left + box.width / 2) - box.left;
+      const y = (event.clientY || box.top + box.height / 2) - box.top;
+      // Reach the furthest corner so the ripple always covers the card.
+      const size = Math.hypot(Math.max(x, box.width - x), Math.max(y, box.height - y)) * 2;
+
+      const ripple = document.createElement('span');
+      ripple.className = 'nm-ripple';
+      ripple.style.width = `${size}px`;
+      ripple.style.height = `${size}px`;
+      ripple.style.left = `${x}px`;
+      ripple.style.top = `${y}px`;
+      link.appendChild(ripple);
+
+      window.setTimeout(() => {
+        window.location.href = href;
+      }, RIPPLE_MS);
+    });
+  });
+};
+
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', initCardRipple);
+} else {
+  initCardRipple();
 }
