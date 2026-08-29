@@ -799,8 +799,8 @@ body {
   width:min(100%,var(--nm-card-width,420px),calc(var(--nm-card-max-h,52vh) * 3 / 4));
   height:auto;
   overflow:hidden;
-  background:#fff;
-  color:#050505;
+  background:transparent;
+  color:var(--text);
   text-decoration:none;
   transition:transform .25s ease,box-shadow .25s ease;
 }
@@ -829,6 +829,7 @@ body {
   object-position:center;
   transform:scale(var(--nm-card-zoom,1));
   transform-origin:center;
+  opacity:var(--nm-card-opacity,1);
 }
 
 /* Caption over the bottom of the photo, scrimmed so it stays readable on a
@@ -842,8 +843,8 @@ body {
   display:grid;
   gap:.2rem;
   padding:clamp(28px,7vh,64px) clamp(12px,4%,22px) clamp(10px,2vh,18px);
-  color:#050505;
-  background:linear-gradient(180deg,rgba(255,255,255,0),rgba(255,255,255,.86) 46%,rgba(255,255,255,.96));
+  color:#f6f6f3;
+  background:linear-gradient(180deg,rgba(5,5,5,0),rgba(5,5,5,.5) 48%,rgba(5,5,5,.78));
   text-align:left;
 }
 
@@ -871,7 +872,7 @@ body {
   display:inline-flex;
   align-items:center;
   gap:.4rem;
-  color:#2c2c2c;
+  color:rgba(246,246,243,.78);
 }
 
 .nm-drop-card__content small:after {
@@ -885,7 +886,9 @@ body {
   place-items:center;
   width:100%;
   height:100%;
-  background:#fff;
+  background:rgba(255,255,255,.06);
+  border:1px solid var(--line);
+  color:var(--text);
   text-align:center;
 }
 

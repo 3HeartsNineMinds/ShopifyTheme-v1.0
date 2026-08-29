@@ -245,15 +245,12 @@ html[data-theme='dark'] .nm-wordmark__image {
   filter:none!important;
 }
 
-/* The hero card is the white block from the draft in both modes; in light
-   mode it needs an edge so it does not merge into the page. */
+/* The card is a frame for the photo rather than a white block: no fill and no
+   border, so the product sits straight on the artwork. --nm-card-opacity (set
+   from the section settings) fades the photo further if needed. */
 .nm-drop-card {
-  background:#fff!important;
-  color:#050505!important;
-  border:1px solid var(--mode-line)!important;
-}
-
-html[data-theme='dark'] .nm-drop-card {
+  background:transparent!important;
+  color:var(--mode-text)!important;
   border:0!important;
 }
 
