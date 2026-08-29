@@ -18,6 +18,7 @@
         "eyebrow_register": "REGISTER FOR 15% OFF",
         "register_url": "/pages/register",
         "rotate_seconds": 3.4,
+        "card_box_color": "#050505",
         "card_box_opacity": 10,
         "card_zoom": 100
       }
