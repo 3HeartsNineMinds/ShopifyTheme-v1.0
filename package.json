@@ -7,7 +7,8 @@
     "push": "shopify theme push",
     "pull": "shopify theme pull",
     "check": "shopify theme check",
-    "shot": "node scripts/screenshot.mjs"
+    "shot": "node scripts/screenshot.mjs",
+    "validate": "node scripts/validate-schema.mjs"
   },
   "devDependencies": {
     "@shopify/cli": "^4.7.0",
