@@ -26,14 +26,13 @@
 
   <div class="nm-hero">
     {%- comment -%}
-      Rotating strapline. theme.js alternates the items; the register message is
-      a link, so it is kept clickable and rotation pauses on hover/focus.
+      Static strapline. The rotation and the register message were removed; the
+      register popup below is left in place for when that is revisited.
     {%- endcomment -%}
-    <p class="nm-eyebrow" data-eyebrow-rotator data-eyebrow-interval="{{ section.settings.rotate_seconds | default: 3.4 }}">
+    <p class="nm-eyebrow">
       <span class="nm-dot" aria-hidden="true"></span>
       <span class="nm-eyebrow__slot">
-        <span class="nm-eyebrow__item is-active" data-eyebrow-item>{{ section.settings.eyebrow }}</span>
-        <a class="nm-eyebrow__item nm-eyebrow__item--link" data-eyebrow-item data-register-open href="{{ section.settings.register_url | default: routes.root_url }}">{{ section.settings.eyebrow_register }}</a>
+        <span class="nm-eyebrow__item is-active">{{ section.settings.eyebrow }}</span>
       </span>
     </p>
 
@@ -142,10 +141,7 @@
     { "type": "range", "id": "art_opacity", "label": "Background art opacity", "min": 0, "max": 100, "step": 5, "unit": "%", "default": 100 },
     { "type": "image_picker", "id": "wordmark", "label": "Wordmark image (white artwork)", "info": "Defaults to NineMindsLogoText.png from Content > Files." },
     { "type": "header", "content": "Strapline" },
-    { "type": "text", "id": "eyebrow", "label": "Message one", "default": "ORDER NOW / FIRST DROP / 99 PIECES" },
-    { "type": "text", "id": "eyebrow_register", "label": "Message two (link)", "default": "REGISTER FOR 15% OFF" },
-    { "type": "url", "id": "register_url", "label": "Message two link" },
-    { "type": "range", "id": "rotate_seconds", "label": "Seconds per message", "min": 2, "max": 10, "step": 0.1, "unit": "s", "default": 3.4 },
+    { "type": "text", "id": "eyebrow", "label": "Message", "default": "ORDER NOW / FIRST DROP / 99 PIECES" },
     { "type": "header", "content": "Register popup" },
     { "type": "text", "id": "modal_heading", "label": "Popup heading", "default": "Register for 15% off" },
     { "type": "text", "id": "modal_terms", "label": "Marketing tick box label", "default": "I agree to receive marketing emails from Nine Minds." },

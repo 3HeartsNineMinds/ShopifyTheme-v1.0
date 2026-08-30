@@ -5,10 +5,10 @@
     "footer": {
       "type": "footer",
       "settings": {
-        "link_one_label": "ABOUT US",
-        "link_one_url": "/pages/about-us",
+        "link_one_label": "FAQ",
+        "link_one_url": "/pages/faq",
         "link_two_label": "SIZE GUIDE",
-        "link_two_url": "/pages/size-guide",
+        "link_two_url": "/pages/sizing",
         "link_three_label": "CONTACT US",
         "link_three_url": "/pages/contact-us",
         "link_four_label": "LEGAL SHIT",

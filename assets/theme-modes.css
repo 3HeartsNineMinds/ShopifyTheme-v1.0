@@ -15,27 +15,27 @@
    ========================================================== */
 :root,
 html[data-theme='light'] {
-  --mode-bg:#ffffff;
-  --mode-text:#050505;
-  --mode-muted:#5a5a5a;
-  --mode-cream:#050505;
-  --mode-panel:#ffffff;
-  --mode-panel-strong:#ffffff;
-  --mode-line:rgba(5,5,5,.12);
-  --mode-soft:#f4f4f4;
-  --mode-inverse:#050505;
-  --mode-inverse-text:#f6f6f3;
-}
-
-html[data-theme='dark'] {
-  --mode-bg:#050505;
+  --mode-bg:#000000;
   --mode-text:#f6f6f3;
   --mode-muted:#a7a7a7;
   --mode-cream:#ece7dc;
   --mode-panel:rgba(255,255,255,.06);
-  --mode-panel-strong:#111111;
+  --mode-panel-strong:#0a0a0a;
   --mode-line:rgba(255,255,255,.14);
-  --mode-soft:#151515;
+  --mode-soft:#0a0a0a;
+  --mode-inverse:#f6f6f3;
+  --mode-inverse-text:#050505;
+}
+
+html[data-theme='dark'] {
+  --mode-bg:#000000;
+  --mode-text:#f6f6f3;
+  --mode-muted:#a7a7a7;
+  --mode-cream:#ece7dc;
+  --mode-panel:rgba(255,255,255,.06);
+  --mode-panel-strong:#0a0a0a;
+  --mode-line:rgba(255,255,255,.14);
+  --mode-soft:#0a0a0a;
   --mode-inverse:#f6f6f3;
   --mode-inverse-text:#050505;
 }
@@ -52,14 +52,11 @@ body {
 /* ==========================================================
    HEADER & NAVIGATION
    ========================================================== */
-.site-header {
-  background:rgba(255,255,255,.88)!important;
-  border-bottom:1px solid var(--mode-line)!important;
-  backdrop-filter:blur(14px)!important;
-}
-
+.site-header,
 html[data-theme='dark'] .site-header {
-  background:rgba(5,5,5,.82)!important;
+  background:#000000!important;
+  border-bottom:2px solid #ffffff!important;
+  backdrop-filter:none!important;
 }
 
 .site-brand,
@@ -216,14 +213,10 @@ html[data-theme='dark'] .product-title {
   color:var(--mode-text)!important;
 }
 
-.nm-grain {
-  opacity:.025!important;
-  mix-blend-mode:multiply!important;
-}
-
+/* The grain overlay is off: the page is a flat black surface. */
+.nm-grain,
 html[data-theme='dark'] .nm-grain {
-  opacity:.16!important;
-  mix-blend-mode:normal!important;
+  display:none!important;
 }
 
 /* The embroidery artwork is dark, so it is dialled back on a light page. */
@@ -235,13 +228,11 @@ html[data-theme='dark'] .nm-landing__art {
   opacity:var(--nm-art-opacity)!important;
 }
 
-/* NineMindsLogoText.png is white artwork: invert it to black on light
-   backgrounds, and leave it as-is in dark mode. */
+/* NineMindsLogoText.png is white artwork sitting on a black page, so it is
+   never inverted, and the whole block stays at full opacity. */
+.nm-wordmark,
 .nm-wordmark__image {
-  filter:invert(1)!important;
-}
-
-html[data-theme='dark'] .nm-wordmark__image {
+  opacity:1!important;
   filter:none!important;
 }
 
@@ -277,14 +268,12 @@ html[data-theme='dark'] .nm-modal::backdrop {
 /* ==========================================================
    FOOTER BAR
    ========================================================== */
-.site-footer {
-  background:rgba(255,255,255,.88)!important;
-  border-top:1px solid var(--mode-line)!important;
-  color:var(--mode-text)!important;
-}
-
+.site-footer,
 html[data-theme='dark'] .site-footer {
-  background:rgba(5,5,5,.82)!important;
+  background:#000000!important;
+  border-top:2px solid #ffffff!important;
+  backdrop-filter:none!important;
+  color:var(--mode-text)!important;
 }
 
 /* ==========================================================
@@ -330,11 +319,9 @@ html[data-theme='dark'] .product-media-next {
    RESPONSIVE: 880px AND BELOW
    ========================================================== */
 @media(max-width:880px) {
-  .site-header {
-    background:rgba(255,255,255,.94)!important;
-  }
+  .site-header,
   html[data-theme='dark'] .site-header {
-    background:rgba(5,5,5,.92)!important;
+    background:#000000!important;
   }
   [data-product-section] .product-title {
     color:#050505!important;
