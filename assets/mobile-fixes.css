@@ -7,6 +7,31 @@
    ========================================================== */
 
 @media (max-width: 880px) {
+  /* ---- Scroll lock ----------------------------------------
+     The landing is a single locked screen on mobile as well as desktop:
+     nothing scrolls, and rubber-band/overscroll is off so the page cannot be
+     dragged away from the viewport on iOS. */
+  html.template-index,
+  html.template-index body {
+    height:100%!important;
+    max-height:100%!important;
+    overflow:hidden!important;
+    overscroll-behavior:none!important;
+    touch-action:pan-x pinch-zoom!important;
+    -webkit-overflow-scrolling:auto!important;
+  }
+  html.template-index body {
+    position:fixed!important;
+    inset:0!important;
+    width:100%!important;
+  }
+  .template-index .main-content {
+    overflow:hidden!important;
+  }
+  /* The mobile artwork replaces the desktop file. */
+  .nm-landing__art {
+    background-image:var(--nm-art-mobile,var(--nm-art-desktop,none))!important;
+  }
   .site-header {
     position:sticky!important;
     top:0!important;

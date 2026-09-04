@@ -723,6 +723,10 @@ body {
   background-repeat:no-repeat;
   background-size:cover;
   opacity:var(--nm-art-opacity);
+  /* Desktop artwork by default; the mobile file takes over below 880px (see
+     mobile-fixes.css). Either var falls back to the other when only one file
+     is set, so a single image still covers both breakpoints. */
+  background-image:var(--nm-art-desktop,none);
 }
 
 .nm-grain {
@@ -823,7 +827,9 @@ body {
   aspect-ratio:3 / 4;
   width:min(100%,var(--nm-card-width,420px),calc(var(--nm-card-max-h,52vh) * 3 / 4));
   height:auto;
-  overflow:hidden;
+  /* Visible, not hidden: the caption is nudged below the bottom edge and must
+     not be clipped. The zoomed photo is clipped by its own clip-path instead. */
+  overflow:visible;
   background:transparent;
   color:var(--text);
   text-decoration:none;
@@ -865,6 +871,9 @@ body {
   object-position:center;
   transform:scale(var(--nm-card-zoom,1));
   transform-origin:center;
+  /* Does the cropping the card's overflow used to do, so the zoom still cuts
+     the photo to the card box while the caption can sit outside it. */
+  clip-path:inset(0);
   z-index:1;
 }
 
@@ -885,6 +894,9 @@ body {
      photo happens to be light where the caption sits. */
   text-shadow:0 1px 14px rgba(5,5,5,.8),0 0 3px rgba(5,5,5,.5);
   text-align:center;
+  /* Nudged down the photo. --nm-card-caption-drop is the single knob so the
+     offset can be dialled back per breakpoint if the caption ever clips. */
+  transform:translateY(var(--nm-card-caption-drop,20px));
 }
 
 .nm-drop-card__kicker,

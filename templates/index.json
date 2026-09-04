@@ -12,7 +12,8 @@
     "nine_minds_landing": {
       "type": "nine-minds-landing",
       "settings": {
-        "background_file": "WEBSITE_OCTOPUS_ART_EMBROIDERY.png",
+        "background_file_desktop": "Background_desktop.png",
+        "background_file_mobile": "Background_mobile.png",
         "art_opacity": 100,
         "eyebrow": "ORDER NOW / FIRST DROP / 99 PIECES",
         "eyebrow_register": "REGISTER FOR 15% OFF",

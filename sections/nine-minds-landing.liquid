@@ -10,17 +10,39 @@
   assign wordmark = section.settings.wordmark
   assign wordmark_file_url = 'NineMindsLogoText.png' | file_url
 
-  # Background embroidery art: theme-editor setting first, then Content > Files.
-  assign art_url = ''
-  if section.settings.background_image != blank
-    assign art_url = section.settings.background_image | image_url: width: 2400
-  elsif section.settings.background_file != blank
-    assign art_url = section.settings.background_file | file_url
+  # Background art. Desktop and mobile are separate files (Background_desktop /
+  # Background_mobile); each falls back to a picked image, then to a Content >
+  # Files name. Whichever one is missing falls back to the other in CSS, so a
+  # single file still covers both breakpoints.
+  assign art_desktop = ''
+  if section.settings.background_image_desktop != blank
+    assign art_desktop = section.settings.background_image_desktop | image_url: width: 2400
+  elsif section.settings.background_file_desktop != blank
+    assign art_desktop = section.settings.background_file_desktop | file_url
+  endif
+
+  assign art_mobile = ''
+  if section.settings.background_image_mobile != blank
+    assign art_mobile = section.settings.background_image_mobile | image_url: width: 1400
+  elsif section.settings.background_file_mobile != blank
+    assign art_mobile = section.settings.background_file_mobile | file_url
+  endif
+
+  # Either side missing means the other covers both breakpoints.
+  if art_desktop == blank
+    assign art_desktop = art_mobile
+  endif
+  if art_mobile == blank
+    assign art_mobile = art_desktop
   endif
 -%}
-<section class="nm-landing" id="top" style="--nm-art-opacity:{{ section.settings.art_opacity | default: 100 | divided_by: 100.0 }}">
-  {%- if art_url != blank -%}
-    <div class="nm-landing__art" aria-hidden="true" style="background-image:url('{{ art_url }}')"></div>
+<section class="nm-landing" id="top" style="--nm-art-opacity:{{ section.settings.art_opacity | default: 100 | divided_by: 100.0 }}{% if art_desktop != blank %};--nm-art-desktop:url('{{ art_desktop }}'){% endif %}{% if art_mobile != blank %};--nm-art-mobile:url('{{ art_mobile }}'){% endif %}">
+  {%- if art_desktop != blank or art_mobile != blank -%}
+    {%- comment -%}
+      The image itself comes from --nm-art-desktop / --nm-art-mobile above; the
+      breakpoint that picks between them lives in base.css and mobile-fixes.css.
+    {%- endcomment -%}
+    <div class="nm-landing__art" aria-hidden="true"></div>
   {%- endif -%}
   <div class="nm-grain" aria-hidden="true"></div>
 
@@ -136,8 +158,10 @@
   "name": "Nine Minds landing",
   "settings": [
     { "type": "header", "content": "Artwork" },
-    { "type": "image_picker", "id": "background_image", "label": "Background art" },
-    { "type": "text", "id": "background_file", "label": "Background art filename", "default": "WEBSITE_OCTOPUS_ART_EMBROIDERY.png", "info": "Used only when no background art is picked above. Must match a file in Content > Files, including its extension." },
+    { "type": "image_picker", "id": "background_image_desktop", "label": "Background art - desktop" },
+    { "type": "text", "id": "background_file_desktop", "label": "Background art filename - desktop", "default": "Background_desktop.png", "info": "Used only when no desktop art is picked above. Must match a file in Content > Files, including its extension." },
+    { "type": "image_picker", "id": "background_image_mobile", "label": "Background art - mobile" },
+    { "type": "text", "id": "background_file_mobile", "label": "Background art filename - mobile", "default": "Background_mobile.png", "info": "Shown at 880px and below. Used only when no mobile art is picked above. Leave blank to reuse the desktop art." },
     { "type": "range", "id": "art_opacity", "label": "Background art opacity", "min": 0, "max": 100, "step": 5, "unit": "%", "default": 100 },
     { "type": "image_picker", "id": "wordmark", "label": "Wordmark image (white artwork)", "info": "Defaults to NineMindsLogoText.png from Content > Files." },
     { "type": "header", "content": "Strapline" },
