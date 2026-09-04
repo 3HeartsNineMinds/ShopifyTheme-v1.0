@@ -1145,9 +1145,11 @@ body {
   .product-layout {
     grid-template-columns:1fr;
   }
+  /* The mobile header is in flow (see mobile-fixes.css), so these only need
+     breathing room, not clearance for a fixed bar. */
   .product-section,
   .cart-section {
-    padding-top:8rem;
+    padding-top:1rem;
   }
   .product-actions {
     justify-content:flex-start;
@@ -1156,9 +1158,11 @@ body {
     align-items:flex-start;
     flex-direction:column;
   }
+  /* Rows stack into cards on mobile instead of scrolling sideways; the
+     layout for that lives in mobile-fixes.css. */
   .cart-table {
     display:block;
-    overflow-x:auto;
+    overflow-x:hidden;
   }
   .cart-summary {
     margin-left:0;

@@ -32,8 +32,19 @@
   .nm-landing__art {
     background-image:var(--nm-art-mobile,var(--nm-art-desktop,none))!important;
   }
-  .site-header {
+  /* ---- Sticky top bar, every template ---------------------
+     Shopify wraps the header section in its own div. Sticking .site-header
+     alone does nothing on a scrolling page: its wrapper is exactly one header
+     tall, so there is no room to stick inside it and the bar scrolls away.
+     Pin the wrapper instead and let the header sit static inside it. */
+  .shopify-section-group-header-group,
+  body > .shopify-section:has(> .site-header) {
     position:sticky!important;
+    top:0!important;
+    z-index:100!important;
+  }
+  .site-header {
+    position:relative!important;
     top:0!important;
     z-index:100!important;
     padding:.55rem 0!important;
@@ -173,17 +184,52 @@
     font-size:8px!important;
     opacity:.7!important;
   }
+  /* ---- Product page: one locked screen ---------------------
+     Same treatment as the landing - nothing scrolls. The layout is a grid of
+     fixed rows with the media row taking whatever height is left over, so the
+     page always fits between the sticky bar and the fixed footer, on any
+     phone, without a scroll. */
+  html.template-product,
+  html.template-product body {
+    height:100%!important;
+    max-height:100%!important;
+    overflow:hidden!important;
+    overscroll-behavior:none!important;
+    -webkit-overflow-scrolling:auto!important;
+  }
+  html.template-product body {
+    position:fixed!important;
+    inset:0!important;
+    width:100%!important;
+    display:flex!important;
+    flex-direction:column!important;
+  }
+  /* flex:1 rather than a dvh calc: the header is in flow, so the main region
+     is simply "whatever is left", regardless of browser chrome. */
+  .template-product .main-content {
+    flex:1 1 auto!important;
+    min-height:0!important;
+    overflow:hidden!important;
+    padding-bottom:0!important;
+  }
   .template-product .product-section,
   [data-product-section].product-section {
-    padding-top:5.1rem!important;
-    padding-bottom:1.5rem!important;
+    height:100%!important;
+    max-height:100%!important;
+    overflow:hidden!important;
+    /* Was 5.1rem, which cleared a fixed header. The header is in flow here, so
+       that was dead space - the title now starts just under the bar. */
+    padding-top:.5rem!important;
+    padding-bottom:calc(var(--site-footer-h) + .35rem)!important;
   }
   [data-product-section] .product-layout {
     display:grid!important;
-    grid-template-columns:minmax(0,1fr) minmax(118px,.72fr)!important;
-    grid-auto-flow:row!important;
-    gap:.85rem!important;
-    width:min(100% - 1.2rem,1240px)!important;
+    grid-template-columns:minmax(0,1fr) minmax(106px,.6fr)!important;
+    /* title / price / description / media + sizes / buttons */
+    grid-template-rows:auto auto auto minmax(0,1fr) auto!important;
+    height:100%!important;
+    gap:.4rem .7rem!important;
+    width:min(100% - 1.1rem,1240px)!important;
     margin-inline:auto!important;
   }
   [data-product-section] .product-info-panel {
@@ -198,61 +244,77 @@
   }
   [data-product-section] .product-title {
     grid-column:1 / -1!important;
+    grid-row:1!important;
     order:1!important;
     color:#f6f6f3!important;
     -webkit-text-fill-color:#f6f6f3!important;
     text-shadow:0 0 24px rgba(236,231,220,.18)!important;
-    font-size:clamp(2.2rem,16vw,4.6rem)!important;
-    line-height:.86!important;
+    font-size:clamp(1.7rem,10.5vw,3.2rem)!important;
+    line-height:.88!important;
     margin:0!important;
     letter-spacing:-.07em!important;
   }
   [data-product-section] .product-price {
     grid-column:1 / -1!important;
+    grid-row:2!important;
     order:2!important;
-    margin:.15rem 0 .15rem!important;
+    margin:0!important;
     color:#ece7dc!important;
-    font-size:1.05rem!important;
+    font-size:.98rem!important;
+    line-height:1.2!important;
   }
   [data-product-section] .product-description {
     grid-column:1 / -1!important;
+    grid-row:3!important;
     order:3!important;
-    max-height:5.8rem!important;
+    max-height:3.4rem!important;
     overflow:hidden!important;
     margin:0!important;
-    font-size:.88rem!important;
+    font-size:.82rem!important;
+    line-height:1.35!important;
     color:#cfcac0!important;
   }
   [data-product-section] .product-form {
     display:contents!important;
   }
   [data-product-section] .product-media-panel {
-    grid-column:1!important;
+    /* Full width when the product has no size picker beside it. */
+    grid-column:1 / -1!important;
+    grid-row:4!important;
     order:4!important;
     min-width:0!important;
-    height:auto!important;
     min-height:0!important;
-    padding:.65rem!important;
+    height:100%!important;
+    padding:.45rem!important;
     border-radius:1.15rem!important;
     overflow:hidden!important;
   }
+  /* Rows are pinned explicitly above rather than left to auto-placement, so a
+     product with no description (or no size picker) still lands correctly. */
+  [data-product-section] .product-layout:has(.variant-picker) .product-media-panel {
+    grid-column:1!important;
+  }
   [data-product-section] .product-media-gallery {
-    height:auto!important;
+    height:100%!important;
+    min-height:0!important;
     overflow:hidden!important;
   }
   [data-product-section] .product-media-toggle {
     display:none!important;
   }
+  /* Swiping between photos is still horizontal - that is the gallery, not the
+     page. Everything else on this template is scroll-free. */
   [data-product-section] .product-media-slides {
     display:flex!important;
-    gap:.75rem!important;
+    gap:.5rem!important;
+    height:100%!important;
     overflow-x:auto!important;
     overflow-y:hidden!important;
+    overscroll-behavior:contain!important;
     scroll-snap-type:x mandatory!important;
     -webkit-overflow-scrolling:touch!important;
-    height:auto!important;
     position:relative!important;
-    padding-bottom:.2rem!important;
+    padding-bottom:0!important;
     scrollbar-width:none!important;
   }
   [data-product-section] .product-media-slides::-webkit-scrollbar {
@@ -269,12 +331,12 @@
     flex:0 0 100%!important;
     scroll-snap-align:center!important;
     min-height:0!important;
-    height:auto!important;
+    height:100%!important;
   }
   [data-product-section] .product-media {
     width:100%!important;
-    height:auto!important;
-    max-height:42vh!important;
+    height:100%!important;
+    max-height:100%!important;
     object-fit:contain!important;
     aspect-ratio:auto!important;
     background:#080808!important;
@@ -285,38 +347,42 @@
   }
   [data-product-section] .variant-picker {
     grid-column:2!important;
+    grid-row:4!important;
     order:4!important;
     margin:0!important;
     padding:0!important;
     border:0!important;
     align-self:stretch!important;
     min-width:0!important;
+    min-height:0!important;
+    overflow:hidden!important;
   }
   [data-product-section] .variant-picker legend {
-    font-size:.58rem!important;
+    font-size:.55rem!important;
     letter-spacing:.12em!important;
-    margin:0 0 .45rem!important;
+    margin:0 0 .35rem!important;
     color:#ece7dc!important;
     white-space:nowrap!important;
   }
   [data-product-section] .variant-options {
     display:grid!important;
     grid-template-columns:1fr!important;
-    gap:.5rem!important;
+    gap:.4rem!important;
     height:auto!important;
+    align-content:start!important;
   }
   [data-product-section] .variant-option__content {
     min-height:0!important;
-    padding:.72rem .6rem!important;
-    border-radius:.85rem!important;
+    padding:.58rem .5rem!important;
+    border-radius:.8rem!important;
   }
   [data-product-section] .variant-option__title {
-    font-size:.68rem!important;
+    font-size:.66rem!important;
     letter-spacing:.1em!important;
     line-height:1.1!important;
   }
   [data-product-section] .variant-option__price {
-    font-size:.76rem!important;
+    font-size:.72rem!important;
     line-height:1.1!important;
   }
   [data-product-section] .variant-option--sold-out .variant-option__content::before {
@@ -328,18 +394,208 @@
   }
   [data-product-section] .product-actions {
     grid-column:1 / -1!important;
+    grid-row:5!important;
     order:5!important;
     justify-content:stretch!important;
     display:grid!important;
     grid-template-columns:1fr 1fr!important;
-    gap:.65rem!important;
-    margin-top:.2rem!important;
+    gap:.55rem!important;
+    margin:0!important;
   }
   [data-product-section] .product-actions .button {
     width:100%!important;
     min-height:44px!important;
-    padding:.7rem .65rem!important;
+    padding:.65rem .6rem!important;
     font-size:.66rem!important;
+  }
+
+  /* ---- Cart page: locked screen, stacked rows --------------
+     The table used to be display:block;overflow-x:auto, so the product column
+     dragged sideways. Each row is a card that fits a normal phone width now,
+     and the page itself is locked like the product template. */
+  html.template-cart,
+  html.template-cart body {
+    height:100%!important;
+    max-height:100%!important;
+    overflow:hidden!important;
+    overscroll-behavior:none!important;
+  }
+  html.template-cart body {
+    position:fixed!important;
+    inset:0!important;
+    width:100%!important;
+    display:flex!important;
+    flex-direction:column!important;
+  }
+  .template-cart .main-content {
+    flex:1 1 auto!important;
+    min-height:0!important;
+    overflow:hidden!important;
+    padding-bottom:0!important;
+  }
+  .template-cart .cart-section {
+    display:flex!important;
+    flex-direction:column!important;
+    height:100%!important;
+    overflow:hidden!important;
+    padding-top:.6rem!important;
+    padding-bottom:calc(var(--site-footer-h) + .35rem)!important;
+  }
+  .template-cart .cart-section > .page-width {
+    display:flex!important;
+    flex-direction:column!important;
+    flex:1 1 auto!important;
+    min-height:0!important;
+    width:min(100% - 1.1rem,1240px)!important;
+  }
+  .template-cart .cart-section .section-kicker {
+    display:none!important;
+  }
+  .template-cart .cart-header {
+    flex-direction:row!important;
+    align-items:center!important;
+    justify-content:space-between!important;
+    gap:.6rem!important;
+    margin-bottom:.6rem!important;
+  }
+  .template-cart .cart-header .section-title {
+    font-size:1.9rem!important;
+    margin:0!important;
+  }
+  .template-cart .cart-header .button {
+    min-height:36px!important;
+    padding:.5rem .7rem!important;
+    font-size:.6rem!important;
+    white-space:nowrap!important;
+  }
+  .template-cart .cart-form {
+    display:flex!important;
+    flex-direction:column!important;
+    flex:1 1 auto!important;
+    min-height:0!important;
+    gap:.6rem!important;
+  }
+  /* The row list is the one place a long cart can still move: the page stays
+     put and the list absorbs the overflow instead. A one to three item cart
+     never reaches it. */
+  .template-cart .cart-table {
+    display:block!important;
+    flex:1 1 auto!important;
+    min-height:0!important;
+    overflow-x:hidden!important;
+    overflow-y:auto!important;
+    overscroll-behavior:contain!important;
+    scrollbar-width:none!important;
+    border:0!important;
+    border-radius:0!important;
+    background:none!important;
+  }
+  .template-cart .cart-table::-webkit-scrollbar {
+    display:none!important;
+  }
+  .template-cart .cart-table thead {
+    display:none!important;
+  }
+  .template-cart .cart-table tbody {
+    display:block!important;
+    width:100%!important;
+  }
+  .template-cart .cart-row {
+    display:block!important;
+    width:100%!important;
+    margin:0 0 .55rem!important;
+    padding:.65rem .7rem!important;
+    border:1px solid rgba(255,255,255,.16)!important;
+    border-radius:1rem!important;
+    background:rgba(255,255,255,.05)!important;
+  }
+  .template-cart .cart-row:last-child {
+    margin-bottom:0!important;
+  }
+  .template-cart .cart-cell {
+    display:flex!important;
+    align-items:center!important;
+    justify-content:space-between!important;
+    gap:.6rem!important;
+    width:100%!important;
+    padding:.3rem 0!important;
+    border:0!important;
+    font-size:.82rem!important;
+  }
+  .template-cart .cart-cell[data-label]::before {
+    content:attr(data-label);
+    flex:0 0 auto;
+    color:#a7a7a7;
+    text-transform:uppercase;
+    letter-spacing:.12em;
+    font-size:.56rem;
+    font-weight:800;
+  }
+  .template-cart .cart-cell--product {
+    padding:0 0 .5rem!important;
+    border-bottom:1px solid rgba(255,255,255,.12)!important;
+  }
+  .template-cart .cart-product {
+    gap:.6rem!important;
+    min-width:0!important;
+  }
+  .template-cart .cart-product strong {
+    font-size:.86rem!important;
+    line-height:1.15!important;
+  }
+  .template-cart .cart-product small {
+    font-size:.7rem!important;
+    color:#a7a7a7!important;
+  }
+  .template-cart .cart-product__image {
+    width:46px!important;
+    height:58px!important;
+    border-radius:.5rem!important;
+    flex:0 0 auto!important;
+  }
+  .template-cart .cart-cell--qty .cart-quantity {
+    width:72px!important;
+    max-width:72px!important;
+    padding:.35rem .5rem!important;
+    text-align:center!important;
+  }
+  .template-cart .cart-cell--remove {
+    justify-content:flex-end!important;
+    padding-top:.35rem!important;
+  }
+  .template-cart .remove-link {
+    padding:.35rem .6rem!important;
+    font-size:.58rem!important;
+  }
+  .template-cart .cart-summary {
+    flex:0 0 auto!important;
+    margin:0!important;
+    max-width:none!important;
+  }
+  .template-cart .cart-summary__label {
+    font-size:.6rem!important;
+  }
+  .template-cart .cart-summary__price {
+    font-size:1.5rem!important;
+    margin:.1rem 0!important;
+  }
+  .template-cart .cart-summary__note {
+    display:none!important;
+  }
+  .template-cart .cart-summary .product-actions {
+    display:grid!important;
+    grid-template-columns:1fr 1fr!important;
+    gap:.55rem!important;
+    margin-top:.45rem!important;
+  }
+  .template-cart .cart-summary .product-actions .button {
+    width:100%!important;
+    min-height:44px!important;
+    padding:.65rem .6rem!important;
+    font-size:.66rem!important;
+  }
+  .template-cart .empty-cart-panel {
+    margin-top:1rem!important;
   }
 }
 

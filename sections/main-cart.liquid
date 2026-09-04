@@ -22,8 +22,8 @@
           </thead>
           <tbody>
             {% for item in cart.items %}
-              <tr>
-                <td>
+              <tr class="cart-row">
+                <td class="cart-cell cart-cell--product">
                   <div class="cart-product">
                     {% if item.image %}
                       {{ item.image | image_url: width: 180 | image_tag: class: 'cart-product__image', loading: 'lazy' }}
@@ -34,10 +34,10 @@
                     </div>
                   </div>
                 </td>
-                <td>{% unless item.variant.title == 'Default Title' %}{{ item.variant.title }}{% else %}&mdash;{% endunless %}</td>
-                <td><input class="input cart-quantity" type="number" name="updates[]" value="{{ item.quantity }}" min="0" aria-label="Quantity for {{ item.product.title | escape }}"></td>
-                <td>{{ item.final_line_price | money }}</td>
-                <td><a class="remove-link" href="{{ item.url_to_remove }}" aria-label="Remove {{ item.product.title | escape }} from cart">Remove</a></td>
+                <td class="cart-cell cart-cell--size" data-label="Size">{% unless item.variant.title == 'Default Title' %}{{ item.variant.title }}{% else %}&mdash;{% endunless %}</td>
+                <td class="cart-cell cart-cell--qty" data-label="Qty"><input class="input cart-quantity" type="number" name="updates[]" value="{{ item.quantity }}" min="0" aria-label="Quantity for {{ item.product.title | escape }}"></td>
+                <td class="cart-cell cart-cell--total" data-label="Total">{{ item.final_line_price | money }}</td>
+                <td class="cart-cell cart-cell--remove"><a class="remove-link" href="{{ item.url_to_remove }}" aria-label="Remove {{ item.product.title | escape }} from cart">Remove</a></td>
               </tr>
             {% endfor %}
           </tbody>
