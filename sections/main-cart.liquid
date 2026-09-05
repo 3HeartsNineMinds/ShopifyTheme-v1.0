@@ -5,7 +5,7 @@
         <p class="section-kicker">Your selection</p>
         <h1 class="section-title">Basket</h1>
       </div>
-      <a class="button button--secondary" href="{{ routes.all_products_collection_url }}">Continue shopping</a>
+      <a class="button button--secondary" href="{{ routes.root_url }}">Continue shopping</a>
     </div>
 
     {% if cart.item_count > 0 %}
@@ -56,7 +56,7 @@
     {% else %}
       <div class="empty-cart-panel">
         <p>Your basket is empty.</p>
-        <a class="button" href="{{ routes.all_products_collection_url }}">Continue shopping</a>
+        <a class="button" href="{{ routes.root_url }}">Continue shopping</a>
       </div>
     {% endif %}
   </div>
