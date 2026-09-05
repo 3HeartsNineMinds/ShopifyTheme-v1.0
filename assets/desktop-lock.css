@@ -47,6 +47,12 @@
     grid-column:3;
     justify-self:end;
   }
+  /* The header is position:fixed on desktop, so a scrolling template has to
+     pad past it or its first line sits under the bar. The cart and product
+     templates already do this themselves. */
+  .template-page .section:first-child {
+    padding-top:calc(var(--site-header-h) + 1.5rem);
+  }
   html.template-product,
   html.template-product body {
     height:100%;

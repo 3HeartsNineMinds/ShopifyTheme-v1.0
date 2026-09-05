@@ -3,8 +3,28 @@
     <h1 class="section-title">{{ page.title }}</h1>
     {{ page.content }}
   </div>
+
+  {%- comment -%}
+    App blocks. Shopify Forms (and any other theme app extension) is added as a
+    block of type @app from the theme editor, so the section has to opt in and
+    render them - see the schema below. shopify_attributes is what lets the
+    editor select and highlight the block.
+  {%- endcomment -%}
+  {%- if section.blocks.size > 0 -%}
+    <div class="page-width page-blocks">
+      {%- for block in section.blocks -%}
+        <div class="page-block" {{ block.shopify_attributes }}>
+          {%- render block -%}
+        </div>
+      {%- endfor -%}
+    </div>
+  {%- endif -%}
 </section>
 
 {% schema %}
-{ "name": "Main page", "settings": [] }
+{
+  "name": "Main page",
+  "settings": [],
+  "blocks": [{ "type": "@app" }]
+}
 {% endschema %}

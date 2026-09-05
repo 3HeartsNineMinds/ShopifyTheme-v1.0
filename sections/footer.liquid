@@ -38,7 +38,7 @@
         >
           <span class="site-footer__signup-full">{{ section.settings.signup_label }}</span>
           {%- comment -%}
-            Below 360px the full label pushes the copyright off the bar, so the
+            Below 390px the full label pushes the copyright off the bar, so the
             short one takes over there. CSS picks between them.
           {%- endcomment -%}
           <span class="site-footer__signup-short">{{ section.settings.signup_label_short | default: section.settings.signup_label }}</span>
@@ -66,17 +66,17 @@
   "name": "Footer",
   "settings": [
     { "type": "paragraph", "content": "Each link points at a Shopify page. Create them under Content > Pages with matching handles. Leave a label blank to hide that link." },
-    { "type": "text", "id": "link_one_label", "label": "Link 1 label", "default": "CONTACT US" },
+    { "type": "text", "id": "link_one_label", "label": "Link 1 label", "default": "FAQ" },
     { "type": "url", "id": "link_one_url", "label": "Link 1 URL" },
-    { "type": "text", "id": "link_two_label", "label": "Link 2 label", "default": "LEGAL SHIT" },
+    { "type": "text", "id": "link_two_label", "label": "Link 2 label", "default": "CONTACT US" },
     { "type": "url", "id": "link_two_url", "label": "Link 2 URL" },
-    { "type": "text", "id": "link_three_label", "label": "Link 3 label" },
+    { "type": "text", "id": "link_three_label", "label": "Link 3 label", "default": "LEGAL SHIT" },
     { "type": "url", "id": "link_three_url", "label": "Link 3 URL" },
     { "type": "text", "id": "link_four_label", "label": "Link 4 label" },
     { "type": "url", "id": "link_four_url", "label": "Link 4 URL" },
     { "type": "header", "content": "Signup" },
     { "type": "text", "id": "signup_label", "label": "Signup label", "default": "SIGN UP FOR 15% OFF", "info": "Sits to the left of the copyright. Leave blank to hide it." },
-    { "type": "text", "id": "signup_label_short", "label": "Signup label - narrow phones", "default": "15% OFF", "info": "Shown below 360px wide, where the full label will not fit on one line." },
+    { "type": "text", "id": "signup_label_short", "label": "Signup label - narrow phones", "default": "15% OFF", "info": "Shown below 390px wide, where the full label will not fit on one line." },
     { "type": "url", "id": "signup_url", "label": "Signup fallback URL", "info": "Only used when JavaScript is unavailable - the label opens the popup otherwise." },
     { "type": "text", "id": "modal_heading", "label": "Popup heading", "default": "Register for 15% off" },
     { "type": "text", "id": "modal_terms", "label": "Marketing tick box label", "default": "I agree to receive marketing emails from Nine Minds." },

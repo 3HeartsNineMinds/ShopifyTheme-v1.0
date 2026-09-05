@@ -141,8 +141,8 @@ body {
   transition:background .2s ease,color .2s ease;
 }
 
-/* Only one of the two labels is ever shown; mobile-fixes.css swaps them on
-   the narrowest phones. */
+/* Only one of the two labels is ever shown; mobile-fixes.css swaps them in
+   below 390px, where the full one no longer fits the bar. */
 .site-footer__signup-short {
   display:none;
 }
@@ -1013,6 +1013,23 @@ body {
   font-size:clamp(16px,2.4vw,22px);
   font-weight:900;
   letter-spacing:-.05em;
+}
+
+/* ---- Page app blocks -------------------------------------- */
+/* Shopify Forms and other app blocks bring their own markup and styling, so
+   the theme only owns the spacing around them. */
+.page-blocks {
+  display:grid;
+  gap:2rem;
+  margin-top:2.5rem;
+}
+
+.page-block {
+  min-width:0;
+}
+
+.apps-section .page-blocks {
+  margin-top:0;
 }
 
 /* ---- Register popup -------------------------------------- */

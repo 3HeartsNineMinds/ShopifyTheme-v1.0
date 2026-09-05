@@ -1,0 +1,24 @@
+{%- comment -%}
+  App wrapper. Shopify uses this section automatically when a merchant adds an
+  app block as its own section rather than inside an existing one. It is not a
+  normal section: it cannot be rendered with {% section 'apps' %} and it does
+  not appear in the theme editor's own section list.
+{%- endcomment -%}
+<div class="section apps-section">
+  <div class="page-width page-blocks">
+    {%- for block in section.blocks -%}
+      <div class="page-block" {{ block.shopify_attributes }}>
+        {%- render block -%}
+      </div>
+    {%- endfor -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Apps",
+  "settings": [],
+  "blocks": [{ "type": "@app" }],
+  "presets": [{ "name": "Apps" }]
+}
+{% endschema %}

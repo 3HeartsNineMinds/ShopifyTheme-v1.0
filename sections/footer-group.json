@@ -5,12 +5,12 @@
     "footer": {
       "type": "footer",
       "settings": {
-        "link_one_label": "CONTACT US",
-        "link_one_url": "/pages/contact-us",
-        "link_two_label": "LEGAL SHIT",
-        "link_two_url": "/pages/legal",
-        "link_three_label": "",
-        "link_three_url": "",
+        "link_one_label": "FAQ",
+        "link_one_url": "/pages/faq",
+        "link_two_label": "CONTACT US",
+        "link_two_url": "/pages/contact-us",
+        "link_three_label": "LEGAL SHIT",
+        "link_three_url": "/pages/legal",
         "link_four_label": "",
         "link_four_url": "",
         "signup_label": "SIGN UP FOR 15% OFF",

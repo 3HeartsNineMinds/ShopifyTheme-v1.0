@@ -243,6 +243,15 @@
     overflow:hidden!important;
     padding-bottom:0!important;
   }
+  /* The header is in flow on mobile, so the page template only needs
+     breathing room rather than clearance for a fixed bar. */
+  .template-page .section:first-child {
+    padding-top:1.5rem!important;
+  }
+  .template-page .page-blocks {
+    margin-top:1.75rem!important;
+    gap:1.5rem!important;
+  }
   .template-product .product-section,
   [data-product-section].product-section {
     height:100%!important;
@@ -630,10 +639,10 @@
   }
 }
 
-/* Narrow phones. The footer is one row of four items; below 360px the full
+/* Narrow phones. The footer is one row of five items; below 390px the full
    signup label pushes the copyright off the end, so the short label takes over
    and the gaps close up. */
-@media (max-width: 359px) {
+@media (max-width: 389px) {
   .site-footer__signup-full {
     display:none!important;
   }
