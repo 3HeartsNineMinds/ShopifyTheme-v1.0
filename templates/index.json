@@ -15,7 +15,7 @@
         "background_file_desktop": "Background_desktop.png",
         "background_file_mobile": "Background_mobile.png",
         "art_opacity": 100,
-        "eyebrow": "ORDER NOW / 99 PIECES",
+        "eyebrow": "ORDER NOW / FIRST DROP / 99 PIECES",
         "eyebrow_register": "REGISTER FOR 15% OFF",
         "register_url": "/pages/register",
         "rotate_seconds": 3.4,

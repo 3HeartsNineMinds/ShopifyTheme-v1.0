@@ -840,6 +840,24 @@ body {
   letter-spacing:.08em;
   font-size:clamp(11px,1.5vw,14px);
   font-weight:800;
+  /* The strapline sits straight on the artwork, so a 1px outline keeps it
+     readable over a light patch. Eight offsets rather than -webkit-text-stroke,
+     which draws down the middle of the glyph and thins the letterforms. The
+     element itself stays transparent. */
+  text-shadow:
+    1px 0 0 #000,
+    -1px 0 0 #000,
+    0 1px 0 #000,
+    0 -1px 0 #000,
+    1px 1px 0 #000,
+    -1px -1px 0 #000,
+    1px -1px 0 #000,
+    -1px 1px 0 #000;
+}
+
+/* The dot is a filled shape, so it takes the same edge as a ring instead. */
+.nm-dot {
+  box-shadow:0 0 0 1px #000;
 }
 
 .nm-dot {
