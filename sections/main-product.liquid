@@ -196,7 +196,6 @@
           <button class="button product-submit" type="submit" {% unless product.selected_or_first_available_variant.available %}disabled{% endunless %} data-add-to-cart>
             {% if product.selected_or_first_available_variant.available %}Add to basket{% else %}Sold out{% endif %}
           </button>
-          <a class="button button--secondary" href="{{ routes.cart_url }}">View basket</a>
         </div>
       {% endform %}
     </div>

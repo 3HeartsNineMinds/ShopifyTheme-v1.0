@@ -368,6 +368,12 @@ body {
   flex-wrap:wrap;
 }
 
+/* Single action now, so it fills the block. The pill shape stays. */
+.product-actions .product-submit {
+  flex:1 1 100%;
+  width:100%;
+}
+
 /* ==========================================================
    SECTION SHELL, GRID & PRODUCT CARDS
    ========================================================== */

@@ -492,9 +492,10 @@
     order:7!important;
     justify-content:stretch!important;
     display:grid!important;
-    grid-template-columns:1fr 1fr!important;
+    grid-template-columns:1fr!important;
     gap:.55rem!important;
-    margin:0!important;
+    /* A break between the photo block and the button. */
+    margin:.7rem 0 0!important;
   }
   [data-product-section] .product-actions .button {
     width:100%!important;
