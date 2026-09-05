@@ -203,8 +203,28 @@
     letter-spacing:.09em!important;
   }
   .size-guide-modal__panel {
-    width:min(96vw,620px)!important;
-    padding:.7rem!important;
+    width:min(100%,620px)!important;
+    gap:.6rem!important;
+    padding:.85rem!important;
+  }
+  .size-guide-modal__heading {
+    padding-right:2.2rem!important;
+  }
+  .size-guide-modal__note {
+    font-size:.72rem!important;
+  }
+  .size-guide-table {
+    font-size:.78rem!important;
+  }
+  .size-guide-table th,
+  .size-guide-table td {
+    padding:.45rem .55rem!important;
+  }
+  .size-guide-table thead th {
+    font-size:.58rem!important;
+  }
+  .size-guide-modal__image {
+    max-height:42vh!important;
   }
   /* Corner buttons would sit off-screen at this width, so tuck it inside. */
   .size-guide-modal__close {

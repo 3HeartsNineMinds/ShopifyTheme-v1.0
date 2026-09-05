@@ -6,6 +6,60 @@
   elsif section.settings.size_guide_file != blank
     assign size_guide_src = section.settings.size_guide_file | file_url
   endif
+
+  # Size guide measurements come from per-variant metafields named
+  # Size_Guide:<measurement>. Liquid cannot push to an array, so the rows are
+  # collected into a delimited string and split back out: one entry per
+  # measurement, as "Label::namespace::key". uniq collapses the repeats across
+  # variants and sort_natural puts the labels in alphabetical order.
+  assign sg_namespace = section.settings.size_guide_namespace | default: 'Size_Guide'
+
+  capture sg_raw
+    for variant in product.variants
+      for field in variant.metafields[sg_namespace]
+        assign sg_key = field.first
+        assign sg_label = sg_key | replace: 'Size_Guide:', '' | replace: 'size_guide:', '' | replace: 'Size_Guide_', '' | replace: 'size_guide_', '' | replace: '_', ' ' | replace: '-', ' ' | strip | capitalize
+        echo sg_label
+        echo '::'
+        echo sg_namespace
+        echo '::'
+        echo sg_key
+        echo '||'
+      endfor
+    endfor
+  endcapture
+
+  # Fallback for stores where the measurements were defined in another
+  # namespace and carry the prefix on the key instead, e.g. custom.
+  if sg_raw == blank
+    capture sg_raw
+      for variant in product.variants
+        for sg_group in variant.metafields
+          assign sg_group_name = sg_group.first
+          for field in sg_group.last
+            assign sg_key = field.first
+            assign sg_probe = sg_key | downcase | replace: ':', '_'
+            if sg_probe contains 'size_guide'
+              assign sg_label = sg_key | replace: 'Size_Guide:', '' | replace: 'size_guide:', '' | replace: 'Size_Guide_', '' | replace: 'size_guide_', '' | replace: '_', ' ' | replace: '-', ' ' | strip | capitalize
+              echo sg_label
+              echo '::'
+              echo sg_group_name
+              echo '::'
+              echo sg_key
+              echo '||'
+            endif
+          endfor
+        endfor
+      endfor
+    endcapture
+  endif
+
+  assign sg_rows = sg_raw | split: '||' | uniq | sort_natural
+
+  assign has_size_guide = false
+  if sg_rows.size > 0 or size_guide_src != blank
+    assign has_size_guide = true
+  endif
 -%}
 <section class="section product-section nm-surface" data-product-section>
   {%- comment -%} Same grain overlay the landing page uses, so the backgrounds match. {%- endcomment -%}
@@ -94,7 +148,7 @@
               {% endfor %}
             </div>
 
-            {%- if size_guide_src != blank -%}
+            {%- if has_size_guide -%}
               <button class="size-guide-link" type="button" data-size-guide-open>Size guide</button>
             {%- endif -%}
           </fieldset>
@@ -114,13 +168,50 @@
     Size guide popup. Native <dialog>, so focus trapping and Esc come free;
     theme.js handles the open/close and the older-Safari [open] fallback.
   {%- endcomment -%}
-  {%- if size_guide_src != blank -%}
-    <dialog class="size-guide-modal" data-size-guide aria-label="Size guide">
+  {%- if has_size_guide -%}
+    <dialog class="size-guide-modal" data-size-guide aria-label="{{ product.title | escape }} size guide">
       <div class="size-guide-modal__panel">
         <button class="size-guide-modal__close" type="button" data-size-guide-close aria-label="Close size guide">&times;</button>
-        {% # theme-check-disable ImgWidthAndHeight %}
-        <img class="size-guide-modal__image" src="{{ size_guide_src }}" alt="Size guide for {{ product.title | escape }}" loading="lazy">
-        {% # theme-check-enable ImgWidthAndHeight %}
+
+        <h2 class="size-guide-modal__heading">{{ product.title }} Size Guide</h2>
+        <p class="size-guide-modal__note">All sizes are in cm</p>
+
+        {%- if sg_rows.size > 0 -%}
+          <div class="size-guide-table-wrap">
+            <table class="size-guide-table">
+              <thead>
+                <tr>
+                  <th scope="col">Measurement</th>
+                  {%- for variant in product.variants -%}
+                    <th scope="col">{{ variant.title }}</th>
+                  {%- endfor -%}
+                </tr>
+              </thead>
+              <tbody>
+                {%- for row in sg_rows -%}
+                  {%- liquid
+                    assign row_parts = row | split: '::'
+                    assign row_label = row_parts[0]
+                    assign row_namespace = row_parts[1]
+                    assign row_key = row_parts[2]
+                  -%}
+                  <tr>
+                    <th scope="row">{{ row_label }}</th>
+                    {%- for variant in product.variants -%}
+                      <td>{{ variant.metafields[row_namespace][row_key].value | default: '—' }}</td>
+                    {%- endfor -%}
+                  </tr>
+                {%- endfor -%}
+              </tbody>
+            </table>
+          </div>
+        {%- endif -%}
+
+        {%- if size_guide_src != blank -%}
+          {% # theme-check-disable ImgWidthAndHeight %}
+          <img class="size-guide-modal__image" src="{{ size_guide_src }}" alt="Size guide for {{ product.title | escape }}" loading="lazy">
+          {% # theme-check-enable ImgWidthAndHeight %}
+        {%- endif -%}
       </div>
     </dialog>
   {%- endif -%}
@@ -134,7 +225,8 @@
   "settings": [
     { "type": "header", "content": "Size guide" },
     { "type": "image_picker", "id": "size_guide_image", "label": "Size guide image" },
-    { "type": "text", "id": "size_guide_file", "label": "Size guide filename", "default": "Size_guide.png", "info": "Used only when no image is picked above. Must match a file in Content > Files, including its extension. Leave both blank to hide the size guide link." }
+    { "type": "text", "id": "size_guide_file", "label": "Size guide filename", "default": "Size_guide.png", "info": "Used only when no image is picked above. Must match a file in Content > Files, including its extension. Leave both blank to show only the measurements table." },
+    { "type": "text", "id": "size_guide_namespace", "label": "Measurement metafield namespace", "default": "Size_Guide", "info": "Variant metafields in this namespace become the rows of the table, one row per measurement, sorted alphabetically." }
   ]
 }
 {% endschema %}

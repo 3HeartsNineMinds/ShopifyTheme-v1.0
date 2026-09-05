@@ -460,8 +460,14 @@ body {
 
 .input {
   width:100%;
+  max-width:100%;
   min-height:44px;
   padding:.75rem;
+  /* Form controls do not inherit the page font, and iOS Safari zooms the whole
+     page in when a focused field computes under 16px - which is what the
+     browser default (13.33px) did to the signup popup. */
+  font:inherit;
+  font-size:16px;
   border:1px solid rgba(255,255,255,.24);
   border-radius:.7rem;
   background:#0a0a0a;
@@ -1075,7 +1081,9 @@ body {
 .nm-modal__panel {
   position:relative;
   z-index:1;
-  width:min(92vw,420px);
+  /* 100%, not 92vw: the dialog already pads itself, so a vw width added its
+     own gutter on top and pushed the panel wider than the screen. */
+  width:min(100%,420px);
   padding:clamp(1.4rem,5vw,2rem);
   border:1px solid var(--line);
   border-radius:1.25rem;
@@ -1213,10 +1221,16 @@ body {
 .size-guide-modal__panel {
   position:relative;
   z-index:1;
+  /* Column, not a bare image box: heading, note, table, then the artwork if
+     there is one. The panel scrolls internally when the table is long. */
   display:flex;
-  width:min(94vw,760px);
+  flex-direction:column;
+  gap:.85rem;
+  width:min(100%,760px);
   max-height:88vh;
-  padding:.9rem;
+  overflow-y:auto;
+  overscroll-behavior:contain;
+  padding:1.1rem;
   border:1px solid var(--line);
   border-radius:1.25rem;
   background:var(--surface);
@@ -1227,7 +1241,7 @@ body {
   display:block;
   width:100%;
   height:auto;
-  max-height:calc(88vh - 1.8rem);
+  max-height:60vh;
   object-fit:contain;
   border-radius:.8rem;
   background:#0b0b0b;
@@ -1256,6 +1270,79 @@ body {
 .size-guide-modal__close:focus-visible {
   background:var(--cream);
   color:#050505;
+}
+
+.size-guide-modal__heading {
+  margin:0;
+  padding-right:2.5rem;
+  font-size:clamp(1.05rem,3.8vw,1.5rem);
+  line-height:1.05;
+  letter-spacing:-.04em;
+  text-transform:uppercase;
+  font-weight:900;
+}
+
+.size-guide-modal__note {
+  margin:-.5rem 0 0;
+  color:var(--color-muted);
+  font-size:.8rem;
+  letter-spacing:.02em;
+}
+
+/* The table is the one thing allowed to scroll sideways: a wide size run on a
+   narrow phone has nowhere else to go, and the header column stays put. */
+.size-guide-table-wrap {
+  overflow-x:auto;
+  overscroll-behavior-x:contain;
+  border:1px solid var(--line);
+  border-radius:1rem;
+  background:rgba(255,255,255,.04);
+}
+
+.size-guide-table {
+  width:100%;
+  border-collapse:separate;
+  border-spacing:0;
+  font-size:.85rem;
+}
+
+.size-guide-table th,
+.size-guide-table td {
+  padding:.6rem .75rem;
+  border-bottom:1px solid rgba(255,255,255,.12);
+  text-align:center;
+  white-space:nowrap;
+}
+
+.size-guide-table thead th {
+  color:var(--cream);
+  text-transform:uppercase;
+  letter-spacing:.12em;
+  font-size:.65rem;
+  background:rgba(255,255,255,.07);
+}
+
+.size-guide-table tbody th {
+  text-align:left;
+  font-weight:800;
+  letter-spacing:.01em;
+}
+
+/* Keep the measurement name readable while the sizes scroll under it. */
+.size-guide-table th:first-child {
+  position:sticky;
+  left:0;
+  z-index:1;
+  background:#101012;
+}
+
+.size-guide-table thead th:first-child {
+  z-index:2;
+}
+
+.size-guide-table tr:last-child th,
+.size-guide-table tr:last-child td {
+  border-bottom:0;
 }
 
 /* The link under the size options. */
