@@ -141,6 +141,12 @@ body {
   transition:background .2s ease,color .2s ease;
 }
 
+/* Only one of the two labels is ever shown; mobile-fixes.css swaps them on
+   the narrowest phones. */
+.site-footer__signup-short {
+  display:none;
+}
+
 .site-footer__signup:hover,
 .site-footer__signup:focus-visible {
   background:var(--cream);

@@ -14,6 +14,7 @@
         "link_four_label": "",
         "link_four_url": "",
         "signup_label": "SIGN UP FOR 15% OFF",
+        "signup_label_short": "15% OFF",
         "signup_url": "/pages/register",
         "modal_heading": "Register for 15% off",
         "modal_terms": "I agree to receive marketing emails from Nine Minds.",
@@ -22,5 +23,7 @@
       }
     }
   },
-  "order": ["footer"]
+  "order": [
+    "footer"
+  ]
 }

@@ -35,7 +35,14 @@
           class="site-footer__signup"
           href="{{ section.settings.signup_url | default: routes.root_url }}"
           data-register-open
-        >{{ section.settings.signup_label }}</a>
+        >
+          <span class="site-footer__signup-full">{{ section.settings.signup_label }}</span>
+          {%- comment -%}
+            Below 360px the full label pushes the copyright off the bar, so the
+            short one takes over there. CSS picks between them.
+          {%- endcomment -%}
+          <span class="site-footer__signup-short">{{ section.settings.signup_label_short | default: section.settings.signup_label }}</span>
+        </a>
       {%- endif -%}
 
       <p class="site-footer__legal">&copy;{{ 'now' | date: '%Y' }} {{ shop.name | upcase }}</p>
@@ -69,6 +76,7 @@
     { "type": "url", "id": "link_four_url", "label": "Link 4 URL" },
     { "type": "header", "content": "Signup" },
     { "type": "text", "id": "signup_label", "label": "Signup label", "default": "SIGN UP FOR 15% OFF", "info": "Sits to the left of the copyright. Leave blank to hide it." },
+    { "type": "text", "id": "signup_label_short", "label": "Signup label - narrow phones", "default": "15% OFF", "info": "Shown below 360px wide, where the full label will not fit on one line." },
     { "type": "url", "id": "signup_url", "label": "Signup fallback URL", "info": "Only used when JavaScript is unavailable - the label opens the popup otherwise." },
     { "type": "text", "id": "modal_heading", "label": "Popup heading", "default": "Register for 15% off" },
     { "type": "text", "id": "modal_terms", "label": "Marketing tick box label", "default": "I agree to receive marketing emails from Nine Minds." },

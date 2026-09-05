@@ -125,10 +125,7 @@
   :root {
     /* Sticky (in-flow) header: .55rem padding top+bottom + 38px logo + border. */
     --site-header-h:57px;
-    /* Two lines since the signup joined the bar: .5rem padding top+bottom,
-       the 9px link row and the signup row, plus the row gaps. Measures 56px;
-       the extra 2px is slack for a longer label wrapping the pill. */
-    --site-footer-h:58px;
+    --site-footer-h:52px;
   }
   /* The header is in flow here, so the landing must be a viewport MINUS the
      header - otherwise the page overruns by the header height and the wordmark
@@ -159,44 +156,43 @@
   .template-index .nm-wordmark {
     --nm-wordmark-width:100%;
   }
-  /* All five items fit on one row on a wider phone but not a narrow one, so
-     the row is allowed to wrap: the copyright drops to a second line only when
-     it has to, rather than always. */
+  /* One row, four items, no wrapping: the two links sit together at the left,
+     then the signup and the copyright are pushed to the right. Type is sized
+     so the whole row still fits a 360px phone. */
   .site-footer {
-    padding:.5rem .75rem!important;
+    padding:.5rem .5rem!important;
   }
   .site-footer__inner {
-    flex-wrap:wrap!important;
+    flex-wrap:nowrap!important;
     align-items:center!important;
-    gap:.15rem .5rem!important;
+    gap:.35rem!important;
   }
   .site-footer__nav {
-    flex:1 1 auto!important;
-    min-width:0!important;
-    justify-content:space-between!important;
-    gap:.3rem!important;
+    /* Never shrink: shrinking overlapped the second link with the signup. */
+    flex:0 0 auto!important;
+    justify-content:flex-start!important;
+    gap:.5rem!important;
     flex-wrap:nowrap!important;
   }
   .site-footer__link {
-    font-size:9px!important;
-    letter-spacing:.02em!important;
+    font-size:8px!important;
+    letter-spacing:.01em!important;
   }
-  /* Two deterministic lines: links across the top, then signup + copyright
-     right-aligned underneath. --site-footer-h below reserves both. */
   .site-footer__right {
-    flex:1 0 100%!important;
+    flex:0 0 auto!important;
+    margin-left:auto!important;
     justify-content:flex-end!important;
-    gap:.6rem!important;
+    gap:.4rem!important;
   }
   .site-footer__signup {
-    padding:.22rem .55rem!important;
-    font-size:9px!important;
-    letter-spacing:.02em!important;
+    padding:.18rem .4rem!important;
+    font-size:8px!important;
+    letter-spacing:0!important;
   }
   .site-footer__legal {
     flex:0 0 auto!important;
     text-align:right!important;
-    font-size:8px!important;
+    font-size:7px!important;
     opacity:.7!important;
   }
 
@@ -631,6 +627,27 @@
   }
   .template-cart .empty-cart-panel {
     margin-top:1rem!important;
+  }
+}
+
+/* Narrow phones. The footer is one row of four items; below 360px the full
+   signup label pushes the copyright off the end, so the short label takes over
+   and the gaps close up. */
+@media (max-width: 359px) {
+  .site-footer__signup-full {
+    display:none!important;
+  }
+  .site-footer__signup-short {
+    display:inline!important;
+  }
+  .site-footer__inner {
+    gap:.25rem!important;
+  }
+  .site-footer__nav {
+    gap:.4rem!important;
+  }
+  .site-footer__right {
+    gap:.3rem!important;
   }
 }
 
