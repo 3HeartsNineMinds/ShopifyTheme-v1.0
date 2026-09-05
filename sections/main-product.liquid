@@ -1,59 +1,52 @@
 {%- liquid
-  # Size guide artwork: theme-editor setting first, then a Content > Files name.
-  assign size_guide_src = ''
-  if section.settings.size_guide_image != blank
-    assign size_guide_src = section.settings.size_guide_image | image_url: width: 1600
-  elsif section.settings.size_guide_file != blank
-    assign size_guide_src = section.settings.size_guide_file | file_url
-  endif
-
   # ---- Size guide measurements ----------------------------------------
-  # Rows come from per-variant metafields. Liquid cannot push to an array, so
-  # they are captured into a delimited string and split back out: one entry per
-  # measurement, as "Label::namespace::key". uniq collapses the repeats across
-  # variants, sort_natural alphabetises by label.
+  # The measurements live on variant metafields. On this store they are
+  # namespace "custom" with keys prefixed "size_guide_", which is what Shopify
+  # generates from definition names like "Size_Guide:Height".
   #
-  # Two ways in, because only the first is guaranteed by the Liquid docs:
-  #   1. The keys listed in the section settings, read with the documented
-  #      metafields[namespace][key] syntax. Always works.
-  #   2. Auto-discovery, which walks the metafields object. Convenient when it
-  #      works, but enumerating namespaces is undocumented behaviour.
-  assign sg_namespace = section.settings.size_guide_namespace | default: 'Size_Guide'
-  assign sg_raw = ''
+  # Liquid cannot push to an array, so rows are captured into a delimited
+  # string and split back out: one entry per measurement, "Label::namespace::key".
+  # uniq collapses repeats across variants, sort_natural alphabetises by label.
+  #
+  # Two collectors run and merge, because only the first is guaranteed by the
+  # Liquid docs:
+  #   1. The keys listed in the settings, read with the documented
+  #      metafields[namespace][key] syntax.
+  #   2. Auto-discovery, which walks the namespace and keeps anything carrying
+  #      the prefix, so measurements added later appear without a code change.
+  #      Enumerating metafields is undocumented, hence the belt and braces.
+  assign sg_namespace = section.settings.size_guide_namespace | default: 'custom'
+  assign sg_prefix = section.settings.size_guide_prefix | default: 'size_guide'
 
-  # -- 1. Explicit list, e.g. "Height, Chest, Sleeve".
-  if section.settings.size_guide_keys != blank
+  capture sg_listed_raw
     assign sg_listed = section.settings.size_guide_keys | split: ','
-    capture sg_raw
-      for sg_entry in sg_listed
-        assign sg_key = sg_entry | strip
-        assign sg_entry_ns = sg_namespace
-        # An entry may carry its own namespace, e.g. custom.size_guide_height.
-        if sg_key contains '.'
-          assign sg_key_parts = sg_key | split: '.'
-          assign sg_entry_ns = sg_key_parts[0] | strip
-          assign sg_key = sg_key_parts[1] | strip
-        endif
-        if sg_key != blank
-          assign sg_label = sg_key | replace: 'Size_Guide:', '' | replace: 'size_guide:', '' | replace: 'Size_Guide_', '' | replace: 'size_guide_', '' | replace: '_', ' ' | replace: '-', ' ' | strip | capitalize
-          echo sg_label
-          echo '::'
-          echo sg_entry_ns
-          echo '::'
-          echo sg_key
-          echo '||'
-        endif
-      endfor
-    endcapture
-  endif
+    for sg_entry in sg_listed
+      assign sg_key = sg_entry | strip
+      assign sg_entry_ns = sg_namespace
+      # An entry may carry its own namespace, e.g. custom.size_guide_height.
+      if sg_key contains '.'
+        assign sg_key_parts = sg_key | split: '.'
+        assign sg_entry_ns = sg_key_parts[0] | strip
+        assign sg_key = sg_key_parts[1] | strip
+      endif
+      if sg_key != blank
+        assign sg_label = sg_key | replace: 'Size_Guide:', '' | replace: 'size_guide:', '' | replace: 'Size_Guide_', '' | replace: 'size_guide_', '' | replace: '_', ' ' | replace: '-', ' ' | strip | capitalize
+        echo sg_label
+        echo '::'
+        echo sg_entry_ns
+        echo '::'
+        echo sg_key
+        echo '||'
+      endif
+    endfor
+  endcapture
 
-  # -- 2. Auto-discovery: the named namespace first, then a sweep of every
-  #       namespace for anything that looks like a size guide field.
-  if sg_raw == blank
-    capture sg_raw
-      for variant in product.variants
-        for field in variant.metafields[sg_namespace]
-          assign sg_key = field.first
+  capture sg_found_raw
+    for variant in product.variants
+      for field in variant.metafields[sg_namespace]
+        assign sg_key = field.first
+        assign sg_probe = sg_key | downcase | replace: '-', '_' | replace: ':', '_' | replace: ' ', '_'
+        if sg_probe contains sg_prefix
           assign sg_label = sg_key | replace: 'Size_Guide:', '' | replace: 'size_guide:', '' | replace: 'Size_Guide_', '' | replace: 'size_guide_', '' | replace: '_', ' ' | replace: '-', ' ' | strip | capitalize
           echo sg_label
           echo '::'
@@ -61,46 +54,16 @@
           echo '::'
           echo sg_key
           echo '||'
-        endfor
+        endif
       endfor
-    endcapture
-  endif
+    endfor
+  endcapture
 
-  if sg_raw == blank
-    capture sg_raw
-      for variant in product.variants
-        for sg_group in variant.metafields
-          assign sg_group_name = sg_group.first
-          assign sg_group_probe = sg_group_name | downcase | replace: '-', '_' | replace: ':', '_' | replace: ' ', '_'
-          for field in sg_group.last
-            assign sg_key = field.first
-            assign sg_key_probe = sg_key | downcase | replace: '-', '_' | replace: ':', '_' | replace: ' ', '_'
-            assign sg_hit = false
-            if sg_group_probe contains 'size_guide'
-              assign sg_hit = true
-            endif
-            if sg_key_probe contains 'size_guide'
-              assign sg_hit = true
-            endif
-            if sg_hit
-              assign sg_label = sg_key | replace: 'Size_Guide:', '' | replace: 'size_guide:', '' | replace: 'Size_Guide_', '' | replace: 'size_guide_', '' | replace: '_', ' ' | replace: '-', ' ' | strip | capitalize
-              echo sg_label
-              echo '::'
-              echo sg_group_name
-              echo '::'
-              echo sg_key
-              echo '||'
-            endif
-          endfor
-        endfor
-      endfor
-    endcapture
-  endif
-
+  assign sg_raw = sg_listed_raw | append: sg_found_raw
   assign sg_rows = sg_raw | split: '||' | uniq | sort_natural
 
   assign has_size_guide = false
-  if sg_rows.size > 0 or size_guide_src != blank or section.settings.size_guide_debug
+  if sg_rows.size > 0 or section.settings.size_guide_debug
     assign has_size_guide = true
   endif
 -%}
@@ -250,7 +213,19 @@
                   <tr>
                     <th scope="row">{{ row_label }}</th>
                     {%- for variant in product.variants -%}
-                      <td>{{ variant.metafields[row_namespace][row_key].value | default: '—' }}</td>
+                      {%- liquid
+                        assign cell = variant.metafields[row_namespace][row_key].value
+                        assign cell_out = cell | default: '—'
+                        # number_decimal returns "71.0"; drop the dead decimal
+                        # so a whole number reads as 71 next to a real 60.5.
+                        assign cell_parts = cell | split: '.'
+                        if cell_parts.size == 2
+                          if cell_parts[1] == '0'
+                            assign cell_out = cell_parts[0]
+                          endif
+                        endif
+                      -%}
+                      <td>{{ cell_out }}</td>
                     {%- endfor -%}
                   </tr>
                 {%- endfor -%}
@@ -259,14 +234,8 @@
           </div>
         {%- endif -%}
 
-        {%- if sg_rows.size == 0 and size_guide_src == blank -%}
+        {%- if sg_rows.size == 0 -%}
           <p class="size-guide-modal__note">No measurements found for this product.</p>
-        {%- endif -%}
-
-        {%- if size_guide_src != blank -%}
-          {% # theme-check-disable ImgWidthAndHeight %}
-          <img class="size-guide-modal__image" src="{{ size_guide_src }}" alt="Size guide for {{ product.title | escape }}" loading="lazy">
-          {% # theme-check-enable ImgWidthAndHeight %}
         {%- endif -%}
       </div>
     </dialog>
@@ -280,10 +249,9 @@
   "name": "Main product",
   "settings": [
     { "type": "header", "content": "Size guide" },
-    { "type": "image_picker", "id": "size_guide_image", "label": "Size guide image" },
-    { "type": "text", "id": "size_guide_file", "label": "Size guide filename", "default": "Size_guide.png", "info": "Used only when no image is picked above. Must match a file in Content > Files, including its extension. Leave both blank to show only the measurements table." },
-    { "type": "text", "id": "size_guide_namespace", "label": "Measurement metafield namespace", "default": "Size_Guide", "info": "The namespace half of the variant metafield, i.e. the part before the dot in Size_Guide.Height." },
-    { "type": "text", "id": "size_guide_keys", "label": "Measurement keys", "info": "Comma separated, e.g. Height, Chest, Sleeve. Prefix an entry with its own namespace if it differs, e.g. custom.size_guide_height. Setting this is the reliable path - leave it blank only if auto-detection is already finding the rows." },
+    { "type": "text", "id": "size_guide_namespace", "label": "Measurement metafield namespace", "default": "custom", "info": "The namespace half of the variant metafield. Definitions named Size_Guide:Height land in custom." },
+    { "type": "text", "id": "size_guide_prefix", "label": "Measurement key prefix", "default": "size_guide", "info": "Only keys containing this are treated as measurements, so the rest of the namespace is ignored." },
+    { "type": "text", "id": "size_guide_keys", "label": "Measurement keys", "default": "size_guide_chest, size_guide_height, size_guide_height_inc_hood, size_guide_waist", "info": "Comma separated. Prefix an entry with its own namespace if it differs, e.g. custom.size_guide_height. Rows found automatically are merged in, so a new measurement appears without editing this." },
     { "type": "checkbox", "id": "size_guide_debug", "label": "Show metafield debug info", "default": false, "info": "Prints the raw metafields of the first variant inside the popup so the namespace and keys can be confirmed. Turn off once the table is correct." }
   ]
 }

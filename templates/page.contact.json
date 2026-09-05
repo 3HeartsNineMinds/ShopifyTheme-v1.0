@@ -33,7 +33,9 @@
       "block_order": [
         "forms_inline_4LFPpA"
       ],
-      "settings": {}
+      "settings": {
+        "title_alignment": "center"
+      }
     }
   },
   "order": [

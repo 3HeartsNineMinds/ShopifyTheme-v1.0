@@ -218,13 +218,18 @@
   }
   .size-guide-table th,
   .size-guide-table td {
-    padding:.45rem .55rem!important;
+    padding:.45rem .42rem!important;
+  }
+  /* Let the measurement name wrap instead of holding the column open - that is
+     what pushed the last size off the edge on a phone. The size columns stay
+     on one line. */
+  .size-guide-table tbody th {
+    white-space:normal!important;
+    max-width:6rem!important;
+    line-height:1.15!important;
   }
   .size-guide-table thead th {
     font-size:.58rem!important;
-  }
-  .size-guide-modal__image {
-    max-height:42vh!important;
   }
   /* Corner buttons would sit off-screen at this width, so tuck it inside. */
   .size-guide-modal__close {

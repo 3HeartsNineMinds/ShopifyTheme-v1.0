@@ -1021,6 +1021,19 @@ body {
   letter-spacing:-.05em;
 }
 
+/* ---- Page title ------------------------------------------- */
+.page-title--left {
+  text-align:left;
+}
+
+.page-title--center {
+  text-align:center;
+}
+
+.page-title--right {
+  text-align:right;
+}
+
 /* ---- Page app blocks -------------------------------------- */
 /* Shopify Forms and other app blocks bring their own markup and styling, so
    the theme only owns the spacing around them. */
@@ -1235,16 +1248,6 @@ body {
   border-radius:1.25rem;
   background:var(--surface);
   box-shadow:0 40px 120px rgba(0,0,0,.55);
-}
-
-.size-guide-modal__image {
-  display:block;
-  width:100%;
-  height:auto;
-  max-height:60vh;
-  object-fit:contain;
-  border-radius:.8rem;
-  background:#0b0b0b;
 }
 
 .size-guide-modal__close {
