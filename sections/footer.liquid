@@ -24,23 +24,56 @@
       {%- endfor -%}
     </nav>
 
-    <p class="site-footer__legal">&copy;{{ 'now' | date: '%Y' }} {{ shop.name | upcase }}</p>
+    {%- comment -%}
+      Signup and copyright share the right-hand end of the bar, in that order.
+      The button opens the register popup rendered below; with JavaScript off
+      it falls back to the link URL so the offer is never a dead end.
+    {%- endcomment -%}
+    <div class="site-footer__right">
+      {%- if section.settings.signup_label != blank -%}
+        <a
+          class="site-footer__signup"
+          href="{{ section.settings.signup_url | default: routes.root_url }}"
+          data-register-open
+        >{{ section.settings.signup_label }}</a>
+      {%- endif -%}
+
+      <p class="site-footer__legal">&copy;{{ 'now' | date: '%Y' }} {{ shop.name | upcase }}</p>
+    </div>
   </div>
 </footer>
+
+{%- comment -%}
+  Rendered here rather than in the landing section so the popup exists on every
+  template - the footer bar is the only site-wide section.
+{%- endcomment -%}
+{%- render 'register-modal',
+  heading: section.settings.modal_heading,
+  terms: section.settings.modal_terms,
+  submit: section.settings.modal_submit,
+  thanks: section.settings.modal_thanks
+-%}
 
 {% schema %}
 {
   "name": "Footer",
   "settings": [
-    { "type": "paragraph", "content": "Each link points at a Shopify page. Create them under Content > Pages with matching handles." },
-    { "type": "text", "id": "link_one_label", "label": "Link 1 label", "default": "FAQ" },
+    { "type": "paragraph", "content": "Each link points at a Shopify page. Create them under Content > Pages with matching handles. Leave a label blank to hide that link." },
+    { "type": "text", "id": "link_one_label", "label": "Link 1 label", "default": "CONTACT US" },
     { "type": "url", "id": "link_one_url", "label": "Link 1 URL" },
-    { "type": "text", "id": "link_two_label", "label": "Link 2 label", "default": "SIZE GUIDE" },
+    { "type": "text", "id": "link_two_label", "label": "Link 2 label", "default": "LEGAL SHIT" },
     { "type": "url", "id": "link_two_url", "label": "Link 2 URL" },
-    { "type": "text", "id": "link_three_label", "label": "Link 3 label", "default": "CONTACT US" },
+    { "type": "text", "id": "link_three_label", "label": "Link 3 label" },
     { "type": "url", "id": "link_three_url", "label": "Link 3 URL" },
-    { "type": "text", "id": "link_four_label", "label": "Link 4 label", "default": "LEGAL SHIT" },
-    { "type": "url", "id": "link_four_url", "label": "Link 4 URL" }
+    { "type": "text", "id": "link_four_label", "label": "Link 4 label" },
+    { "type": "url", "id": "link_four_url", "label": "Link 4 URL" },
+    { "type": "header", "content": "Signup" },
+    { "type": "text", "id": "signup_label", "label": "Signup label", "default": "SIGN UP FOR 15% OFF", "info": "Sits to the left of the copyright. Leave blank to hide it." },
+    { "type": "url", "id": "signup_url", "label": "Signup fallback URL", "info": "Only used when JavaScript is unavailable - the label opens the popup otherwise." },
+    { "type": "text", "id": "modal_heading", "label": "Popup heading", "default": "Register for 15% off" },
+    { "type": "text", "id": "modal_terms", "label": "Marketing tick box label", "default": "I agree to receive marketing emails from Nine Minds." },
+    { "type": "text", "id": "modal_submit", "label": "Submit button label", "default": "Submit" },
+    { "type": "text", "id": "modal_thanks", "label": "Thank you message", "default": "Thanks, please open your emails for the promo code" }
   ]
 }
 {% endschema %}

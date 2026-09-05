@@ -246,6 +246,8 @@ html[data-theme='dark'] .nm-landing__art {
 }
 
 /* Popup surface follows the mode tokens like every other panel. */
+.size-guide-modal__panel,
+.size-guide-modal__close,
 .nm-modal__panel {
   background:var(--mode-panel-strong)!important;
   border-color:var(--mode-line)!important;
@@ -268,6 +270,18 @@ html[data-theme='dark'] .nm-modal::backdrop {
 /* ==========================================================
    FOOTER BAR
    ========================================================== */
+/* Signup pill borrows the mode line like every other outlined control. */
+.site-footer__signup {
+  border-color:var(--mode-line)!important;
+  color:var(--mode-text)!important;
+}
+
+.site-footer__signup:hover,
+.site-footer__signup:focus-visible {
+  background:var(--mode-text)!important;
+  color:var(--mode-bg)!important;
+}
+
 .site-footer,
 html[data-theme='dark'] .site-footer {
   background:#000000!important;

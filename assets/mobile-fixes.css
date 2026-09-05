@@ -125,7 +125,10 @@
   :root {
     /* Sticky (in-flow) header: .55rem padding top+bottom + 38px logo + border. */
     --site-header-h:57px;
-    --site-footer-h:52px;
+    /* Two lines since the signup joined the bar: .5rem padding top+bottom,
+       the 9px link row and the signup row, plus the row gaps. Measures 56px;
+       the extra 2px is slack for a longer label wrapping the pill. */
+    --site-footer-h:58px;
   }
   /* The header is in flow here, so the landing must be a viewport MINUS the
      header - otherwise the page overruns by the header height and the wordmark
@@ -178,11 +181,43 @@
     font-size:9px!important;
     letter-spacing:.02em!important;
   }
+  /* Two deterministic lines: links across the top, then signup + copyright
+     right-aligned underneath. --site-footer-h below reserves both. */
+  .site-footer__right {
+    flex:1 0 100%!important;
+    justify-content:flex-end!important;
+    gap:.6rem!important;
+  }
+  .site-footer__signup {
+    padding:.22rem .55rem!important;
+    font-size:9px!important;
+    letter-spacing:.02em!important;
+  }
   .site-footer__legal {
-    flex:1 0 auto!important;
+    flex:0 0 auto!important;
     text-align:right!important;
     font-size:8px!important;
     opacity:.7!important;
+  }
+
+  /* The size guide sits under a narrow column, so it wraps to its own line. */
+  [data-product-section] .size-guide-link {
+    margin-top:.5rem!important;
+    font-size:.58rem!important;
+    letter-spacing:.09em!important;
+  }
+  .size-guide-modal__panel {
+    width:min(96vw,620px)!important;
+    padding:.7rem!important;
+  }
+  /* Corner buttons would sit off-screen at this width, so tuck it inside. */
+  .size-guide-modal__close {
+    top:6px!important;
+    right:6px!important;
+    width:38px!important;
+    height:38px!important;
+    background:rgba(5,5,5,.72)!important;
+    backdrop-filter:blur(6px)!important;
   }
   /* ---- Product page: one locked screen ---------------------
      Same treatment as the landing - nothing scrolls. The layout is a grid of

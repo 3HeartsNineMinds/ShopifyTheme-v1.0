@@ -115,6 +115,38 @@ body {
   flex-wrap:wrap;
 }
 
+/* Signup and copyright ride together at the right-hand end of the bar. */
+.site-footer__right {
+  display:flex;
+  align-items:center;
+  gap:clamp(10px,2.5vw,28px);
+  min-width:0;
+}
+
+.site-footer__signup {
+  display:inline-flex;
+  align-items:center;
+  padding:.32rem .7rem;
+  border:1px solid var(--line);
+  border-radius:999px;
+  color:inherit;
+  text-decoration:none;
+  text-transform:uppercase;
+  letter-spacing:.06em;
+  font-size:clamp(9px,1.5vw,13px);
+  font-weight:800;
+  white-space:nowrap;
+  cursor:pointer;
+  background:none;
+  transition:background .2s ease,color .2s ease;
+}
+
+.site-footer__signup:hover,
+.site-footer__signup:focus-visible {
+  background:var(--cream);
+  color:#050505;
+}
+
 .site-footer__link,
 .site-footer__legal {
   margin:0;
@@ -1113,6 +1145,118 @@ body {
   font-size:clamp(.95rem,3.4vw,1.1rem);
   font-weight:800;
   line-height:1.35;
+}
+
+/* ---- Size guide popup ------------------------------------ */
+/* Same overlay mechanics as .nm-modal: full-screen fixed box that centres its
+   panel, so the native showModal path and the [open] fallback look identical. */
+.size-guide-modal {
+  display:none;
+  position:fixed;
+  inset:0;
+  z-index:200;
+  width:100%;
+  max-width:none;
+  height:100%;
+  max-height:none;
+  margin:0;
+  padding:clamp(1rem,4vw,2rem);
+  border:0;
+  background:transparent;
+  color:var(--text);
+  overflow:auto;
+  overscroll-behavior:contain;
+}
+
+.size-guide-modal[open] {
+  display:grid;
+  place-items:center;
+}
+
+.size-guide-modal::backdrop {
+  background:rgba(5,5,5,.82);
+  backdrop-filter:blur(4px);
+}
+
+/* Scrim for the fallback path, which gets no ::backdrop. */
+.size-guide-modal[open]:before {
+  content:"";
+  position:fixed;
+  inset:0;
+  background:rgba(5,5,5,.82);
+  backdrop-filter:blur(4px);
+}
+
+.size-guide-modal__panel {
+  position:relative;
+  z-index:1;
+  display:flex;
+  width:min(94vw,760px);
+  max-height:88vh;
+  padding:.9rem;
+  border:1px solid var(--line);
+  border-radius:1.25rem;
+  background:var(--surface);
+  box-shadow:0 40px 120px rgba(0,0,0,.55);
+}
+
+.size-guide-modal__image {
+  display:block;
+  width:100%;
+  height:auto;
+  max-height:calc(88vh - 1.8rem);
+  object-fit:contain;
+  border-radius:.8rem;
+  background:#0b0b0b;
+}
+
+.size-guide-modal__close {
+  position:absolute;
+  top:-14px;
+  right:-14px;
+  z-index:2;
+  display:grid;
+  place-items:center;
+  width:44px;
+  height:44px;
+  padding:0;
+  border:1px solid var(--line);
+  border-radius:999px;
+  background:var(--surface);
+  color:inherit;
+  font-size:1.5rem;
+  line-height:1;
+  cursor:pointer;
+}
+
+.size-guide-modal__close:hover,
+.size-guide-modal__close:focus-visible {
+  background:var(--cream);
+  color:#050505;
+}
+
+/* The link under the size options. */
+.size-guide-link {
+  display:inline-flex;
+  align-items:center;
+  margin-top:.7rem;
+  padding:0;
+  border:0;
+  background:none;
+  color:inherit;
+  text-transform:uppercase;
+  letter-spacing:.12em;
+  font-size:.66rem;
+  font-weight:800;
+  text-decoration:underline;
+  text-underline-offset:.35em;
+  cursor:pointer;
+  opacity:.75;
+}
+
+.size-guide-link:hover,
+.size-guide-link:focus-visible {
+  opacity:1;
 }
 
 /* ---- Wordmark -------------------------------------------- */

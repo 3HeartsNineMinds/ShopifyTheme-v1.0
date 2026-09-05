@@ -5,14 +5,20 @@
     "footer": {
       "type": "footer",
       "settings": {
-        "link_one_label": "FAQ",
-        "link_one_url": "/pages/faq",
-        "link_two_label": "SIZE GUIDE",
-        "link_two_url": "/pages/sizing",
-        "link_three_label": "CONTACT US",
-        "link_three_url": "/pages/contact-us",
-        "link_four_label": "LEGAL SHIT",
-        "link_four_url": "/pages/legal"
+        "link_one_label": "CONTACT US",
+        "link_one_url": "/pages/contact-us",
+        "link_two_label": "LEGAL SHIT",
+        "link_two_url": "/pages/legal",
+        "link_three_label": "",
+        "link_three_url": "",
+        "link_four_label": "",
+        "link_four_url": "",
+        "signup_label": "SIGN UP FOR 15% OFF",
+        "signup_url": "/pages/register",
+        "modal_heading": "Register for 15% off",
+        "modal_terms": "I agree to receive marketing emails from Nine Minds.",
+        "modal_submit": "Submit",
+        "modal_thanks": "Thanks, please open your emails for the promo code"
       }
     }
   },

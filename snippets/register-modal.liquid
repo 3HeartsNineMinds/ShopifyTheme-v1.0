@@ -1,0 +1,57 @@
+{%- comment -%}
+  Register popup - the "sign up for 15% off" box.
+
+  Lived inside sections/nine-minds-landing.liquid, so it only existed on the
+  home page. It is rendered from the footer now, which puts it on every
+  template; theme.js finds it by [data-register-modal] and any
+  [data-register-open] trigger opens it.
+
+  The form is a real Shopify customer form, so submissions land in Customers
+  with the tags below and the page reloads on submit - theme.js reopens the
+  dialog on the way back to show the thank you, then closes it.
+
+  Accepts: heading, terms, submit, thanks (all optional, defaults below).
+{%- endcomment -%}
+
+{%- liquid
+  assign modal_heading = heading | default: 'Register for 15% off'
+  assign modal_terms = terms | default: 'I agree to receive marketing emails from Nine Minds.'
+  assign modal_submit = submit | default: 'Submit'
+  assign modal_thanks = thanks | default: 'Thanks, please open your emails for the promo code'
+-%}
+
+<dialog class="nm-modal" data-register-modal data-close-delay="2000" aria-label="{{ modal_heading }}">
+  <div class="nm-modal__panel">
+    <button class="nm-modal__close" type="button" data-modal-close aria-label="Close">&times;</button>
+
+    <div data-modal-form>
+      <h2 class="nm-modal__heading">{{ modal_heading }}</h2>
+
+      {%- form 'customer', class: 'nm-modal__form' -%}
+        {%- if form.posted_successfully? -%}
+          <span data-register-success hidden></span>
+        {%- endif -%}
+        {%- if form.errors -%}
+          <span data-register-errors hidden></span>
+          <p class="nm-modal__error">{{ form.errors | default_errors }}</p>
+        {%- endif -%}
+
+        <input type="hidden" name="contact[tags]" value="newsletter, register-15-off">
+
+        <label class="nm-modal__field">
+          <span>Email address</span>
+          <input class="input" type="email" name="contact[email]" autocomplete="email" placeholder="you@example.com" required>
+        </label>
+
+        <label class="nm-modal__check">
+          <input type="checkbox" name="contact[accepts_marketing]" value="true" required>
+          <span>{{ modal_terms }}</span>
+        </label>
+
+        <button class="button nm-modal__submit" type="submit">{{ modal_submit }}</button>
+      {%- endform -%}
+    </div>
+
+    <p class="nm-modal__thanks" data-modal-thanks hidden>{{ modal_thanks }}</p>
+  </div>
+</dialog>

@@ -1,3 +1,12 @@
+{%- liquid
+  # Size guide artwork: theme-editor setting first, then a Content > Files name.
+  assign size_guide_src = ''
+  if section.settings.size_guide_image != blank
+    assign size_guide_src = section.settings.size_guide_image | image_url: width: 1600
+  elsif section.settings.size_guide_file != blank
+    assign size_guide_src = section.settings.size_guide_file | file_url
+  endif
+-%}
 <section class="section product-section nm-surface" data-product-section>
   {%- comment -%} Same grain overlay the landing page uses, so the backgrounds match. {%- endcomment -%}
   <div class="nm-grain" aria-hidden="true"></div>
@@ -84,6 +93,10 @@
                 </label>
               {% endfor %}
             </div>
+
+            {%- if size_guide_src != blank -%}
+              <button class="size-guide-link" type="button" data-size-guide-open>Size guide</button>
+            {%- endif -%}
           </fieldset>
         {% endunless %}
 
@@ -96,10 +109,32 @@
       {% endform %}
     </div>
   </div>
+
+  {%- comment -%}
+    Size guide popup. Native <dialog>, so focus trapping and Esc come free;
+    theme.js handles the open/close and the older-Safari [open] fallback.
+  {%- endcomment -%}
+  {%- if size_guide_src != blank -%}
+    <dialog class="size-guide-modal" data-size-guide aria-label="Size guide">
+      <div class="size-guide-modal__panel">
+        <button class="size-guide-modal__close" type="button" data-size-guide-close aria-label="Close size guide">&times;</button>
+        {% # theme-check-disable ImgWidthAndHeight %}
+        <img class="size-guide-modal__image" src="{{ size_guide_src }}" alt="Size guide for {{ product.title | escape }}" loading="lazy">
+        {% # theme-check-enable ImgWidthAndHeight %}
+      </div>
+    </dialog>
+  {%- endif -%}
 </section>
 
 {{ 'product.css' | asset_url | stylesheet_tag }}
 
 {% schema %}
-{ "name": "Main product", "settings": [] }
+{
+  "name": "Main product",
+  "settings": [
+    { "type": "header", "content": "Size guide" },
+    { "type": "image_picker", "id": "size_guide_image", "label": "Size guide image" },
+    { "type": "text", "id": "size_guide_file", "label": "Size guide filename", "default": "Size_guide.png", "info": "Used only when no image is picked above. Must match a file in Content > Files, including its extension. Leave both blank to hide the size guide link." }
+  ]
+}
 {% endschema %}

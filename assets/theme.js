@@ -310,3 +310,58 @@ if (document.readyState === 'loading') {
 } else {
   initCardRipple();
 }
+
+/* Size guide popup on the product page. Same shape as the register popup: a
+   native <dialog> where available, with the [open] attribute as the older
+   Safari fallback (the stylesheet renders both as the same overlay). */
+const initSizeGuideModal = () => {
+  const modal = document.querySelector('[data-size-guide]');
+  if (!modal) return;
+
+  const native = typeof modal.showModal === 'function';
+  const isOpen = () => modal.hasAttribute('open');
+
+  const open = () => {
+    if (isOpen()) return;
+    if (native) {
+      modal.showModal();
+    } else {
+      modal.setAttribute('open', '');
+    }
+    modal.querySelector('[data-size-guide-close]')?.focus();
+  };
+
+  const close = () => {
+    if (!isOpen()) return;
+    if (native) {
+      modal.close();
+    } else {
+      modal.removeAttribute('open');
+    }
+  };
+
+  // Delegated, so it survives the section being re-rendered by the editor.
+  document.addEventListener('click', (event) => {
+    if (event.target.closest('[data-size-guide-open]')) {
+      event.preventDefault();
+      open();
+      return;
+    }
+    if (event.target.closest('[data-size-guide-close]')) {
+      close();
+      return;
+    }
+    // Clicking the backdrop area outside the panel closes it too.
+    if (event.target === modal) close();
+  });
+
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape' && isOpen()) close();
+  });
+};
+
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', initSizeGuideModal);
+} else {
+  initSizeGuideModal();
+}

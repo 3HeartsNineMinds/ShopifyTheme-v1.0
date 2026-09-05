@@ -48,8 +48,9 @@
 
   <div class="nm-hero">
     {%- comment -%}
-      Static strapline. The rotation and the register message were removed; the
-      register popup below is left in place for when that is revisited.
+      Static strapline. The rotation and the register message were removed.
+      The register popup itself now lives in the footer (snippets/register-modal),
+      so it is available on every template rather than only here.
     {%- endcomment -%}
     <p class="nm-eyebrow">
       <span class="nm-dot" aria-hidden="true"></span>
@@ -98,46 +99,6 @@
   </div>
 
   {%- comment -%}
-    Register popup. The strapline link opens this; with JavaScript off the link
-    still navigates to the register page, so nothing is lost. The form is a real
-    Shopify customer form, so submissions land in Customers with the tags below.
-  {%- endcomment -%}
-  <dialog class="nm-modal" data-register-modal data-close-delay="2000" aria-label="{{ section.settings.modal_heading }}">
-    <div class="nm-modal__panel">
-      <button class="nm-modal__close" type="button" data-modal-close aria-label="Close">&times;</button>
-
-      <div data-modal-form>
-        <h2 class="nm-modal__heading">{{ section.settings.modal_heading }}</h2>
-
-        {%- form 'customer', class: 'nm-modal__form' -%}
-          {%- if form.posted_successfully? -%}
-            <span data-register-success hidden></span>
-          {%- endif -%}
-          {%- if form.errors -%}
-            <span data-register-errors hidden></span>
-            <p class="nm-modal__error">{{ form.errors | default_errors }}</p>
-          {%- endif -%}
-
-          <input type="hidden" name="contact[tags]" value="newsletter, register-15-off">
-
-          <label class="nm-modal__field">
-            <span>Email address</span>
-            <input class="input" type="email" name="contact[email]" autocomplete="email" placeholder="you@example.com" required>
-          </label>
-
-          <label class="nm-modal__check">
-            <input type="checkbox" name="contact[accepts_marketing]" value="true" required>
-            <span>{{ section.settings.modal_terms }}</span>
-          </label>
-
-          <button class="button nm-modal__submit" type="submit">{{ section.settings.modal_submit }}</button>
-        {%- endform -%}
-      </div>
-
-      <p class="nm-modal__thanks" data-modal-thanks hidden>{{ section.settings.modal_thanks }}</p>
-    </div>
-  </dialog>
-  {%- comment -%}
     Water warp for the product picture. theme.js animates the displacement
     scale on tap, then hands over to the view transition into the product page.
     The SVG must stay in the layout (not display:none) or Safari drops the
@@ -166,11 +127,6 @@
     { "type": "image_picker", "id": "wordmark", "label": "Wordmark image (white artwork)", "info": "Defaults to NineMindsLogoText.png from Content > Files." },
     { "type": "header", "content": "Strapline" },
     { "type": "text", "id": "eyebrow", "label": "Message", "default": "ORDER NOW / FIRST DROP / 99 PIECES" },
-    { "type": "header", "content": "Register popup" },
-    { "type": "text", "id": "modal_heading", "label": "Popup heading", "default": "Register for 15% off" },
-    { "type": "text", "id": "modal_terms", "label": "Marketing tick box label", "default": "I agree to receive marketing emails from Nine Minds." },
-    { "type": "text", "id": "modal_submit", "label": "Submit button label", "default": "Submit" },
-    { "type": "text", "id": "modal_thanks", "label": "Thank you message", "default": "Thanks, please open your emails for the promo code" },
     { "type": "header", "content": "Hero product" },
     { "type": "product", "id": "drop_product", "label": "Product card" },
     { "type": "checkbox", "id": "show_card_details", "label": "Show product details on the card", "default": true },
