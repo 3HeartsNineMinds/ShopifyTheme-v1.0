@@ -1,0 +1,71 @@
+{%- comment -%}
+  Legal page body. Each policy is a block (heading + rich text) so the wording
+  can be edited in the theme editor without touching Liquid. The copy shipped
+  in templates/page.legal.json is a DRAFT for review, not legal advice.
+{%- endcomment -%}
+<section class="section legal-section">
+  <div class="page-width legal">
+    {%- if section.settings.heading != blank -%}
+      <h2 class="section-title page-title--{{ section.settings.heading_alignment | default: 'center' }}">
+        {{ section.settings.heading }}
+      </h2>
+    {%- endif -%}
+
+    {%- if section.settings.updated != blank -%}
+      <p class="legal__updated">Last updated: {{ section.settings.updated }}</p>
+    {%- endif -%}
+
+    <div class="legal__body">
+      {%- for block in section.blocks -%}
+        <article class="legal__item" {{ block.shopify_attributes }}>
+          {%- if block.settings.title != blank -%}
+            <h3 class="legal__title">{{ block.settings.title }}</h3>
+          {%- endif -%}
+          <div class="legal__text rte">{{ block.settings.text }}</div>
+        </article>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Legal",
+  "tag": "section",
+  "settings": [
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Legal" },
+    {
+      "type": "select",
+      "id": "heading_alignment",
+      "label": "Heading alignment",
+      "options": [
+        { "value": "left", "label": "Left" },
+        { "value": "center", "label": "Centre" },
+        { "value": "right", "label": "Right" }
+      ],
+      "default": "center"
+    },
+    { "type": "text", "id": "updated", "label": "Last updated", "default": "5 September 2026" }
+  ],
+  "blocks": [
+    {
+      "type": "policy",
+      "name": "Policy",
+      "settings": [
+        { "type": "text", "id": "title", "label": "Title", "default": "Policy" },
+        { "type": "richtext", "id": "text", "label": "Text", "default": "<p>Policy text.</p>" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Legal",
+      "blocks": [
+        { "type": "policy" },
+        { "type": "policy" },
+        { "type": "policy" }
+      ]
+    }
+  ]
+}
+{% endschema %}

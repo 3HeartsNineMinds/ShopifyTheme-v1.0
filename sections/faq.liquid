@@ -1,0 +1,75 @@
+{%- comment -%}
+  FAQ accordion. Every question is a native <details>/<summary> pair, so the
+  answers start collapsed and expand on click with no JavaScript - which also
+  keeps keyboard and screen-reader behaviour for free. Questions are blocks,
+  so the copy is edited in the theme editor.
+{%- endcomment -%}
+<section class="section faq-section">
+  <div class="page-width faq">
+    {%- if section.settings.heading != blank -%}
+      <h2 class="section-title page-title--{{ section.settings.heading_alignment | default: 'center' }}">
+        {{ section.settings.heading }}
+      </h2>
+    {%- endif -%}
+
+    {%- if section.settings.intro != blank -%}
+      <p class="section-intro faq__intro">{{ section.settings.intro }}</p>
+    {%- endif -%}
+
+    <div class="faq__list">
+      {%- for block in section.blocks -%}
+        <details class="faq__item" {{ block.shopify_attributes }}>
+          <summary class="faq__question">
+            <span>{{ block.settings.question }}</span>
+            <span class="faq__icon" aria-hidden="true"></span>
+          </summary>
+          <div class="faq__answer rte">{{ block.settings.answer }}</div>
+        </details>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "FAQ",
+  "tag": "section",
+  "settings": [
+    { "type": "text", "id": "heading", "label": "Heading", "default": "FAQ" },
+    {
+      "type": "select",
+      "id": "heading_alignment",
+      "label": "Heading alignment",
+      "options": [
+        { "value": "left", "label": "Left" },
+        { "value": "center", "label": "Centre" },
+        { "value": "right", "label": "Right" }
+      ],
+      "default": "center"
+    },
+    { "type": "textarea", "id": "intro", "label": "Intro text", "default": "Everything people usually ask before a drop lands. Still stuck? Contact us." }
+  ],
+  "blocks": [
+    {
+      "type": "question",
+      "name": "Question",
+      "settings": [
+        { "type": "text", "id": "question", "label": "Question", "default": "Question" },
+        { "type": "richtext", "id": "answer", "label": "Answer", "default": "<p>Answer.</p>" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "FAQ",
+      "blocks": [
+        { "type": "question" },
+        { "type": "question" },
+        { "type": "question" },
+        { "type": "question" },
+        { "type": "question" }
+      ]
+    }
+  ]
+}
+{% endschema %}

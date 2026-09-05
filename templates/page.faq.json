@@ -1,0 +1,57 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-page",
+      "settings": {
+        "title_alignment": "center"
+      }
+    },
+    "faq": {
+      "type": "faq",
+      "blocks": {
+        "order": {
+          "type": "question",
+          "settings": {
+            "question": "Where is my order?",
+            "answer": "<p>As soon as your order leaves us you'll get a dispatch email with a tracking link. Tracking can take up to 24 hours to start updating. UK orders usually arrive within [2-4] working days, international within [7-14]. If your tracking hasn't moved for more than [5] working days, email us at [hello@nineminds.com] with your order number and we'll chase it.</p>"
+          }
+        },
+        "returns": {
+          "type": "question",
+          "settings": {
+            "question": "What is the return policy?",
+            "answer": "<p>You have [30] days from delivery to return anything unworn, unwashed and with the tags still attached, in its original packaging. Start a return by emailing [hello@nineminds.com] with your order number. Refunds go back to the original payment method within [5-10] working days of us receiving the parcel. Return postage is paid by you unless the item is faulty or we sent the wrong thing. Sale items and gift cards are [non-refundable].</p>"
+          }
+        },
+        "sizes": {
+          "type": "question",
+          "settings": {
+            "question": "Where can I find sizes?",
+            "answer": "<p>Every product page has a size guide link next to the size options, with garment measurements in cm and the fit we designed it for. Our pieces are cut [oversized] - if you're between sizes we'd size [down] for a closer fit. Still unsure? Message us with your usual size and height and we'll tell you what we'd send.</p>"
+          }
+        },
+        "shipping": {
+          "type": "question",
+          "settings": {
+            "question": "How much is delivery and do you ship internationally?",
+            "answer": "<p>UK standard delivery is [£X] and free over [£X]. We ship worldwide from [£X], calculated at checkout. Orders placed before [2pm] on a working day are dispatched the same day. International customers are responsible for any customs duties or import taxes charged on arrival.</p>"
+          }
+        },
+        "drops": {
+          "type": "question",
+          "settings": {
+            "question": "Will sold out pieces be restocked?",
+            "answer": "<p>Drops are limited and numbered - most pieces are made once and not repeated. If something sells out we'll say clearly whether it's returning. Register for the mailing list to get drop dates and early access before anything goes public.</p>"
+          }
+        }
+      },
+      "block_order": ["order", "returns", "sizes", "shipping", "drops"],
+      "settings": {
+        "heading": "",
+        "heading_alignment": "center",
+        "intro": "Everything people usually ask before a drop lands. Still stuck? Contact us."
+      }
+    }
+  },
+  "order": ["main", "faq"]
+}

@@ -1,0 +1,71 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-page",
+      "settings": {
+        "title_alignment": "center"
+      }
+    },
+    "legal": {
+      "type": "legal",
+      "blocks": {
+        "intro": {
+          "type": "policy",
+          "settings": {
+            "title": "About this page",
+            "text": "<p>This page sets out the terms you agree to when you use [nineminds.com] or buy from us, and how we handle your personal data. It covers our Terms and Conditions, our Privacy Policy, your rights under the UK GDPR and EU GDPR, and how we use cookies.</p><p>Nine Minds is a trading name of [Company Name Ltd], registered in [England and Wales] under company number [00000000], registered office [address]. Contact us at [hello@nineminds.com].</p><p><strong>Draft for review - to be checked by a qualified legal adviser before publishing.</strong></p>"
+          }
+        },
+        "terms": {
+          "type": "policy",
+          "settings": {
+            "title": "Terms and conditions",
+            "text": "<p><strong>By placing an order with Nine Minds you confirm that you accept these terms and conditions in full.</strong> If you do not agree with them, please do not purchase from this site.</p><p>You must be at least [18] years old, or have permission from a parent or guardian, to place an order. All orders are an offer to buy; a contract is only formed when we send you a dispatch confirmation. We may refuse or cancel an order - and will refund you in full - if the item is unavailable, the price or description was wrong, or we suspect fraudulent or resale activity.</p><p>Prices are shown in [GBP] and include [VAT where applicable]. Delivery costs are added at checkout. Product images are as accurate as we can make them, but colours can vary between screens and garment measurements may differ by up to [1-2cm].</p><p>All content on this site - designs, artwork, logos, photography and text - belongs to [Company Name Ltd] and may not be copied, reproduced or resold without our written permission.</p><p>Nothing in these terms limits our liability for death or personal injury caused by our negligence, for fraud, or for anything else that cannot be limited by law. These terms are governed by the laws of [England and Wales] and any dispute will be handled by the courts of [England and Wales]. We may update these terms from time to time; the version published here at the time of your order is the one that applies.</p>"
+          }
+        },
+        "returns": {
+          "type": "policy",
+          "settings": {
+            "title": "Returns, refunds and cancellation",
+            "text": "<p>If you are a consumer in the UK or EU you have a legal right to cancel an online order within [14] days of receiving it, and a further [14] days to send the goods back. On top of that we offer returns for up to [30] days from delivery.</p><p>Items must be unworn, unwashed, undamaged and returned with tags and original packaging. Refunds are issued to the original payment method within [14] days of us receiving the goods. Return postage is at your cost unless the item is faulty, damaged or incorrect, in which case we cover it. This does not affect your statutory rights, including your rights under the Consumer Rights Act 2015 in respect of faulty goods.</p>"
+          }
+        },
+        "privacy": {
+          "type": "policy",
+          "settings": {
+            "title": "Privacy policy",
+            "text": "<p>[Company Name Ltd] is the data controller for the personal data collected through this site. We are registered with the Information Commissioner's Office under registration number [ZA000000].</p><p><strong>What we collect:</strong> your name, email address, delivery and billing address, phone number, order history, marketing preferences, and technical data such as IP address, device type and pages viewed. We do not store your full card details - payments are processed by [Shopify Payments / PayPal], who handle that data as controllers in their own right.</p><p><strong>Why we use it, and our lawful basis:</strong> to fulfil your order and provide customer service (performance of a contract); to meet accounting, tax and fraud-prevention obligations (legal obligation); to send marketing emails where you have opted in (consent); and to improve the site and understand how it is used (legitimate interests).</p><p><strong>Who we share it with:</strong> our ecommerce platform [Shopify], payment providers, delivery carriers such as [Royal Mail / DPD], our email marketing provider [provider], and analytics providers [provider]. Some of these process data outside the UK or EEA; where they do, transfers are covered by UK adequacy regulations or Standard Contractual Clauses. We never sell your personal data.</p><p><strong>How long we keep it:</strong> order and transaction records for [7] years to meet tax requirements; marketing data until you unsubscribe, and for no more than [24] months of inactivity after that.</p>"
+          }
+        },
+        "gdpr": {
+          "type": "policy",
+          "settings": {
+            "title": "Your rights under GDPR",
+            "text": "<p>Under the UK GDPR and the EU GDPR you have the right to: be informed about how your data is used; access a copy of the data we hold about you; have inaccurate data corrected; ask us to erase your data where we no longer need it; restrict or object to our processing, including profiling for marketing; and receive your data in a portable format. Where we rely on your consent, you can withdraw it at any time - this does not affect processing carried out before you withdrew it.</p><p>To exercise any of these rights, email [privacy@nineminds.com]. We will respond within one month. You can unsubscribe from marketing at any time using the link in any email. If you are not happy with how we have handled your data you can complain to the Information Commissioner's Office at ico.org.uk, or to your local supervisory authority in the EU.</p>"
+          }
+        },
+        "cookies": {
+          "type": "policy",
+          "settings": {
+            "title": "Cookies",
+            "text": "<p>We use strictly necessary cookies to run the cart, checkout and your account - these cannot be switched off. With your consent we also use analytics cookies to understand how the site is used, and marketing cookies to measure and target advertising on [Meta / Google / TikTok].</p><p>You can accept, reject or change your cookie preferences at any time through the cookie banner or [the cookie settings link in the footer], and you can block cookies in your browser settings - though parts of the site may stop working if you block the necessary ones.</p>"
+          }
+        },
+        "contact": {
+          "type": "policy",
+          "settings": {
+            "title": "Contact",
+            "text": "<p>Questions about these policies, your order or your data: [hello@nineminds.com]. Postal address: [Company Name Ltd, address line 1, city, postcode].</p>"
+          }
+        }
+      },
+      "block_order": ["intro", "terms", "returns", "privacy", "gdpr", "cookies", "contact"],
+      "settings": {
+        "heading": "",
+        "heading_alignment": "center",
+        "updated": "5 September 2026"
+      }
+    }
+  },
+  "order": ["main", "legal"]
+}

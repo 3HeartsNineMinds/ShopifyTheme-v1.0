@@ -354,6 +354,29 @@ html[data-theme='dark'] .product-media-next {
 }
 
 /* ==========================================================
+   FAQ & LEGAL PAGES
+   ========================================================== */
+.faq__list,
+.faq__item {
+  border-color:var(--mode-line)!important;
+}
+
+.faq__question {
+  color:var(--mode-text)!important;
+}
+
+.faq__intro,
+.legal__updated,
+.faq__answer,
+.legal__text {
+  color:var(--mode-muted)!important;
+}
+
+.legal__title {
+  color:var(--mode-text)!important;
+}
+
+/* ==========================================================
    RESPONSIVE: 880px AND BELOW
    ========================================================== */
 @media(max-width:880px) {
