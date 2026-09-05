@@ -27,17 +27,19 @@
     --nm-card-width:520px;
     /* 4vh shorter than before: the height it gives back is what lets the
        caption clear the photo and the wordmark sit off the footer bar. */
-    --nm-card-max-h:46vh;
+    --nm-card-max-h:42vh;
     /* 100% of the caption's own height, so it lands completely below the
        card instead of overlapping the bottom of the garment. */
     --nm-card-caption-drop:100%;
     /* The caption is absolutely positioned, so it takes no space in the
-       flex column - this margin reserves the room it now sits in. */
-    margin-bottom:clamp(34px,5vh,58px);
+       flex column - this margin reserves the room it now sits in, plus a
+       clear gap before the wordmark. Roughly caption height + breathing room:
+       too small and the price line lands on top of the logo. */
+    margin-bottom:clamp(72px,9.5vh,116px);
   }
   .template-index .nm-wordmark {
     --nm-wordmark-width:900px;
-    --nm-wordmark-max-h:18vh;
+    --nm-wordmark-max-h:17vh;
   }
   /* Extra clearance under the wordmark so its descenders are not clipped by
      the fixed footer bar. */
@@ -175,6 +177,39 @@
   }
   .template-product .product-sku {
     color:#ece7dc;
+  }
+  /* ---- Size guide popup ------------------------------------ */
+  /* The panel was a scroll container (max-height + overflow-y:auto), which
+     did two bad things: the close button sits outside the panel box, so the
+     container clipped it and the 14px it hangs off the right edge turned into
+     a scrollbar. The panel is now free-flowing and the cross sits inside the
+     corner, above everything. The dialog itself still scrolls if a size run
+     is ever tall enough to need it. */
+  .size-guide-modal__panel {
+    max-height:none;
+    overflow:visible;
+    padding:1.4rem;
+  }
+  .size-guide-modal__close {
+    top:12px;
+    right:12px;
+    z-index:3;
+  }
+  .size-guide-modal__heading {
+    padding-right:3.4rem;
+  }
+  /* Six or seven columns fit inside the 760px panel on desktop, so the table
+     has no reason to scroll sideways here. */
+  .size-guide-table-wrap {
+    overflow-x:visible;
+  }
+  .size-guide-table {
+    table-layout:fixed;
+  }
+  /* Fixed layout splits the width evenly, and the measurement names need more
+     of it than a two-digit size column does. */
+  .size-guide-table th:first-child {
+    width:30%;
   }
   .template-product .product-details__description {
     max-height:18vh;
