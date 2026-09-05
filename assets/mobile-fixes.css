@@ -294,8 +294,11 @@
   [data-product-section] .product-layout {
     display:grid!important;
     grid-template-columns:minmax(0,1fr) minmax(106px,.6fr)!important;
-    /* title / sku / media + sizes / material / description / buttons */
-    grid-template-rows:auto auto minmax(0,1fr) auto auto auto!important;
+    /* title / sku / media + sizes / material / description / buttons.
+       The sizes row is content height and the material row takes the slack,
+       so material sits directly under the size guide and the photo - which
+       spans both - still fills the column. */
+    grid-template-rows:auto auto auto minmax(0,1fr) auto auto!important;
     height:100%!important;
     gap:.4rem .7rem!important;
     width:min(100% - 1.1rem,1240px)!important;
@@ -337,10 +340,12 @@
     letter-spacing:.14em!important;
   }
   [data-product-section] .product-material {
-    grid-column:1 / -1!important;
+    grid-column:2!important;
     grid-row:4!important;
     order:5!important;
-    margin:0!important;
+    align-self:start!important;
+    margin:.55rem 0 0!important;
+    min-width:0!important;
   }
   [data-product-section] .product-material__label {
     margin:0!important;
@@ -348,8 +353,9 @@
     letter-spacing:.13em!important;
   }
   [data-product-section] .product-material__value {
-    font-size:.8rem!important;
+    font-size:.72rem!important;
     line-height:1.25!important;
+    overflow-wrap:anywhere!important;
   }
   [data-product-section] .product-description {
     grid-column:1 / -1!important;
@@ -382,6 +388,9 @@
      product with no description (or no size picker) still lands correctly. */
   [data-product-section] .product-layout:has(.variant-picker) .product-media-panel {
     grid-column:1!important;
+    /* Spans the sizes row and the material row, so the photo fills the column
+       beside them rather than leaving a gap under the size guide. */
+    grid-row:3 / 5!important;
   }
   [data-product-section] .product-media-gallery {
     height:100%!important;
