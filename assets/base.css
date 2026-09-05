@@ -1524,10 +1524,24 @@ body {
   margin-inline:auto;
 }
 
+/* The page title and the body below it are two separate sections, so the gap
+   between them was the title section's bottom padding plus this one's top
+   padding. The body owns the spacing instead: title section pads to 0 below,
+   body starts at 0 above. */
+.template-page--faq .main-content > *:first-child .section,
+.template-page--legal .main-content > *:first-child .section {
+  padding-bottom:0;
+}
+
+.faq-section,
+.legal-section {
+  padding-top:0;
+}
+
 .faq__intro,
 .legal__updated {
   text-align:center;
-  margin:0 auto 2.5rem;
+  margin:0 auto 1.5rem;
   max-width:52ch;
 }
 

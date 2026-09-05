@@ -81,17 +81,25 @@
     height: 100vh !important;
     max-height: 100vh !important;
     overflow: hidden !important;
-    padding-top: 96px !important;
-    padding-bottom: 24px !important;
+    padding-top: 88px !important;
+    /* The footer bar is fixed and paints over the bottom of the viewport, so
+       the panels have to stop above it - otherwise the media card's bottom
+       border and rounded corners are hidden behind it. */
+    padding-bottom: calc(var(--site-footer-h) + 20px) !important;
   }
   [data-product-section] .product-layout {
-    height: calc(100vh - 120px) !important;
+    height: calc(100vh - 88px - var(--site-footer-h) - 20px) !important;
     align-items: stretch !important;
+    gap: 1.1rem !important;
   }
   [data-product-section] .product-media-panel,
   [data-product-section] .product-info-panel {
     height: 100% !important;
     overflow: hidden !important;
+    /* Tighter than the 2rem site-wide panel padding: on a locked 100vh screen
+       the inner padding is what makes the card read as oversized. */
+    padding: 1.5rem !important;
+    border-radius: 1.4rem !important;
   }
   [data-product-section] .product-media-gallery,
   [data-product-section] .product-media-slides {
@@ -170,11 +178,16 @@
     text-shadow: 0 0 34px rgba(236,231,220,.24) !important;
     opacity: 1 !important;
     filter: none !important;
-    font-size: clamp(3rem, 5.5vw, 5.8rem) !important;
-    margin-bottom: 1rem !important;
+    font-size: clamp(2.4rem, 4.2vw, 4.4rem) !important;
+    margin-bottom: .8rem !important;
   }
   [data-product-section] .product-details__description {
-    max-height: 16vh !important;
+    max-height: 18vh !important;
     overflow: hidden !important;
+  }
+  /* Kicker removed on desktop for the product and basket pages - the title
+     carries it. Mobile keeps it (see mobile-fixes.css). */
+  [data-product-section] .section-kicker {
+    display: none !important;
   }
 }

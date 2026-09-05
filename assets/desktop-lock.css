@@ -25,10 +25,24 @@
      screen. The card takes the space left between the two fixed bars. */
   .template-index .nm-drop-card {
     --nm-card-width:520px;
-    --nm-card-max-h:50vh;
+    /* 4vh shorter than before: the height it gives back is what lets the
+       caption clear the photo and the wordmark sit off the footer bar. */
+    --nm-card-max-h:46vh;
+    /* 100% of the caption's own height, so it lands completely below the
+       card instead of overlapping the bottom of the garment. */
+    --nm-card-caption-drop:100%;
+    /* The caption is absolutely positioned, so it takes no space in the
+       flex column - this margin reserves the room it now sits in. */
+    margin-bottom:clamp(34px,5vh,58px);
   }
   .template-index .nm-wordmark {
     --nm-wordmark-width:900px;
+    --nm-wordmark-max-h:18vh;
+  }
+  /* Extra clearance under the wordmark so its descenders are not clipped by
+     the fixed footer bar. */
+  .template-index .nm-hero {
+    padding-bottom:calc(var(--site-footer-h) + clamp(12px,2.4vh,30px));
   }
   .site-header__inner {
     display:grid;
@@ -50,7 +64,7 @@
   /* The header is position:fixed on desktop, so a scrolling template has to
      pad past it or its first line sits under the bar. The cart and product
      templates already do this themselves. */
-  .template-page .section:first-child {
+  .template-page .main-content > *:first-child .section:first-child {
     padding-top:calc(var(--site-header-h) + 1.5rem);
   }
   html.template-product,
@@ -64,13 +78,16 @@
   }
   .template-product .product-section {
     height:100vh;
-    padding-top:96px;
-    padding-bottom:24px;
+    padding-top:88px;
+    /* Stops above the fixed footer bar so the media card's bottom edge is
+       visible - see the same maths in product.css. */
+    padding-bottom:calc(var(--site-footer-h) + 20px);
     overflow:hidden;
   }
   .template-product .product-layout {
-    height:calc(100vh - 120px);
+    height:calc(100vh - 88px - var(--site-footer-h) - 20px);
     align-items:stretch;
+    gap:1.1rem;
   }
   .template-product .product-media-panel,
   .template-product .product-info-panel {
@@ -152,15 +169,21 @@
   .template-product .product-title {
     color:#f6f6f3!important;
     text-shadow:0 0 32px rgba(236,231,220,.2);
-    font-size:clamp(3rem,5.5vw,5.8rem);
-    margin-bottom:1rem;
+    font-size:clamp(2.4rem,4.2vw,4.4rem);
+    margin-bottom:.8rem;
     opacity:1;
   }
   .template-product .product-sku {
     color:#ece7dc;
   }
   .template-product .product-details__description {
-    max-height:16vh;
+    max-height:18vh;
     overflow:hidden;
+  }
+  /* Kicker dropped on desktop for both the product and the basket. Mobile is
+     untouched, so the line still shows there. */
+  .template-product .section-kicker,
+  .template-cart .section-kicker {
+    display:none;
   }
 }

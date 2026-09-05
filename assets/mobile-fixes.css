@@ -270,7 +270,10 @@
   }
   /* The header is in flow on mobile, so the page template only needs
      breathing room rather than clearance for a fixed bar. */
-  .template-page .section:first-child {
+  /* Scoped to the FIRST section on the page, not every section that happens
+     to be the first child of its own shopify-section wrapper - which is what
+     was double-padding the FAQ and Legal bodies under their titles. */
+  .template-page .main-content > *:first-child .section:first-child {
     padding-top:1.5rem!important;
   }
   .template-page .page-blocks {
