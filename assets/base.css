@@ -511,8 +511,23 @@ body {
   background:#111;
 }
 
+/* The rte paragraphs bring their own margins; inside a bordered box they just
+   add phantom height at the ends. */
+.product-description > :first-child {
+  margin-top:0;
+}
+
+.product-description > :last-child {
+  margin-bottom:0;
+}
+
 .product-description {
   margin-bottom:1.75rem;
+  padding:.85rem 1rem;
+  /* Same frame as .variant-option__content, so the description reads as part
+     of the same set of panels. */
+  border:1px solid rgba(255,255,255,.22);
+  border-radius:1rem;
   color:#d7d7d2;
 }
 
@@ -795,7 +810,7 @@ body {
   display:inline-flex;
   gap:10px;
   align-items:center;
-  margin:0;
+  margin:4px 0 0;
   color:var(--text);
   text-transform:uppercase;
   letter-spacing:.08em;

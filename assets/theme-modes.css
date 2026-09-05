@@ -317,6 +317,11 @@ html[data-theme='dark'] .site-footer {
 /* ==========================================================
    PRODUCT VARIANTS & MEDIA
    ========================================================== */
+/* Description shares the size options' frame, so it shares their line too. */
+.product-description {
+  border-color:var(--mode-line)!important;
+}
+
 .variant-option__content {
   background:var(--mode-panel-strong)!important;
   color:var(--mode-text)!important;
