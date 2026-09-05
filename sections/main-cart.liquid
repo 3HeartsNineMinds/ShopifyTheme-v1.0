@@ -3,7 +3,7 @@
     <div class="cart-header">
       <div>
         <p class="section-kicker">Your selection</p>
-        <h1 class="section-title">Cart</h1>
+        <h1 class="section-title">Basket</h1>
       </div>
       <a class="button button--secondary" href="{{ routes.all_products_collection_url }}">Continue shopping</a>
     </div>
@@ -37,7 +37,7 @@
                 <td class="cart-cell cart-cell--size" data-label="Size">{% unless item.variant.title == 'Default Title' %}{{ item.variant.title }}{% else %}&mdash;{% endunless %}</td>
                 <td class="cart-cell cart-cell--qty" data-label="Qty"><input class="input cart-quantity" type="number" name="updates[]" value="{{ item.quantity }}" min="0" aria-label="Quantity for {{ item.product.title | escape }}"></td>
                 <td class="cart-cell cart-cell--total" data-label="Total">{{ item.final_line_price | money }}</td>
-                <td class="cart-cell cart-cell--remove"><a class="remove-link" href="{{ item.url_to_remove }}" aria-label="Remove {{ item.product.title | escape }} from cart">Remove</a></td>
+                <td class="cart-cell cart-cell--remove"><a class="remove-link" href="{{ item.url_to_remove }}" aria-label="Remove {{ item.product.title | escape }} from basket">Remove</a></td>
               </tr>
             {% endfor %}
           </tbody>
@@ -48,14 +48,14 @@
           <p class="cart-summary__price">{{ cart.total_price | money }}</p>
           <p class="cart-summary__note">Shipping and discount codes are calculated at checkout.</p>
           <div class="product-actions">
-            <button class="button button--secondary" type="submit" name="update">Update cart</button>
+            <button class="button button--secondary" type="submit" name="update">Update basket</button>
             <button class="button" type="submit" name="checkout">Checkout</button>
           </div>
         </div>
       </form>
     {% else %}
       <div class="empty-cart-panel">
-        <p>Your cart is empty.</p>
+        <p>Your basket is empty.</p>
         <a class="button" href="{{ routes.all_products_collection_url }}">Continue shopping</a>
       </div>
     {% endif %}
@@ -63,5 +63,5 @@
 </section>
 
 {% schema %}
-{ "name": "Main cart", "settings": [] }
+{ "name": "Main basket", "settings": [] }
 {% endschema %}

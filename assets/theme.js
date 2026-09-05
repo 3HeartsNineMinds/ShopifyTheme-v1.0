@@ -82,7 +82,7 @@ document.addEventListener('change', (event) => {
   const isAvailable = input.dataset.available === 'true';
   if (addButton) {
     addButton.disabled = !isAvailable;
-    addButton.textContent = isAvailable ? 'Add to cart' : 'Sold out';
+    addButton.textContent = isAvailable ? 'Add to basket' : 'Sold out';
   }
 });
 
@@ -103,7 +103,7 @@ document.addEventListener('submit', async (event) => {
       body: new FormData(form),
     });
 
-    if (!response.ok) throw new Error('Unable to add item to cart');
+    if (!response.ok) throw new Error('Unable to add item to basket');
     window.location.href = '/cart';
   } catch (error) {
     console.error(error);

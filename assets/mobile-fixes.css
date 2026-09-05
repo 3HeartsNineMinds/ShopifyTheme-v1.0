@@ -474,43 +474,19 @@
     font-size:.66rem!important;
   }
 
-  /* ---- Cart page: locked screen, stacked rows --------------
+  /* ---- Cart page: stacked rows -----------------------------
      The table used to be display:block;overflow-x:auto, so the product column
-     dragged sideways. Each row is a card that fits a normal phone width now,
-     and the page itself is locked like the product template. */
-  html.template-cart,
-  html.template-cart body {
-    height:100%!important;
-    max-height:100%!important;
-    overflow:hidden!important;
-    overscroll-behavior:none!important;
-  }
-  html.template-cart body {
-    position:fixed!important;
-    inset:0!important;
-    width:100%!important;
-    display:flex!important;
-    flex-direction:column!important;
-  }
-  .template-cart .main-content {
-    flex:1 1 auto!important;
-    min-height:0!important;
-    overflow:hidden!important;
-    padding-bottom:0!important;
-  }
+     dragged sideways. Each row is a card that fits a normal phone width now.
+
+     The page itself scrolls normally. It was locked to one screen with the
+     rows scrolling inside, but that put the subtotal and the checkout button
+     out of reach as soon as there was more than one item. */
   .template-cart .cart-section {
-    display:flex!important;
-    flex-direction:column!important;
-    height:100%!important;
-    overflow:hidden!important;
     padding-top:.6rem!important;
-    padding-bottom:calc(var(--site-footer-h) + .35rem)!important;
+    /* Clear the fixed footer bar so the checkout button is never under it. */
+    padding-bottom:calc(var(--site-footer-h) + 1rem)!important;
   }
   .template-cart .cart-section > .page-width {
-    display:flex!important;
-    flex-direction:column!important;
-    flex:1 1 auto!important;
-    min-height:0!important;
     width:min(100% - 1.1rem,1240px)!important;
   }
   .template-cart .cart-section .section-kicker {
@@ -534,29 +510,15 @@
     white-space:nowrap!important;
   }
   .template-cart .cart-form {
-    display:flex!important;
-    flex-direction:column!important;
-    flex:1 1 auto!important;
-    min-height:0!important;
-    gap:.6rem!important;
+    display:grid!important;
+    gap:.8rem!important;
   }
-  /* The row list is the one place a long cart can still move: the page stays
-     put and the list absorbs the overflow instead. A one to three item cart
-     never reaches it. */
   .template-cart .cart-table {
     display:block!important;
-    flex:1 1 auto!important;
-    min-height:0!important;
     overflow-x:hidden!important;
-    overflow-y:auto!important;
-    overscroll-behavior:contain!important;
-    scrollbar-width:none!important;
     border:0!important;
     border-radius:0!important;
     background:none!important;
-  }
-  .template-cart .cart-table::-webkit-scrollbar {
-    display:none!important;
   }
   .template-cart .cart-table thead {
     display:none!important;

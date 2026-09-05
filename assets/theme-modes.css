@@ -246,6 +246,14 @@ html[data-theme='dark'] .nm-landing__art {
 }
 
 /* Popup surface follows the mode tokens like every other panel. */
+/* The mode layer sets the close button background with !important, so its
+   hover state has to live here too or hovering does nothing. */
+.size-guide-modal__close:hover,
+.size-guide-modal__close:focus-visible {
+  background:var(--mode-text)!important;
+  color:var(--mode-bg)!important;
+}
+
 /* The sticky first column paints its own background, so it needs the mode
    token rather than the hard-coded dark one. */
 .size-guide-table th:first-child {
