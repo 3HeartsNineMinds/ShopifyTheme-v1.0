@@ -1,4 +1,14 @@
 {%- liquid
+  # ---- SKU and material -----------------------------------------------
+  # Both are product level metafields, read through the documented
+  # metafields[namespace][key] path. The settings take "namespace.key" so a
+  # different store can point them elsewhere without a code change.
+  assign sku_path = section.settings.sku_metafield | default: 'custom.sku' | split: '.'
+  assign product_sku = product.metafields[sku_path[0]][sku_path[1]].value
+
+  assign material_path = section.settings.material_metafield | default: 'custom.material' | split: '.'
+  assign product_material = product.metafields[material_path[0]][material_path[1]].value
+
   # ---- Size guide measurements ----------------------------------------
   # The measurements live on variant metafields. On this store they are
   # namespace "custom" with keys prefixed "size_guide_", which is what Shopify
@@ -121,11 +131,14 @@
       <p class="section-kicker">Nine Minds piece</p>
       <h1 class="section-title product-title">{{ product.title }}</h1>
 
-      <p class="price product-price" data-product-price>{{ product.selected_or_first_available_variant.price | money }}</p>
-
-      {% if product.description != blank %}
-        <div class="rte product-description">{{ product.description }}</div>
-      {% endif %}
+      {%- comment -%}
+        The SKU takes the slot the price used to hold. Per-variant prices are
+        still on the size options, so nothing is lost by dropping it here.
+        The description has moved below the size guide.
+      {%- endcomment -%}
+      {%- if product_sku != blank -%}
+        <p class="product-sku"><span class="product-sku__label">SKU:</span> <span class="product-sku__value">{{ product_sku }}</span></p>
+      {%- endif -%}
 
       {% form 'product', product, data-cart-add: true, class: 'product-form' %}
         <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}" data-variant-id>
@@ -159,6 +172,17 @@
             {%- endif -%}
           </fieldset>
         {% endunless %}
+
+        {%- if product_material != blank -%}
+          <div class="product-material">
+            <p class="product-material__label">Material</p>
+            <p class="product-material__value">{{ product_material }}</p>
+          </div>
+        {%- endif -%}
+
+        {% if product.description != blank %}
+          <div class="rte product-description">{{ product.description }}</div>
+        {% endif %}
 
         <div class="product-actions">
           <button class="button product-submit" type="submit" {% unless product.selected_or_first_available_variant.available %}disabled{% endunless %} data-add-to-cart>
@@ -248,6 +272,9 @@
 {
   "name": "Main product",
   "settings": [
+    { "type": "header", "content": "Product details" },
+    { "type": "text", "id": "sku_metafield", "label": "SKU metafield", "default": "custom.sku", "info": "Namespace and key of the product metafield shown under the title, in place of the price." },
+    { "type": "text", "id": "material_metafield", "label": "Material metafield", "default": "custom.material", "info": "Namespace and key of the product metafield shown under the size guide." },
     { "type": "header", "content": "Size guide" },
     { "type": "text", "id": "size_guide_namespace", "label": "Measurement metafield namespace", "default": "custom", "info": "The namespace half of the variant metafield. Definitions named Size_Guide:Height land in custom." },
     { "type": "text", "id": "size_guide_prefix", "label": "Measurement key prefix", "default": "size_guide", "info": "Only keys containing this are treated as measurements, so the rest of the namespace is ignored." },

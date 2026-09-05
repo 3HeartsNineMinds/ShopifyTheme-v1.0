@@ -73,11 +73,9 @@ document.addEventListener('change', (event) => {
   if (!form) return;
 
   const variantIdInput = form.querySelector('[data-variant-id]');
-  const priceEl = document.querySelector('[data-product-price]');
   const addButton = form.querySelector('[data-add-to-cart]');
 
   if (variantIdInput) variantIdInput.value = input.value;
-  if (priceEl && input.dataset.price) priceEl.textContent = input.dataset.price;
 
   const isAvailable = input.dataset.available === 'true';
   if (addButton) {

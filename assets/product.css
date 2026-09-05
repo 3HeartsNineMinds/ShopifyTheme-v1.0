@@ -174,7 +174,7 @@
     margin-bottom: 1rem !important;
   }
   [data-product-section] .product-description {
-    max-height: 22vh !important;
+    max-height: 16vh !important;
     overflow: hidden !important;
   }
 }

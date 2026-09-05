@@ -281,6 +281,10 @@
   [data-product-section].product-section {
     height:100%!important;
     max-height:100%!important;
+    /* .nm-surface sets min-height:100vh. The header is in flow here, so 100vh
+       overruns the main region by the header height and pushes the buttons
+       under the fixed footer. */
+    min-height:0!important;
     overflow:hidden!important;
     /* Was 5.1rem, which cleared a fixed header. The header is in flow here, so
        that was dead space - the title now starts just under the bar. */
@@ -290,8 +294,8 @@
   [data-product-section] .product-layout {
     display:grid!important;
     grid-template-columns:minmax(0,1fr) minmax(106px,.6fr)!important;
-    /* title / price / description / media + sizes / buttons */
-    grid-template-rows:auto auto auto minmax(0,1fr) auto!important;
+    /* title / sku / media + sizes / material / description / buttons */
+    grid-template-rows:auto auto minmax(0,1fr) auto auto auto!important;
     height:100%!important;
     gap:.4rem .7rem!important;
     width:min(100% - 1.1rem,1240px)!important;
@@ -319,24 +323,44 @@
     margin:0!important;
     letter-spacing:-.07em!important;
   }
-  [data-product-section] .product-price {
+  [data-product-section] .product-sku {
     grid-column:1 / -1!important;
     grid-row:2!important;
     order:2!important;
     margin:0!important;
     color:#ece7dc!important;
-    font-size:.98rem!important;
+    font-size:.9rem!important;
     line-height:1.2!important;
+  }
+  [data-product-section] .product-sku__label {
+    font-size:.62rem!important;
+    letter-spacing:.14em!important;
+  }
+  [data-product-section] .product-material {
+    grid-column:1 / -1!important;
+    grid-row:4!important;
+    order:5!important;
+    margin:0!important;
+  }
+  [data-product-section] .product-material__label {
+    margin:0!important;
+    font-size:.58rem!important;
+    letter-spacing:.13em!important;
+  }
+  [data-product-section] .product-material__value {
+    font-size:.8rem!important;
+    line-height:1.25!important;
   }
   [data-product-section] .product-description {
     grid-column:1 / -1!important;
-    grid-row:3!important;
-    order:3!important;
-    max-height:3.4rem!important;
+    grid-row:5!important;
+    order:6!important;
+    /* Bounded so it cannot push the buttons off a locked screen. */
+    max-height:3rem!important;
     overflow:hidden!important;
     margin:0!important;
-    font-size:.82rem!important;
-    line-height:1.35!important;
+    font-size:.78rem!important;
+    line-height:1.3!important;
     color:#cfcac0!important;
   }
   [data-product-section] .product-form {
@@ -345,7 +369,7 @@
   [data-product-section] .product-media-panel {
     /* Full width when the product has no size picker beside it. */
     grid-column:1 / -1!important;
-    grid-row:4!important;
+    grid-row:3!important;
     order:4!important;
     min-width:0!important;
     min-height:0!important;
@@ -412,7 +436,7 @@
   }
   [data-product-section] .variant-picker {
     grid-column:2!important;
-    grid-row:4!important;
+    grid-row:3!important;
     order:4!important;
     margin:0!important;
     padding:0!important;
@@ -459,8 +483,8 @@
   }
   [data-product-section] .product-actions {
     grid-column:1 / -1!important;
-    grid-row:5!important;
-    order:5!important;
+    grid-row:6!important;
+    order:7!important;
     justify-content:stretch!important;
     display:grid!important;
     grid-template-columns:1fr 1fr!important;

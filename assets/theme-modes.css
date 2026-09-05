@@ -125,7 +125,7 @@ html[data-theme='dark'] .site-logo {
    TYPOGRAPHY
    ========================================================== */
 .section-title,
-.product-price,
+.product-sku__value,
 .cart-summary__price,
 .variant-picker legend {
   color:var(--mode-text)!important;
@@ -273,8 +273,14 @@ html[data-theme='dark'] .nm-landing__art {
 }
 
 .nm-modal__field > span,
-.nm-modal__check {
+.nm-modal__check,
+.product-sku__label,
+.product-material__label {
   color:var(--mode-muted)!important;
+}
+
+.product-material__value {
+  color:var(--mode-text)!important;
 }
 
 .nm-modal::backdrop {

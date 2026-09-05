@@ -511,14 +511,6 @@ body {
   background:#111;
 }
 
-.product-price {
-  font-size:1.5rem;
-  color:#ece7dc;
-  opacity:1;
-  margin:0 0 1rem;
-  font-weight:900;
-}
-
 .product-description {
   margin-bottom:1.75rem;
   color:#d7d7d2;
@@ -1019,6 +1011,46 @@ body {
   font-size:clamp(16px,2.4vw,22px);
   font-weight:900;
   letter-spacing:-.05em;
+}
+
+/* ---- Product SKU & material -------------------------------- */
+/* The SKU sits in the slot the price used to hold, so it keeps that rhythm. */
+.product-sku {
+  margin:0 0 1rem;
+  color:var(--cream);
+  font-size:1rem;
+  letter-spacing:.02em;
+}
+
+.product-sku__label {
+  color:var(--color-muted);
+  text-transform:uppercase;
+  letter-spacing:.16em;
+  font-size:.72rem;
+  font-weight:800;
+}
+
+.product-sku__value {
+  font-weight:800;
+}
+
+.product-material {
+  margin:1rem 0 0;
+}
+
+.product-material__label {
+  margin:0 0 .2rem;
+  color:var(--color-muted);
+  text-transform:uppercase;
+  letter-spacing:.16em;
+  font-size:.72rem;
+  font-weight:800;
+}
+
+.product-material__value {
+  margin:0;
+  color:var(--cream);
+  font-size:.95rem;
 }
 
 /* ---- Page title ------------------------------------------- */
