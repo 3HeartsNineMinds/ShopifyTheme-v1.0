@@ -6,6 +6,17 @@
    ========================================================== */
 
 @media (min-width: 881px) {
+  /* The header and footer are position:fixed, so they are laid out inside the
+     viewport MINUS the classic scrollbar. A page long enough to scroll is
+     therefore ~15px narrower than one that is not, which slides the centred
+     logo and the footer row sideways when you move between them - the contact
+     page being the obvious one, since it is the short page among long ones.
+     Reserving the gutter on every template makes the two bars the same width
+     whether the page scrolls or not, including the viewport-locked templates
+     below (overflow:hidden is still a scroll container, so it reserves too). */
+  html {
+    scrollbar-gutter:stable;
+  }
   html.template-index,
   html.template-index body {
     height:100%;
