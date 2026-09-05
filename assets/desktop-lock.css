@@ -159,7 +159,7 @@
   .template-product .product-sku {
     color:#ece7dc;
   }
-  .template-product .product-description {
+  .template-product .product-details__description {
     max-height:16vh;
     overflow:hidden;
   }

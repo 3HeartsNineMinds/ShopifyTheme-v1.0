@@ -150,7 +150,7 @@ html[data-theme='dark'] .product-title {
 .section-kicker,
 .price,
 .rte,
-.product-description,
+.product-details__label,
 .cart-summary__label,
 .cart-summary__note,
 .product-card__tag {
@@ -275,11 +275,11 @@ html[data-theme='dark'] .nm-landing__art {
 .nm-modal__field > span,
 .nm-modal__check,
 .product-sku__label,
-.product-material__label {
+.product-details__label {
   color:var(--mode-muted)!important;
 }
 
-.product-material__value {
+.product-details__material {
   color:var(--mode-text)!important;
 }
 
@@ -317,11 +317,6 @@ html[data-theme='dark'] .site-footer {
 /* ==========================================================
    PRODUCT VARIANTS & MEDIA
    ========================================================== */
-/* Description shares the size options' frame, so it shares their line too. */
-.product-description {
-  border-color:var(--mode-line)!important;
-}
-
 .variant-option__content {
   background:var(--mode-panel-strong)!important;
   color:var(--mode-text)!important;

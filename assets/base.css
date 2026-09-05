@@ -511,24 +511,36 @@ body {
   background:#111;
 }
 
-/* The rte paragraphs bring their own margins; inside a bordered box they just
-   add phantom height at the ends. */
-.product-description > :first-child {
+/* ---- Product details -------------------------------------- */
+/* Label, then the material and the description as plain lines. No frame - it
+   sits inside the right-hand column, not in a panel of its own. */
+.product-details {
+  margin-bottom:1.75rem;
+  color:#d7d7d2;
+}
+
+.product-details__label {
+  margin:0 0 .35rem;
+  color:var(--color-muted);
+  text-transform:uppercase;
+  letter-spacing:.16em;
+  font-size:.72rem;
+  font-weight:800;
+  text-decoration:none;
+}
+
+.product-details__material {
+  margin:0 0 .35rem;
+  color:var(--cream);
+  font-size:.95rem;
+}
+
+.product-details__description > :first-child {
   margin-top:0;
 }
 
-.product-description > :last-child {
+.product-details__description > :last-child {
   margin-bottom:0;
-}
-
-.product-description {
-  margin-bottom:1.75rem;
-  padding:.85rem 1rem;
-  /* Same frame as .variant-option__content, so the description reads as part
-     of the same set of panels. */
-  border:1px solid rgba(255,255,255,.22);
-  border-radius:1rem;
-  color:#d7d7d2;
 }
 
 .product-form {
@@ -537,6 +549,7 @@ body {
 }
 
 .variant-picker {
+  position:relative;
   border:0;
   margin:0;
   padding:0;
@@ -1047,25 +1060,6 @@ body {
 
 .product-sku__value {
   font-weight:800;
-}
-
-.product-material {
-  margin:1rem 0 0;
-}
-
-.product-material__label {
-  margin:0 0 .2rem;
-  color:var(--color-muted);
-  text-transform:uppercase;
-  letter-spacing:.16em;
-  font-size:.72rem;
-  font-weight:800;
-}
-
-.product-material__value {
-  margin:0;
-  color:var(--cream);
-  font-size:.95rem;
 }
 
 /* ---- Page title ------------------------------------------- */

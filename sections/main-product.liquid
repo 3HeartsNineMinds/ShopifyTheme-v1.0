@@ -173,16 +173,24 @@
           </fieldset>
         {% endunless %}
 
-        {%- if product_material != blank -%}
-          <div class="product-material">
-            <p class="product-material__label">Material</p>
-            <p class="product-material__value">{{ product_material }}</p>
+        {%- comment -%}
+          Details block: one label, then the material and the description as
+          plain lines beneath it. Lives in the right-hand column under the
+          size guide.
+        {%- endcomment -%}
+        {%- if product_material != blank or product.description != blank -%}
+          <div class="product-details">
+            <p class="product-details__label">Details:</p>
+
+            {%- if product_material != blank -%}
+              <p class="product-details__material">{{ product_material }}</p>
+            {%- endif -%}
+
+            {%- if product.description != blank -%}
+              <div class="rte product-details__description">{{ product.description }}</div>
+            {%- endif -%}
           </div>
         {%- endif -%}
-
-        {% if product.description != blank %}
-          <div class="rte product-description">{{ product.description }}</div>
-        {% endif %}
 
         <div class="product-actions">
           <button class="button product-submit" type="submit" {% unless product.selected_or_first_available_variant.available %}disabled{% endunless %} data-add-to-cart>

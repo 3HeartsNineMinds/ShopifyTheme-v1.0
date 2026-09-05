@@ -173,7 +173,7 @@
     font-size: clamp(3rem, 5.5vw, 5.8rem) !important;
     margin-bottom: 1rem !important;
   }
-  [data-product-section] .product-description {
+  [data-product-section] .product-details__description {
     max-height: 16vh !important;
     overflow: hidden !important;
   }
