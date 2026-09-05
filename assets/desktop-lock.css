@@ -27,7 +27,7 @@
     --nm-card-width:520px;
     /* 4vh shorter than before: the height it gives back is what lets the
        caption clear the photo and the wordmark sit off the footer bar. */
-    --nm-card-max-h:42vh;
+    --nm-card-max-h:40vh;
     /* 100% of the caption's own height, so it lands completely below the
        card instead of overlapping the bottom of the garment. */
     --nm-card-caption-drop:100%;
@@ -35,7 +35,15 @@
        flex column - this margin reserves the room it now sits in, plus a
        clear gap before the wordmark. Roughly caption height + breathing room:
        too small and the price line lands on top of the logo. */
-    margin-bottom:clamp(72px,9.5vh,116px);
+    margin-bottom:clamp(96px,12vh,140px);
+  }
+  /* The caption is four lines (kicker, title, price, CTA), so its own top
+     padding is what reads as a gap under the garment. Trimmed here rather
+     than by pulling the block up, which would put the kicker back over the
+     photo. */
+  .template-index .nm-drop-card__content {
+    padding-top:2px;
+    gap:.1rem;
   }
   .template-index .nm-wordmark {
     --nm-wordmark-width:900px;
@@ -80,14 +88,16 @@
   }
   .template-product .product-section {
     height:100vh;
-    padding-top:88px;
+    /* Must clear the fixed header (--site-header-h) or the panel's top border
+       is painted over by the bar. */
+    padding-top:calc(var(--site-header-h) + 14px);
     /* Stops above the fixed footer bar so the media card's bottom edge is
        visible - see the same maths in product.css. */
     padding-bottom:calc(var(--site-footer-h) + 20px);
     overflow:hidden;
   }
   .template-product .product-layout {
-    height:calc(100vh - 88px - var(--site-footer-h) - 20px);
+    height:calc(100vh - var(--site-header-h) - 14px - var(--site-footer-h) - 20px);
     align-items:stretch;
     gap:1.1rem;
   }
@@ -201,7 +211,17 @@
   /* Six or seven columns fit inside the 760px panel on desktop, so the table
      has no reason to scroll sideways here. */
   .size-guide-table-wrap {
-    overflow-x:visible;
+    /* hidden, not visible: it still stops the sideways scroll, and it clips
+       the table to the wrap's 1rem radius so the corners follow the border
+       instead of squaring off over it. */
+    overflow:hidden;
+  }
+  /* The first column is only sticky so it survives a sideways scroll. There
+     is none on desktop, and its opaque background was painting over the
+     wrap's left border. */
+  .size-guide-table th:first-child {
+    position:static;
+    background:transparent;
   }
   .size-guide-table {
     table-layout:fixed;

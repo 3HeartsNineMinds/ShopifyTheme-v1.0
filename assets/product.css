@@ -81,14 +81,16 @@
     height: 100vh !important;
     max-height: 100vh !important;
     overflow: hidden !important;
-    padding-top: 88px !important;
+    /* Clears the fixed header, whose height is --site-header-h; anything less
+       and the panel's top border sits under the bar. */
+    padding-top: calc(var(--site-header-h) + 14px) !important;
     /* The footer bar is fixed and paints over the bottom of the viewport, so
        the panels have to stop above it - otherwise the media card's bottom
        border and rounded corners are hidden behind it. */
     padding-bottom: calc(var(--site-footer-h) + 20px) !important;
   }
   [data-product-section] .product-layout {
-    height: calc(100vh - 88px - var(--site-footer-h) - 20px) !important;
+    height: calc(100vh - var(--site-header-h) - 14px - var(--site-footer-h) - 20px) !important;
     align-items: stretch !important;
     gap: 1.1rem !important;
   }
