@@ -198,7 +198,7 @@
 
   /* The size guide sits under a narrow column, so it wraps to its own line. */
   [data-product-section] .size-guide-link {
-    margin-top:.5rem!important;
+    margin-top:.45rem!important;
     font-size:.58rem!important;
     letter-spacing:.09em!important;
   }
@@ -343,7 +343,7 @@
     grid-row:4!important;
     order:5!important;
     align-self:start!important;
-    margin:.55rem 0 0!important;
+    margin:.25rem 0 0!important;
     min-width:0!important;
     min-height:0!important;
     /* The row is the slack in a locked screen, so anything longer is clipped
@@ -352,12 +352,14 @@
     overflow:hidden!important;
   }
   [data-product-section] .product-details__label {
-    margin:0 0 .15rem!important;
+    margin:0 0 .12rem!important;
+    font-weight:900!important;
     font-size:.58rem!important;
     letter-spacing:.13em!important;
   }
   [data-product-section] .product-details__material {
-    margin:0 0 .3rem!important;
+    margin:0 0 .28rem!important;
+    font-weight:400!important;
     font-size:.72rem!important;
     line-height:1.25!important;
     overflow-wrap:anywhere!important;
@@ -455,19 +457,6 @@
     min-height:0!important;
     /* Not hidden: the legend is positioned outside this box, above it. */
     overflow:visible!important;
-  }
-  /* Lifted out of the flow so the first size card starts level with the top
-     of the photo; the label sits in the space above the row. */
-  [data-product-section] .variant-picker legend {
-    position:absolute!important;
-    bottom:100%!important;
-    left:0!important;
-    padding:0!important;
-    margin:0 0 .2rem!important;
-    font-size:.55rem!important;
-    letter-spacing:.12em!important;
-    color:#ece7dc!important;
-    white-space:nowrap!important;
   }
   [data-product-section] .variant-options {
     display:grid!important;

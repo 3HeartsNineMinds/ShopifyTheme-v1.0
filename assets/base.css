@@ -525,7 +525,7 @@ body {
   text-transform:uppercase;
   letter-spacing:.16em;
   font-size:.72rem;
-  font-weight:800;
+  font-weight:900;
   text-decoration:none;
 }
 
@@ -533,6 +533,7 @@ body {
   margin:0 0 .35rem;
   color:var(--cream);
   font-size:.95rem;
+  font-weight:400;
 }
 
 .product-details__description > :first-child {
@@ -555,13 +556,17 @@ body {
   padding:0;
 }
 
+/* The label is not shown any more. It stays in the markup, clipped, because a
+   fieldset with no legend is unlabelled for anyone using a screen reader. */
 .variant-picker legend {
-  margin-bottom:.9rem;
-  color:#ece7dc;
-  text-transform:uppercase;
-  letter-spacing:.18em;
-  font-size:.78rem;
-  font-weight:900;
+  position:absolute;
+  width:1px;
+  height:1px;
+  margin:-1px;
+  padding:0;
+  overflow:hidden;
+  clip-path:inset(50%);
+  white-space:nowrap;
 }
 
 .variant-options {
